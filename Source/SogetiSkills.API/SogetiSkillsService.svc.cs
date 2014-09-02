@@ -19,10 +19,16 @@ namespace SogetiSkills.API
             _db = db;
         }
 
-        public IEnumerable<SkillCategory> Skills_GetAll()
+        public Contracts.DataContracts.Profile Profile_GetByUsername(string username)
         {
-            var skillCategories = _db.SkillCategories.Include(x => x.Skills).ToList();
-            return Mapper.Map<IEnumerable<SkillCategory>>(skillCategories);
+            var profile = _db.Profiles.Include(x => x.Skills).FirstOrDefault(x => x.Username == username);
+            if (profile == null)
+            {
+                profile = new Models.Profile { Username = username };
+                _db.Profiles.Add(profile);
+                _db.SaveChanges();
+            }
+            return Mapper.Map<Contracts.DataContracts.Profile>(profile);
         }
 
         public void Dispose()

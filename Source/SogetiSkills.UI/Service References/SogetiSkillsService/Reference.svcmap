@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="db98cd68-09cf-4a0c-a135-35338176fd84" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:54376/SogetiSkillsService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SogetiSkillsService.xsd" MetadataType="Schema" ID="43cf4a8c-da1f-4f97-92a8-aae001dc3201" SourceId="1" SourceUrl="http://localhost:54376/SogetiSkillsService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SogetiSkillsService1.xsd" MetadataType="Schema" ID="0f23eb1c-b925-475a-9334-2d95ccadc3bc" SourceId="1" SourceUrl="http://localhost:54376/SogetiSkillsService.svc?xsd=xsd2" />
+    <MetadataFile FileName="SogetiSkillsService.disco" MetadataType="Disco" ID="27fd5c6a-66eb-4a98-802e-e2c98e8a11db" SourceId="1" SourceUrl="http://localhost:54376/SogetiSkillsService.svc?disco" />
+    <MetadataFile FileName="SogetiSkillsService2.xsd" MetadataType="Schema" ID="e60e8dc5-6b29-4789-8318-ef28cc613a1b" SourceId="1" SourceUrl="http://localhost:54376/SogetiSkillsService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SogetiSkillsService.wsdl" MetadataType="Wsdl" ID="0ca6d57c-8c81-4830-8164-f438e3833d70" SourceId="1" SourceUrl="http://localhost:54376/SogetiSkillsService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -13,6 +13,6 @@ namespace SogetiSkills.API
     public interface ISogetiSkillsService
     {
         [OperationContract]
-        IEnumerable<SkillCategory> Skills_GetAll();
+        Profile Profile_GetByUsername(string username);
     }
 }

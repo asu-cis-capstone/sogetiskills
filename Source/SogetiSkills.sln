@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SogetiSkills.UI", "SogetiSkills.UI\SogetiSkills.UI.csproj", "{7961EAC9-E047-45E2-958B-F6D1910CE252}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8C2D47F8-4216-4AC0-83EB-A5898C74BB8C} = {8C2D47F8-4216-4AC0-83EB-A5898C74BB8C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SogetiSkills.Tests", "SogetiSkills.Tests\SogetiSkills.Tests.csproj", "{4033F833-4630-4452-ACA7-70E33B41EE3E}"
 EndProject

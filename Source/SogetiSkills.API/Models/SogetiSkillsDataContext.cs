@@ -28,8 +28,11 @@ namespace SogetiSkills.API.Models
                     x.MapLeftKey("SkillId");
                     x.MapRightKey("SkillCategoryId");
                 });
+
+            modelBuilder.Entity<Profile>().HasKey(x => x.Username);
         }
-        
+
+        public DbSet<Profile> Profiles { get; set; }
         public DbSet<SkillCategory> SkillCategories { get; set; }
         public DbSet<Skill> Skills { get; set; }
     }

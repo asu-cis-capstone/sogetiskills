@@ -9,7 +9,7 @@ namespace SogetiSkills.API.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(SogetiSkills.API.Models.SogetiSkillsDataContext db)

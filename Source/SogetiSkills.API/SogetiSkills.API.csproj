@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Contracts\DataContracts\Profile.cs" />
     <Compile Include="Contracts\DataContracts\Skill.cs" />
     <Compile Include="Contracts\DataContracts\SkillCategory.cs" />
     <Compile Include="Global.asax.cs">
@@ -113,11 +114,12 @@
     <Compile Include="Infrastructure\Wcf\StructureMapServiceHostFactory.cs" />
     <Compile Include="ISogetiSkillsService.cs" />
     <Compile Include="Infrastructure\Mapping\AutoMapperConfig.cs" />
-    <Compile Include="Migrations\201408312127390_SkillsAndSkillCategories.cs" />
-    <Compile Include="Migrations\201408312127390_SkillsAndSkillCategories.Designer.cs">
-      <DependentUpon>201408312127390_SkillsAndSkillCategories.cs</DependentUpon>
+    <Compile Include="Migrations\201409020426324_AddSkillsAndBasicProfile.cs" />
+    <Compile Include="Migrations\201409020426324_AddSkillsAndBasicProfile.Designer.cs">
+      <DependentUpon>201409020426324_AddSkillsAndBasicProfile.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\Skill.cs" />
     <Compile Include="Models\SkillCategory.cs" />
     <Compile Include="Models\SogetiSkillsDataContext.cs" />
@@ -132,8 +134,8 @@
     <Folder Include="Contracts\Response\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201408312127390_SkillsAndSkillCategories.resx">
-      <DependentUpon>201408312127390_SkillsAndSkillCategories.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201409020426324_AddSkillsAndBasicProfile.resx">
+      <DependentUpon>201409020426324_AddSkillsAndBasicProfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
