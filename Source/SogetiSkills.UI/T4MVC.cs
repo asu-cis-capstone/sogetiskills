@@ -25,6 +25,7 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    public static SogetiSkills.UI.Controllers.AccountController Account = new SogetiSkills.UI.Controllers.T4MVC_AccountController();
     public static SogetiSkills.UI.Controllers.HomeController Home = new SogetiSkills.UI.Controllers.T4MVC_HomeController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
@@ -63,6 +64,23 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
 
 namespace Links
 {
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public static class Content {
+        private const string URLPATH = "~/Content";
+        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        public static readonly string bootstrap_flatly_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.flatly.min.css") ? Url("bootstrap.flatly.min.css") : Url("bootstrap.flatly.css");
+             
+        public static readonly string bootstrap_flatly_min_css = Url("bootstrap.flatly.min.css");
+        public static readonly string flash_messages_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/flash-messages.min.css") ? Url("flash-messages.min.css") : Url("flash-messages.css");
+             
+        public static readonly string Styles_scss = Url("Styles.scss");
+        public static readonly string Styles_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Styles.min.css") ? Url("Styles.min.css") : Url("Styles.css");
+             
+        public static readonly string Styles_css_map = Url("Styles.css.map");
+        public static readonly string Styles_min_css = Url("Styles.min.css");
+    }
+
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static partial class Bundles
     {

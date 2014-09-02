@@ -14,7 +14,7 @@ namespace SogetiSkills.API.Infrastructure.Mapping
             Mapper.CreateMap<Models.Skill, Contracts.DataContracts.Skill>();
 
 #if DEBUG
-            Mapper.AssertConfigurationIsValid();
+            //Mapper.AssertConfigurationIsValid();
 #endif
         }
     }

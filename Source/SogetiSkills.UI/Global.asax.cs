@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FluentValidation;
+using FluentValidation.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,8 +13,11 @@ namespace SogetiSkills.UI
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            FluentValidationModelValidatorProvider.Configure(config =>
+            {
+                ValidatorOptions.CascadeMode = CascadeMode.StopOnFirstFailure;
+            });
         }
     }
 }
