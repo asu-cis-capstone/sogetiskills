@@ -13,6 +13,9 @@ namespace SogetiSkills.API
     public interface ISogetiSkillsService
     {
         [OperationContract]
+        string GetVersion();
+
+        [OperationContract]
         Profile Profile_GetByUsername(string username);
     }
 }

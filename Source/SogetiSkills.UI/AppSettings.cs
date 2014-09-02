@@ -11,9 +11,32 @@ namespace SogetiSkills.UI
             get { return ConfigurationManager.AppSettings["ApplicationName"]; }
         }
 
+        public static string ApplicationReleaseProfile
+        {
+            get { return ConfigurationManager.AppSettings["ApplicationReleaseProfile"]; }
+        }
+
+        public static string ApplicationVersion
+        {
+            get { return ConfigurationManager.AppSettings["ApplicationVersion"]; }
+        }
+
         public static string ClientValidationEnabled
         {
             get { return ConfigurationManager.AppSettings["ClientValidationEnabled"]; }
+        }
+
+        public static class MvcFlashMessages
+        {
+            public static string InnerCssClass
+            {
+                get { return ConfigurationManager.AppSettings["MvcFlashMessages/InnerCssClass"]; }
+            }
+
+            public static string OuterCssClass
+            {
+                get { return ConfigurationManager.AppSettings["MvcFlashMessages/OuterCssClass"]; }
+            }
         }
 
         public static string UnobtrusiveJavaScriptEnabled

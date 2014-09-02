@@ -109,7 +109,7 @@ public class Entry : List<Entry>
     {
         var entry = this;
 
-        foreach (var token in path.Split(new[] { '.', ':', '/' }, StringSplitOptions.RemoveEmptyEntries))
+        foreach (var token in path.Split(new[] { '.', ':' }, StringSplitOptions.RemoveEmptyEntries))
         {
 			var name = Char.ToUpper(token[0]) + token.Substring(1);
 

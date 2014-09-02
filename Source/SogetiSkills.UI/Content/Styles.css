@@ -6,4 +6,8 @@
   .validation-summary-errors li {
     list-style: square; }
 
+#footer {
+  position: absolute;
+  bottom: 0; }
+
 /*# sourceMappingURL=Styles.css.map */

@@ -149,6 +149,9 @@
     <Content Include="Content\Styles.css.map">
       <DependentUpon>Styles.css</DependentUpon>
     </Content>
+    <Content Include="Service References\SogetiSkillsService\SogetiSkills.UI.SogetiSkillsService.Profile.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\SogetiSkillsService\SogetiSkillsService.wsdl" />
     <None Include="Service References\SogetiSkillsService\SogetiSkillsService.xsd" />
     <None Include="Service References\SogetiSkillsService\SogetiSkillsService1.xsd" />
@@ -161,7 +164,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -180,7 +185,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Infrastructure\DependencyResolution\ControllerConvention.cs" />
+    <Compile Include="Infrastructure\DependencyResolution\IoC.cs" />
     <Compile Include="Infrastructure\DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="Infrastructure\DependencyResolution\StructureMapScopeModule.cs" />
     <Compile Include="Global.asax.cs">
@@ -189,6 +196,10 @@
     <Compile Include="Infrastructure\Security\Authentication.cs" />
     <Compile Include="Infrastructure\Security\IAuthentication.cs" />
     <Compile Include="HomeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\SogetiSkillsServiceClient.cs" />
+    <Compile Include="ProfileController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -225,6 +236,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

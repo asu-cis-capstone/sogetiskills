@@ -19,6 +19,11 @@ namespace SogetiSkills.API
             _db = db;
         }
 
+        public string GetVersion()
+        {
+            return string.Format("{0} ({1})", AppSettings.ApplicationVersion, AppSettings.ApplicationReleaseProfile);
+        }
+
         public Contracts.DataContracts.Profile Profile_GetByUsername(string username)
         {
             var profile = _db.Profiles.Include(x => x.Skills).FirstOrDefault(x => x.Username == username);

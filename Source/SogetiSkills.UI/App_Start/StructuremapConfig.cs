@@ -39,24 +39,10 @@ namespace SogetiSkills.UI
 		
         public static void Start() 
         {
-            IContainer container = CreateContainer();
+            IContainer container = IoC.CreateContainer();
             StructureMapDependencyScope = new StructureMapDependencyScope(container);
             DependencyResolver.SetResolver(StructureMapDependencyScope);
             DynamicModuleUtility.RegisterModule(typeof(StructureMapScopeModule));
-        }
-
-        private static IContainer CreateContainer()
-        {
-            return new Container(config =>
-                {
-                    config.Scan(
-                        scan =>
-                        {
-                            scan.TheCallingAssembly();
-                            scan.WithDefaultConventions();
-                            scan.With(new ControllerConvention());
-                        });
-                });
         }
     }
 }
