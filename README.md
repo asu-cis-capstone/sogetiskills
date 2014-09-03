@@ -3,8 +3,19 @@ sogetiskills
 Repository for project sogeti skills inventory
 
 ###Sogeti Skills Inventory/Hub
-Introduction: Statement of core intent
-//Project "Beach": Creation of record keeping software to track consulatants and their skills; summary website; and basic web application for Sogeti USA, a IT Consulting Firm.
+Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of record keeping software to track consultants and their skills; a summary website; and small web application that will allow users at Sogeti USA to find consultants who are on "the beach."  Incremental builds are hosted at http://sogetiskills.azurewebsites.net/.
+
+###TO-DO
+In progress
+  * Add a new profile.
+
+Product Backlog (w/Strict Prioritizing)
+  * Search profiles.
+  * Edit own profile.
+
+Complete
+  * Create project structure.
+  * Basic sign in/out.
 
 ###Team & Client
 - Project Management
@@ -29,6 +40,3 @@ Introduction: Statement of core intent
 			phone: 602-337-1569
 - Links:
 	Dropbox- https://www.dropbox.com/l/lPGIbSkrGrd0sHM8JoC9Cp/
-
-###TO-DO
-Product Backlog (user stories, features, bug fixes, documentation changes)
