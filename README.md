@@ -5,6 +5,7 @@ Repository for project sogeti skills inventory
 ###Sogeti Skills Inventory/Hub
 Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of record keeping software to track consultants and their skills; a summary website; and small web application that will allow users at Sogeti USA to find consultants who are on "the beach."  Incremental builds are hosted at http://sogetiskills.azurewebsites.net/.
 
+
 ###TO-DO
 In progress
   * Add a new profile.
@@ -23,7 +24,7 @@ Complete
 		git: jsmonje
 		skype: j.monje11
 		phone: 480-231-7552
-- Web Development
+- Frontend Development
 	John W: john.s.wathen@gmail.com
 		git: jwathen
 		skype: live:john.s.wathen

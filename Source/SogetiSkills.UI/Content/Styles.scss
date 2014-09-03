@@ -1,0 +1,19 @@
+﻿.flash-message-info {
+    //color: #3498db;
+}
+
+.validation-summary-errors {
+    color: darken(#e74c3c, 15);
+    font-weight: bold;
+    ul {
+        padding-left: 1.5em;
+    }
+    li {
+        list-style: square;
+    }
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+}
