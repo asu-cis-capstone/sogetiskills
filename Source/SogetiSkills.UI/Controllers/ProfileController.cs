@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace SogetiSkills.UI.Controllers
 {
+    [Authorize]
     public partial class ProfileController : ControllerBase
     {
         private readonly ISogetiSkillsService _sogetiSkillsService;
