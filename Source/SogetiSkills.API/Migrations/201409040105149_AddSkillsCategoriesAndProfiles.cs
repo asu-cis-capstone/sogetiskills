@@ -3,17 +3,21 @@ namespace SogetiSkills.API.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddSkillsAndBasicProfile : DbMigration
+    public partial class AddSkillsCategoriesAndProfiles : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.SkillCategories",
+                "dbo.Profiles",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
+                        Username = c.String(nullable: false, maxLength: 450),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        Bio = c.String(),
                     })
+                .Index(x => x.Username)
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
@@ -21,23 +25,20 @@ namespace SogetiSkills.API.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
-                        Profile_Username = c.String(maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 450),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Profiles", t => t.Profile_Username)
-                .Index(t => t.Profile_Username);
+                .Index(x => x.Name)
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Profiles",
+                "dbo.SkillCategories",
                 c => new
                     {
-                        Username = c.String(nullable: false, maxLength: 128),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                        Bio = c.String(),
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 450),
                     })
-                .PrimaryKey(t => t.Username);
+                 .Index(x => x.Name)
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Skill_SkillCategory",
@@ -52,20 +53,36 @@ namespace SogetiSkills.API.Migrations
                 .Index(t => t.SkillId)
                 .Index(t => t.SkillCategoryId);
             
+            CreateTable(
+                "dbo.Skill_Profile",
+                c => new
+                    {
+                        SkillId = c.Int(nullable: false),
+                        ProfileId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.SkillId, t.ProfileId })
+                .ForeignKey("dbo.Skills", t => t.SkillId)
+                .ForeignKey("dbo.Profiles", t => t.ProfileId)
+                .Index(t => t.SkillId)
+                .Index(t => t.ProfileId);
+            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Skills", "Profile_Username", "dbo.Profiles");
+            DropForeignKey("dbo.Skill_Profile", "ProfileId", "dbo.Profiles");
+            DropForeignKey("dbo.Skill_Profile", "SkillId", "dbo.Skills");
             DropForeignKey("dbo.Skill_SkillCategory", "SkillCategoryId", "dbo.SkillCategories");
             DropForeignKey("dbo.Skill_SkillCategory", "SkillId", "dbo.Skills");
+            DropIndex("dbo.Skill_Profile", new[] { "ProfileId" });
+            DropIndex("dbo.Skill_Profile", new[] { "SkillId" });
             DropIndex("dbo.Skill_SkillCategory", new[] { "SkillCategoryId" });
             DropIndex("dbo.Skill_SkillCategory", new[] { "SkillId" });
-            DropIndex("dbo.Skills", new[] { "Profile_Username" });
+            DropTable("dbo.Skill_Profile");
             DropTable("dbo.Skill_SkillCategory");
-            DropTable("dbo.Profiles");
-            DropTable("dbo.Skills");
             DropTable("dbo.SkillCategories");
+            DropTable("dbo.Skills");
+            DropTable("dbo.Profiles");
         }
     }
 }

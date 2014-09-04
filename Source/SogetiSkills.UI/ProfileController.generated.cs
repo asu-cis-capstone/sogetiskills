@@ -56,9 +56,9 @@ namespace SogetiSkills.UI.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult View()
+        public virtual System.Web.Mvc.ActionResult Details()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.View);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -76,21 +76,21 @@ namespace SogetiSkills.UI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string View = "View";
+            public readonly string Details = "Details";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string View = "View";
+            public const string Details = "Details";
         }
 
 
-        static readonly ActionParamsClass_View s_params_View = new ActionParamsClass_View();
+        static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_View ViewParams { get { return s_params_View; } }
+        public ActionParamsClass_Details DetailsParams { get { return s_params_Details; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_View
+        public class ActionParamsClass_Details
         {
             public readonly string username = "username";
         }
@@ -104,7 +104,9 @@ namespace SogetiSkills.UI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string Details = "Details";
             }
+            public readonly string Details = "~/Views/Profile/Details.cshtml";
         }
     }
 
@@ -114,14 +116,14 @@ namespace SogetiSkills.UI.Controllers
         public T4MVC_ProfileController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void ViewOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string username);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string username);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult View(string username)
+        public override System.Web.Mvc.ActionResult Details(string username)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.View);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "username", username);
-            ViewOverride(callInfo, username);
+            DetailsOverride(callInfo, username);
             return callInfo;
         }
 

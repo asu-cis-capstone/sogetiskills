@@ -19,8 +19,8 @@ namespace SogetiSkills.UI.Controllers
             _sogetiSkillsService = sogetiSkillsService;
         }
 
-        [GET("Profile/View/{username}")]
-        public virtual ActionResult View(string username)
+        [GET("Profile/{username}")]
+        public virtual ActionResult Details(string username)
         {
             return View();
         }

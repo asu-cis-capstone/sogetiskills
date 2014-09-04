@@ -11,5 +11,6 @@ namespace SogetiSkills.API.Models
         public virtual string Name { get; set; }
 
         public virtual ICollection<SkillCategory> Categorites { get; set; }
+        public virtual ICollection<Profile> Profiles { get; set; }
     }
 }

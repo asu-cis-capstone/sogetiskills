@@ -10,10 +10,7 @@ namespace SogetiSkills.API.Contracts.DataContracts
     public class SkillCategory
     {
         [DataMember]
-        public int Id { get; set; }
-
-        [DataMember]
-        public string Description { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
         public IEnumerable<Skill> Skills { get; set; }

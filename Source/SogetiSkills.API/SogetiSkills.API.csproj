@@ -56,6 +56,9 @@
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Seterlund.CodeGuard">
+      <HintPath>..\packages\Seterlund.CodeGuard.2.3.4\lib\net40\Seterlund.CodeGuard.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
     </Reference>
@@ -92,6 +95,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AppSettings.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\sogetiskillsapi.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -123,9 +127,9 @@
     <Compile Include="Infrastructure\Wcf\StructureMapServiceHostFactory.cs" />
     <Compile Include="ISogetiSkillsService.cs" />
     <Compile Include="Infrastructure\Mapping\AutoMapperConfig.cs" />
-    <Compile Include="Migrations\201409020426324_AddSkillsAndBasicProfile.cs" />
-    <Compile Include="Migrations\201409020426324_AddSkillsAndBasicProfile.Designer.cs">
-      <DependentUpon>201409020426324_AddSkillsAndBasicProfile.cs</DependentUpon>
+    <Compile Include="Migrations\201409040105149_AddSkillsCategoriesAndProfiles.cs" />
+    <Compile Include="Migrations\201409040105149_AddSkillsCategoriesAndProfiles.Designer.cs">
+      <DependentUpon>201409040105149_AddSkillsCategoriesAndProfiles.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Profile.cs" />
@@ -143,12 +147,12 @@
     <Folder Include="Contracts\Response\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201409020426324_AddSkillsAndBasicProfile.resx">
-      <DependentUpon>201409020426324_AddSkillsAndBasicProfile.cs</DependentUpon>
-    </EmbeddedResource>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <EmbeddedResource Include="Migrations\201409040105149_AddSkillsCategoriesAndProfiles.resx">
+      <DependentUpon>201409040105149_AddSkillsCategoriesAndProfiles.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -7,13 +7,13 @@ namespace SogetiSkills.API.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class AddSkillsAndBasicProfile : IMigrationMetadata
+    public sealed partial class AddSkillsCategoriesAndProfiles : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSkillsAndBasicProfile));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSkillsCategoriesAndProfiles));
         
         string IMigrationMetadata.Id
         {
-            get { return "201409020426324_AddSkillsAndBasicProfile"; }
+            get { return "201409040105149_AddSkillsCategoriesAndProfiles"; }
         }
         
         string IMigrationMetadata.Source

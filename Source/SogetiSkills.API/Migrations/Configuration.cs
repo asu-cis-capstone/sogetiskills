@@ -12,9 +12,9 @@ namespace SogetiSkills.API.Migrations
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(SogetiSkills.API.Models.SogetiSkillsDataContext db)
+        protected override void Seed(SogetiSkills.API.Models.SogetiSkillsDataContext context)
         {
-             
+            
         }
     }
 }

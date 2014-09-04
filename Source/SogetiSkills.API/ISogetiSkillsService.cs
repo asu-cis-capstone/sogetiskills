@@ -16,6 +16,12 @@ namespace SogetiSkills.API
         string GetVersion();
 
         [OperationContract]
+        void Skill_AddCateogry(string name);
+
+        [OperationContract]
+        void Skill_AddSkill(string category, string name);
+
+        [OperationContract]
         Profile Profile_GetByUsername(string username);
     }
 }
