@@ -15,7 +15,7 @@ Product Backlog (w/Strict Prioritizing)
   * Edit own profile.
 
 Complete
-  * Create project structure.
+  * Created project structure.
   * Basic sign in/out.
 
 ###Team & Client
