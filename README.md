@@ -39,5 +39,6 @@ Complete
 		contact: James Moran, MCP MCTS
 			email: james.moran@us.sogeti.com
 			phone: 602-337-1569
+			phone: 630.337.1569 
 - Links:
 	Dropbox- https://www.dropbox.com/l/lPGIbSkrGrd0sHM8JoC9Cp/
