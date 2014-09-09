@@ -1,4 +1,5 @@
-﻿using SogetiSkills.Models;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SogetiSkills.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -42,8 +43,16 @@ namespace SogetiSkills.Tests.TestHelpers
                 {
                     if (!string.IsNullOrWhiteSpace(statement))
                     {
-                        var command = new SqlCeCommand(statement, connection);
-                        command.ExecuteNonQuery();
+                        string sqlceCompatibleStatement = MakeSqlCeCompatible(statement);
+                        try
+                        {
+                            var command = new SqlCeCommand(MakeSqlCeCompatible(statement), connection);
+                            command.ExecuteNonQuery();
+                        }
+                        catch (SqlCeException ex)
+                        {
+                            throw new Exception(sqlceCompatibleStatement, ex);
+                        }
                     }
                 }
             }
@@ -55,6 +64,40 @@ namespace SogetiSkills.Tests.TestHelpers
             using (StreamReader streamReader = new StreamReader(reasourceStream))
             {
                 return streamReader.ReadToEnd();
+            }
+        }
+
+        private static string MakeSqlCeCompatible(string statement)
+        {
+            string sqlceCompatibleStatement = statement;
+
+            // SQL CE doesn't allow including columns on an index so we remove the INCLUDES part of
+            // a create index statement if it exists.
+            if (sqlceCompatibleStatement.Contains("CREATE INDEX"))
+            {
+                int indexOfIncludesKeyword = sqlceCompatibleStatement.IndexOf("INCLUDE");
+                if (indexOfIncludesKeyword != -1)
+                {
+                    sqlceCompatibleStatement = sqlceCompatibleStatement.Substring(0, indexOfIncludesKeyword);
+                }
+            }
+
+            // SQL CE doesn't allow columns of length "max".
+            sqlceCompatibleStatement = sqlceCompatibleStatement.Replace("max", "4000");
+
+            return sqlceCompatibleStatement;
+        }
+
+        [TestCleanup]
+        public void EmptyDatabase()
+        {
+            using (var db = new SogetiSkillsDataContext())
+            {
+                db.Users.RemoveRange(db.Users);
+                db.Passwords.RemoveRange(db.Passwords);
+                db.Resumes.RemoveRange(db.Resumes);
+                db.Tags.RemoveRange(db.Tags);
+                db.SaveChanges();
             }
         }
     }

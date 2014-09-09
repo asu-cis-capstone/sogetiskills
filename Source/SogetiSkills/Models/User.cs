@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Models
 {
-    public class User
+    public abstract class User
     {
         public int Id { get; set; }
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
-        public UserType UserType { get; set; }
+        public int PasswordId { get; set; }
+
+        public HashedPassword Password { get; set; }
     }
 }
