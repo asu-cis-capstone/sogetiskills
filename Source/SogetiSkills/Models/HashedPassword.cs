@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Models
 {
-    public enum UserType
+    public class HashedPassword
     {
-        AccountExcecutive,
-        Consultant
+        public int Id { get; set; }
+        public byte[] Hash { get; set; }
+        public byte[] Salt { get; set; }
     }
 }
