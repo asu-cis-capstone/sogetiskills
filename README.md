@@ -3,20 +3,41 @@ sogetiskills
 Repository for project sogeti skills inventory
 
 ###Sogeti Skills Inventory/Hub
-Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of record keeping software to track consultants and their skills; a summary website; and small web application that will allow users at Sogeti USA to find consultants who are on "the beach."  Incremental builds are hosted at http://sogetiskills.azurewebsites.net/.
+Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of record keeping software to track consultants and their skills; a summary website; and small web application that will allow users at Sogeti USA to find consultants who are on "the beach."  Development branch builds are automatically pushed to http://dev-sogetiskills.azurewebsites.net/.  Master branch builds are automatically pushed to http://sogetiskills.azurewebsites.net/.
 
 
 ###TO-DO
 In progress
-  * Add a new profile.
+  * User maintenance
+    * Users may only maintain their own details
+    * Phone number
 
 Product Backlog (w/Strict Prioritizing)
-  * Search profiles.
-  * Edit own profile.
+  * User maintenance
+    * Users may only maintain their own details
+    * Current beach status
+    * List of keywords
+      * Add new keywords
+      * Remove keyword associations
+    * Resume
+    * User type change
+  * Account Executive dashboard
+    * List all consultants currently on the beach
+    * List all available tags
+    * Filter by tags
+    * Filter by search
+    * Link to download a specific consultant's resume
+    * Link to e-mail a specific consultant
+    * LInk to e-mail all consultants on the beach
 
 Complete
-  * Create project structure.
-  * Basic sign in/out.
+  * Create project structure
+  * Database design
+  * User login
+  * User authentication persists across all pages
+  * Without authentication, all web pages redirect to user login
+  * User logout
+  * Allow users to register
 
 ###Team & Client
 - Project Management
