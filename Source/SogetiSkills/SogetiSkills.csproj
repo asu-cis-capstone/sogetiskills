@@ -32,10 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -48,8 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\SaltGenerator.cs" />
-    <Compile Include="Managers\AuthenticationManager.cs" />
+    <Compile Include="Security\IPasswordHasher.cs" />
+    <Compile Include="Security\ISaltGenerator.cs" />
+    <Compile Include="Security\PasswordHasher.cs" />
+    <Compile Include="Security\SaltGenerator.cs" />
+    <Compile Include="Managers\IUserManager.cs" />
+    <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Models\AccountExecutive.cs" />
     <Compile Include="Models\Consultant.cs" />
     <Compile Include="Models\HashedPassword.cs" />
@@ -60,11 +66,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <EmbeddedResource Include="Models\CreateDatabase.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Models\CreateDatabase.sql" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

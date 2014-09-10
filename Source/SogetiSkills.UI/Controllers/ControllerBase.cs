@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcFlashMessages;
-using SogetiSkills.UI.SogetiSkillsService;
 
 namespace SogetiSkills.UI.Controllers
 {

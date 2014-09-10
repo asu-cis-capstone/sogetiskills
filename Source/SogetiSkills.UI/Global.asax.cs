@@ -1,11 +1,16 @@
 ﻿using FluentValidation;
 using FluentValidation.Mvc;
+using SogetiSkills.UI.Infrastructure.DependencyResolution;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Xml.Linq;
 
 namespace SogetiSkills.UI
 {
@@ -14,10 +19,7 @@ namespace SogetiSkills.UI
         protected void Application_Start()
         {
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            FluentValidationModelValidatorProvider.Configure(config =>
-            {
-                ValidatorOptions.CascadeMode = CascadeMode.StopOnFirstFailure;
-            });
+            ValidatorOptions.CascadeMode = CascadeMode.StopOnFirstFailure;
         }
     }
 }

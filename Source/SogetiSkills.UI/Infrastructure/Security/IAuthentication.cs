@@ -9,7 +9,7 @@ namespace SogetiSkills.UI.Infrastructure.Security
 {
     public interface IAuthentication
     {
-        Task<bool> ValidateUsernamePasswordAsync(string username, string password);
+        Task<bool> ValidateEmailAddressAndPasswordAsync(string username, string password);
         void SetAuthCookie(string username, HttpContextBase httpContext);
         void ClearAuthCookie(HttpContextBase httpContext);
     }

@@ -72,6 +72,7 @@ namespace SogetiSkills.UI.Controllers
         {
             public readonly string SignIn = "SignIn";
             public readonly string SignOut = "SignOut";
+            public readonly string Register = "Register";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -79,6 +80,7 @@ namespace SogetiSkills.UI.Controllers
         {
             public const string SignIn = "SignIn";
             public const string SignOut = "SignOut";
+            public const string Register = "Register";
         }
 
 
@@ -87,6 +89,14 @@ namespace SogetiSkills.UI.Controllers
         public ActionParamsClass_SignIn SignInParams { get { return s_params_SignIn; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_SignIn
+        {
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_Register s_params_Register = new ActionParamsClass_Register();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Register RegisterParams { get { return s_params_Register; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Register
         {
             public readonly string model = "model";
         }
@@ -100,8 +110,10 @@ namespace SogetiSkills.UI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string Register = "Register";
                 public readonly string SignIn = "SignIn";
             }
+            public readonly string Register = "~/Views/Account/Register.cshtml";
             public readonly string SignIn = "~/Views/Account/SignIn.cshtml";
         }
     }
@@ -143,6 +155,29 @@ namespace SogetiSkills.UI.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SignOut);
             SignOutOverride(callInfo);
             return callInfo;
+        }
+
+        [NonAction]
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Register()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
+            RegisterOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, SogetiSkills.UI.ViewModels.Account.RegisterViewModel model);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Register(SogetiSkills.UI.ViewModels.Account.RegisterViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            RegisterOverride(callInfo, model);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
     }

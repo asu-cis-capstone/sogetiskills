@@ -26,6 +26,9 @@ namespace SogetiSkills.UI.Controllers
     public partial class ProfileController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ProfileController() { }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected ProfileController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
