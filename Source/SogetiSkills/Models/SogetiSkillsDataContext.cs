@@ -12,7 +12,7 @@ namespace SogetiSkills.Models
     public class SogetiSkillsDataContext : DbContext
     {
         public SogetiSkillsDataContext()
-            : base(new SqlConnection(@"Data Source=.\SqlExpress;Initial Catalog=SogetiSkills;MultipleActiveResultSets=True;Integrated Security=True;"), true)
+            : base("SogetiSkills")
         {
             
         }

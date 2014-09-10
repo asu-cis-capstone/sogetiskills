@@ -122,6 +122,16 @@ namespace SogetiSkills.Tests.Unit.Managers
 
                 Assert.IsFalse(passwordIsCorrect);
             }
+
+            [TestMethod]
+            public async Task ValidatePasswordAsync_GivenEmailAddressThatDoesntExist_ReturnsFalse()
+            {   
+                UserManager subject = _fixture.Create<UserManager>();
+
+                bool passwordIsCorrect = await subject.ValidatePasswordAsync("does_not_exist@site.com", "password");
+
+                Assert.IsFalse(passwordIsCorrect);
+            }
         }
     }
 }
