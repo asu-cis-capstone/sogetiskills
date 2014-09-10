@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,14 @@ namespace SogetiSkills.Models
     public class SogetiSkillsDataContext : DbContext
     {
         public SogetiSkillsDataContext()
-            : base ("Name=SogetiSkills")
+            : base(new SqlConnection(@"Data Source=.\SqlExpress;Initial Catalog=SogetiSkills;MultipleActiveResultSets=True;Integrated Security=True;"), true)
         {
-            this.Configuration.AutoDetectChangesEnabled = false;
+            
         }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Resume> Resumes { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -24,13 +29,10 @@ namespace SogetiSkills.Models
             // Users are either a Consultant or an AccountExecutite.  All users have a hashed password so the
             // Users table is split between the User and HashedPassword entity.
             modelBuilder.Entity<User>()
-                .HasRequired(x => x.Password)
-                .WithMany()
-                .HasForeignKey(x => x.PasswordId);
-            modelBuilder.Entity<User>()
                 .Map<AccountExecutive>(x => x.Requires("UserType").HasValue("AccountExecutive"))
                 .Map<Consultant>(x => x.Requires("UserType").HasValue("Consultant"));
-         
+            modelBuilder.ComplexType<HashedPassword>();
+
             // Consultants have a resume.
             modelBuilder.Entity<Consultant>()
                 .HasOptional(x => x.Resume)
@@ -48,14 +50,7 @@ namespace SogetiSkills.Models
                     x.MapRightKey("TagId");
                 });
 
-            modelBuilder.Entity<HashedPassword>().ToTable("Passwords");
-
             base.OnModelCreating(modelBuilder);
         }
-
-        public DbSet<User> Users { get; set; }
-        public DbSet<HashedPassword> Passwords { get; set; }
-        public DbSet<Resume> Resumes { get; set; }
-        public DbSet<Tag> Tags { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Ploeh.AutoFixture;
+using SogetiSkills.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace SogetiSkills.Tests.TestHelpers
         {
             _fixture = new Fixture();
             _fixture.Customize(new WebModelCustomization());
+            _fixture.Inject(new SogetiSkillsDataContext());
         }
     }
 }

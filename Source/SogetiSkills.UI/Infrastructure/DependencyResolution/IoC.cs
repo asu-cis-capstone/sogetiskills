@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using StructureMap.Graph;
-using SogetiSkills.UI.SogetiSkillsService;
+using SogetiSkills.Models;
+using StructureMap.Web;
+using FluentValidation.Mvc;
+using SogetiSkills.UI.Controllers;
 
 namespace SogetiSkills.UI.Infrastructure.DependencyResolution
 {
@@ -17,14 +20,16 @@ namespace SogetiSkills.UI.Infrastructure.DependencyResolution
                     scan =>
                     {
                         scan.TheCallingAssembly();
+                        scan.AssemblyContainingType<SogetiSkillsDataContext>();
                         scan.WithDefaultConventions();
                         scan.With(new ControllerConvention());
                     });
-                config.For<ISogetiSkillsService>().Use(() => new SogetiSkillsServiceClient());
+                config.For<SogetiSkillsDataContext>().HttpContextScoped().Use<SogetiSkillsDataContext>();
+                foreach(var type in FluentValidation.AssemblyScanner.FindValidatorsInAssemblyContaining<HomeController>())
+                {
+                    config.For(type.InterfaceType).Use(type.ValidatorType);
+                }
             });
-#if DEBUG
-            container.AssertConfigurationIsValid();
-#endif
             return container;
         }
     }

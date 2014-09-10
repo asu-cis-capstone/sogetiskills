@@ -1,11 +1,4 @@
-﻿CREATE TABLE Passwords
-(
-	Id INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[Hash] varbinary(max) NOT NULL,
-	Salt varbinary(max) NOT NULL
-);
-
-CREATE TABLE Resumes
+﻿CREATE TABLE Resumes
 (
 	Id INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	FileData varbinary(max) NULL,
@@ -17,16 +10,15 @@ CREATE TABLE Users
 (
 	Id int NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	UserType nvarchar(450) NOT NULL,
-	Username nvarchar(450) NOT NULL,
+	EmailAddress nvarchar(450) NOT NULL,
 	FirstName nvarchar(max) NOT NULL,
 	LastName nvarchar(max) NOT NULL,
-	EmailAddress nvarchar(max) NOT NULL,
-	PasswordId int NOT NULL,
+	Password_Hash nvarchar(max) NOT NULL,
+	Password_Salt nvarchar(max) NOT NULL,
 	ResumeId int NULL,
-	CONSTRAINT FK_Users_Password FOREIGN KEY (PasswordId) REFERENCES Passwords(Id),
 	CONSTRAINT FK_Users_Resume FOREIGN KEY (ResumeId) REFERENCES Resumes(Id)
 );
-CREATE UNIQUE INDEX IX_Users_Usernme ON Users(Username);
+CREATE UNIQUE INDEX IX_Users_EmailAddress ON Users(EmailAddress);
 
 CREATE TABLE Tags
 (

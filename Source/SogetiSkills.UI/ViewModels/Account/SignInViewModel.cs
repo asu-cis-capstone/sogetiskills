@@ -10,7 +10,7 @@ namespace SogetiSkills.UI.ViewModels.Account
     [Validator(typeof(SignInViewModelValidator))]
     public class SignInViewModel
     {
-        public string Username { get; set; }
+        public string EmailAddress { get; set; }
         public string Password { get; set; }
     }
 
@@ -18,7 +18,7 @@ namespace SogetiSkills.UI.ViewModels.Account
     {
         public SignInViewModelValidator()
         {
-            RuleFor(x => x.Username).NotEmpty().WithMessage("Username is required.");
+            RuleFor(x => x.EmailAddress).NotEmpty().WithMessage("Email address is required.");
             RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required.");
         }
     }
