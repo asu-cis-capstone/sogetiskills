@@ -62,5 +62,16 @@
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    @{
+        var db = new SogetiSkills.Models.SogetiSkillsDataContext();
+        try
+        {
+            db.Users.ToArray();
+        }
+        catch(Exception ex)
+        {
+            <p>@ex.Message</p>
+        }
+    }
 </body>
 </html>

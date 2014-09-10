@@ -55,6 +55,10 @@ namespace SogetiSkills.Managers
         public virtual async Task<bool> ValidatePasswordAsync(string emailAddress, string password)
         {
             var userPassword = await GetHashedPasswordForEmailAddressAsync(emailAddress);
+            if (userPassword == null)
+            {
+                return false;
+            }
             var expected = userPassword.Hash;
             var actual = _passwordHasher.Hash(password, userPassword.Salt);
 
@@ -66,7 +70,7 @@ namespace SogetiSkills.Managers
         {
             return await _db.Users.Where(x => x.EmailAddress == emailAddress)
                 .Select(x => x.Password)
-                .FirstAsync();
+                .FirstOrDefaultAsync();
         }
     }
 }
