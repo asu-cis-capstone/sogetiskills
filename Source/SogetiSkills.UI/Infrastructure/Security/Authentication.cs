@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SogetiSkills.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,12 +10,16 @@ namespace SogetiSkills.UI.Infrastructure.Security
 {
     public class Authentication : IAuthentication
     {
-        private string[] users = new[] { "jwathen", "osin", "jmonje", "jmoran" };
+        private readonly IUserManager _userManager;
 
-        public Task<bool> ValidateUsernamePasswordAsync(string username, string password)
+        public Authentication(IUserManager userManager)
         {
-            bool valid = username.Contains(username) && username == password;
-            return Task.FromResult(valid);
+            _userManager = userManager;
+        }
+
+        public async Task<bool> ValidateEmailAddressAndPasswordAsync(string emailAddress, string password)
+        {
+            return await _userManager.ValidatePasswordAsync(emailAddress, password);
         }
 
         public void SetAuthCookie(string username, HttpContextBase httpContext)

@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="SogetiSkills.API.SogetiSkillsService" CodeBehind="SogetiSkillsService.svc.cs" Factory="SogetiSkills.API.Infrastructure.Wcf.StructureMapServiceHostFactory" %>

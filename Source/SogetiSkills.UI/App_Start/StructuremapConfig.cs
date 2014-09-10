@@ -22,6 +22,7 @@ using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using SogetiSkills.UI.Infrastructure.DependencyResolution;
 using StructureMap;
 using StructureMap.Graph;
+using FluentValidation.Mvc;
 
 [assembly: PreApplicationStartMethod(typeof(StructuremapConfig), "Start")]
 [assembly: ApplicationShutdownMethod(typeof(StructuremapConfig), "End")]
@@ -43,6 +44,10 @@ namespace SogetiSkills.UI
             StructureMapDependencyScope = new StructureMapDependencyScope(container);
             DependencyResolver.SetResolver(StructureMapDependencyScope);
             DynamicModuleUtility.RegisterModule(typeof(StructureMapScopeModule));
+            FluentValidationModelValidatorProvider.Configure(config =>
+            {
+                config.ValidatorFactory = new StructureMapValidatorFactory(container);
+            });
         }
     }
 }
