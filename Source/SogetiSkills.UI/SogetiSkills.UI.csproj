@@ -137,10 +137,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.flatly.css" />
-    <Content Include="Content\bootstrap.flatly.min.css">
-      <DependentUpon>bootstrap.flatly.css</DependentUpon>
-    </Content>
     <Content Include="Content\flash-messages.css" />
     <Content Include="Content\Styles.css">
       <DependentUpon>Styles.scss</DependentUpon>

@@ -4,7 +4,7 @@
 }
 
 <div class="col-lg-6">
-    @using (Html.BeginForm(MVC.Account.Register()))
+    @using (Html.BeginForm(MVC.Account.Register(), FormMethod.Post, new { @class = "well" }))
     {
         @Html.ValidationSummary()
         <h3>Register</h3>

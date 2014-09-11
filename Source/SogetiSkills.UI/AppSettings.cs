@@ -21,9 +21,22 @@ namespace SogetiSkills.UI
             get { return ConfigurationManager.AppSettings["ApplicationVersion"]; }
         }
 
+        public static class Aspnet
+        {
+            public static string UseTaskFriendlySynchronizationContext
+            {
+                get { return ConfigurationManager.AppSettings["aspnet:UseTaskFriendlySynchronizationContext"]; }
+            }
+        }
+
         public static string ClientValidationEnabled
         {
             get { return ConfigurationManager.AppSettings["ClientValidationEnabled"]; }
+        }
+
+        public static string DefaultTheme
+        {
+            get { return ConfigurationManager.AppSettings["DefaultTheme"]; }
         }
 
         public static class MvcFlashMessages
@@ -37,6 +50,11 @@ namespace SogetiSkills.UI
             {
                 get { return ConfigurationManager.AppSettings["MvcFlashMessages/OuterCssClass"]; }
             }
+        }
+
+        public static string ThemesEnabled
+        {
+            get { return ConfigurationManager.AppSettings["ThemesEnabled"]; }
         }
 
         public static string UnobtrusiveJavaScriptEnabled
