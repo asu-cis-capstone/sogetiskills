@@ -8,7 +8,7 @@ using System.Web;
 
 namespace SogetiSkills.UI.ViewModels.Profile
 {
-    public class DetailsViewModelBuilder
+    public class DetailsViewModelBuilder : IDetailsViewModelBuilder
     {
         private readonly IUserManager _userManager;
         private readonly IResumeManager _resumeManager;
@@ -24,11 +24,11 @@ namespace SogetiSkills.UI.ViewModels.Profile
             _tagManager = tagManager;
         }
 
-        public async Task<DetailsViewModel> BuildAsync(int userId)
+        public async Task<DetailsViewModel> BuildAsync(int profileUserId, int loggedInUserId)
         {
             DetailsViewModel model = new DetailsViewModel();
 
-            User user = await _userManager.LoadUserById(userId);
+            User user = await _userManager.LoadUserByIdAsync(profileUserId);
             if (user == null)
             {
                 return null;
@@ -53,6 +53,8 @@ namespace SogetiSkills.UI.ViewModels.Profile
             {
                 model.UserTypeDescription = "Account Executive";
             }
+
+            model.ProfileBelongsToCurrentUser = profileUserId == loggedInUserId;
 
             return model;
         }

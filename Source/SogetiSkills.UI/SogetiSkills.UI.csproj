@@ -187,11 +187,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\DependencyResolution\StructureMapValidatorFactory.cs" />
-    <Compile Include="Infrastructure\Security\AuthCookieHelper.cs" />
-    <Compile Include="Infrastructure\Security\IAuthCookieHelper.cs" />
+    <Compile Include="Helpers\Security\AuthCookieHelper.cs" />
+    <Compile Include="Helpers\Security\IAuthCookieHelper.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Security\LoggedInUser.cs" />
     <Compile Include="ProfileController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -208,6 +209,7 @@
     <Compile Include="ViewModels\Account\SignInViewModel.cs" />
     <Compile Include="ViewModels\Profile\DetailsViewModel.cs" />
     <Compile Include="ViewModels\Profile\DetailsViewModelBuilder.cs" />
+    <Compile Include="ViewModels\Profile\IDetailsViewModelBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

@@ -13,6 +13,6 @@ namespace SogetiSkills.Managers
         bool IsEmailAddressInUse(string emailAddress);
         Task<bool> IsEmailAddressInUseAsync(string emailAddress);
         Task<User> ValidatePasswordAsync(string emailAddress, string plainTextPassword);
-        Task<User> LoadUserById(int userId);
+        Task<User> LoadUserByIdAsync(int userId);
     }
 }

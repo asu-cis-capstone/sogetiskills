@@ -14,49 +14,21 @@ namespace SogetiSkills.UI.Controllers
     [Authorize]
     public partial class ProfileController : ControllerBase
     {
-        private readonly IUserManager _userManager;
-        private readonly IResumeManager _resumeManager;
-        private readonly ITagManager _tagManager;
+        private readonly IDetailsViewModelBuilder _detailsViewModelBuilder;
 
-        public ProfileController(
-            IUserManager userManager, 
-            IResumeManager resumeManager, 
-            ITagManager tagManager)
+        public ProfileController(IDetailsViewModelBuilder detailsViewModelBuilder)
         {
-            _userManager = userManager;
-            _resumeManager = resumeManager;
-            _tagManager = tagManager;
+            _detailsViewModelBuilder = detailsViewModelBuilder;
         }
 
         [GET("Profile/{Id}")]
         public virtual async Task<ActionResult> Details(int id)
         {
-            DetailsViewModel model = new DetailsViewModel();
+            DetailsViewModel model = await _detailsViewModelBuilder.BuildAsync(id, LoggedInUserId.Value);
 
-            User user = await _userManager.LoadUserById(id);
-            if (user == null)
+            if (model == null)
             {
                 return HttpNotFound();
-            }
-
-            model.FirstName = user.FirstName;
-            model.LastName = user.LastName;
-            model.FullName = string.Format("{0} {1}", user.FirstName, user.LastName);
-            model.Email = user.EmailAddress;
-            model.PhoneNumber = user.PhoneNumber.GetFormattedValue();
-
-            if (user is Consultant)
-            {
-                Consultant consultant  = (Consultant)user;
-                model.UserTypeDescription = "Consultant";
-                model.IsConsultant = true;
-                model.IsOnBeach = consultant.IsOnBeach ?? false;
-                model.ResumeMetadata = await _resumeManager.LoadResumeMetadata(consultant.Id);
-                model.Tags = await _tagManager.LoadTagsForConsultant(consultant.Id);
-            }
-            else if (user is AccountExecutive)
-            {
-                model.UserTypeDescription = "Account Executive";
             }
 
             return View(model);

@@ -27,7 +27,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 Contact
-                @if (Model.UserCanEditProfile)
+                @if (Model.ProfileBelongsToCurrentUser)
                 {
                     <a href="#" class="pull-right"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                 }
@@ -52,7 +52,7 @@
             {
                 <div class="panel-heading">
                     Resume
-                    @if (Model.UserCanEditProfile)
+                    @if (Model.ProfileBelongsToCurrentUser)
                     {
                         <a href="#" class="pull-right"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                     }
@@ -76,7 +76,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Skills
-                    @if (Model.UserCanEditProfile)
+                    @if (Model.ProfileBelongsToCurrentUser)
                     {
                         <a href="#" class="pull-right"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                     }

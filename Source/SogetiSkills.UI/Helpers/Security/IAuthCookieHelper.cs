@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace SogetiSkills.UI.Infrastructure.Security
+namespace SogetiSkills.UI.Helpers.Security
 {
     public interface IAuthCookieHelper
     {

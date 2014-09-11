@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
 
-namespace SogetiSkills.UI.Infrastructure.Security
+namespace SogetiSkills.UI.Helpers.Security
 {
     public class AuthCookieHelper : IAuthCookieHelper
     {

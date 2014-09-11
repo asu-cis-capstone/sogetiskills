@@ -74,7 +74,7 @@ namespace SogetiSkills.Managers
             }
         }
 
-        public async Task<User> LoadUserById(int userId)
+        public async Task<User> LoadUserByIdAsync(int userId)
         {
             return await _db.Users.FindAsync(userId);
         }

@@ -2,7 +2,7 @@
 using MvcFlashMessages;
 using SogetiSkills.Managers;
 using SogetiSkills.Models;
-using SogetiSkills.UI.Infrastructure.Security;
+using SogetiSkills.UI.Helpers.Security;
 using SogetiSkills.UI.ViewModels.Account;
 using System;
 using System.Collections.Generic;
