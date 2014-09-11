@@ -1,10 +1,13 @@
 ﻿using FluentValidation;
 using FluentValidation.Attributes;
 using SogetiSkills.Managers;
+using SogetiSkills.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
+using Humanizer;
 
 namespace SogetiSkills.UI.ViewModels.Account
 {
@@ -14,8 +17,23 @@ namespace SogetiSkills.UI.ViewModels.Account
         public string EmailAddress { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+        public string AccountType { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
+
+        public IEnumerable<SelectListItem> AccountTypeOptions
+        {
+            get
+            {
+                return from x in AccountTypes.All
+                       select new SelectListItem
+                       {
+                           Text = x.Humanize(LetterCasing.Title),
+                           Value = x
+                       };
+            }
+        }
     }
 
     public class RegisterViewModelValidator : AbstractValidator<RegisterViewModel>
@@ -36,18 +54,49 @@ namespace SogetiSkills.UI.ViewModels.Account
             
             RuleFor(x => x.ConfirmPassword)
                 .Equal(x => x.Password).When(x => !string.IsNullOrEmpty(x.Password)).WithMessage("Passwords do not match.");
-            
+
+            RuleFor(x => x.AccountType)
+                .NotEmpty().WithMessage("Please select an account type.")
+                .Must(BeInTheListOfValidAccountTypes).WithMessage("Please select an account type.");
+
             RuleFor(x => x.FirstName)
                 .NotEmpty().WithMessage("Please enter a first name.");
             
             RuleFor(x => x.LastName)
                 .NotEmpty().WithMessage("Please enter a last name.");
+
+            RuleFor(x => x.PhoneNumber)
+                .NotEmpty().WithMessage("Please enter a phone number.")
+                .Must(BeAValid10DigitPhoneNumber).WithMessage("Please enter a valid 10 digit phone number.");
         }
 
-        public bool BeAvailable(string emailAddress)
+        private bool BeAvailable(string emailAddress)
         {
             bool inUse = _userManager.IsEmailAddressInUse(emailAddress);
             return !inUse;
+        }
+
+        private bool BeInTheListOfValidAccountTypes(string accountType)
+        {
+            return AccountTypes.All.Contains(accountType);
+        }
+
+        private bool BeAValid10DigitPhoneNumber(string phoneNumber)
+        {
+            if (string.IsNullOrWhiteSpace(phoneNumber))
+            {
+                return true;
+            }
+
+            string phoneNumberStrippedOfPunctuation = phoneNumber
+                .Replace(" ", string.Empty)
+                .Replace("(", string.Empty)
+                .Replace(")", string.Empty)
+                .Replace("-", string.Empty)
+                .Trim();
+
+            return phoneNumberStrippedOfPunctuation.Length == 10 
+                && phoneNumberStrippedOfPunctuation.All(x => char.IsDigit(x));
         }
     }
 }

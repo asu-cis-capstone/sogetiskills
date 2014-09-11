@@ -13,6 +13,7 @@ CREATE TABLE Users
 	EmailAddress nvarchar(450) NOT NULL,
 	FirstName nvarchar(max) NOT NULL,
 	LastName nvarchar(max) NOT NULL,
+	PhoneNumber nvarchar(max) NULL,
 	Password_Hash nvarchar(max) NOT NULL,
 	Password_Salt nvarchar(max) NOT NULL,
 	ResumeId int NULL,

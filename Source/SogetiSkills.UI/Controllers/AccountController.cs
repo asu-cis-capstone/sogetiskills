@@ -66,7 +66,8 @@ namespace SogetiSkills.UI.Controllers
         [GET("Account/Register")]
         public virtual ActionResult Register()
         {
-            return View();
+            RegisterViewModel model = new RegisterViewModel();
+            return View(model);
         }
 
         [POST("Account/Register")]
@@ -78,7 +79,15 @@ namespace SogetiSkills.UI.Controllers
                 return View(model);
             }
 
-            await _userManager.RegisterNewUserAsync<Consultant>(model.EmailAddress, model.Password, model.FirstName, model.LastName);
+            if (model.AccountType == AccountTypes.CONSULTANT)
+            {
+                await _userManager.RegisterNewUserAsync<Consultant>(model.EmailAddress, model.Password, model.FirstName, model.LastName, model.PhoneNumber);
+            }
+            else if (model.AccountType == AccountTypes.ACCOUNT_EXECUTIVE)
+            {
+                await _userManager.RegisterNewUserAsync<AccountExecutive>(model.EmailAddress, model.Password, model.FirstName, model.LastName, model.PhoneNumber);
+            }
+
             _authentication.SetAuthCookie(model.EmailAddress, HttpContext);
             return RedirectToAction(MVC.Home.Index());
         }

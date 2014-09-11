@@ -12,6 +12,7 @@ namespace SogetiSkills.Models
         public string EmailAddress { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public PhoneNumber PhoneNumber { get; set; }
         public HashedPassword Password { get; set; }
     }
 }

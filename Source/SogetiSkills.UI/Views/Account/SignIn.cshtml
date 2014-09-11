@@ -4,11 +4,11 @@
 }
 
 <div class="col-lg-6">
-    @using (Html.BeginForm(MVC.Account.SignIn()))
+    <h3>Sign in</h3>
+    <p>Don't have an account?  @Html.ActionLink("Register", MVC.Account.Register())</p>
+    @Html.ValidationSummary()
+    @using (Html.BeginForm(MVC.Account.SignIn(), FormMethod.Post, new { @class = "well" }))
     {
-        @Html.ValidationSummary()
-        <h3>Sign in</h3>
-        <p>Don't have an account?  @Html.ActionLink("Register", MVC.Account.Register())</p>
         <div class="form-group">
             <label>Email address</label>
             @Html.TextBoxFor(x => x.EmailAddress, new { type = "email", @class = "form-control" })

@@ -25,7 +25,7 @@ namespace SogetiSkills.Tests.Unit.Managers
                 _fixture.Inject<IPasswordHasher>(new PasswordHasher());
                 UserManager subject = _fixture.Create<UserManager>();
 
-                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith");
+                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
                 var newUser = DataContext.Users.First(x => x.EmailAddress == "bill@site.com");
                 Assert.IsNotNull(newUser);
@@ -42,7 +42,7 @@ namespace SogetiSkills.Tests.Unit.Managers
                 _fixture.Inject(fakeSaltGenerator);
                 UserManager subject = _fixture.Create<UserManager>();
 
-                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith");
+                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
                 var user = DataContext.Users.First(x => x.EmailAddress == "bill@site.com");
                 Assert.AreEqual("hashed password", user.Password.Hash);
@@ -62,6 +62,7 @@ namespace SogetiSkills.Tests.Unit.Managers
                     EmailAddress = "bill@site.com",
                     FirstName = "Bill",
                     LastName = "Smith",
+                    PhoneNumber = new PhoneNumber("1234567890"),
                     Password = new HashedPassword {  Hash = "hash", Salt = "salt" }
                 });
                 db.SaveChanges();
@@ -81,6 +82,7 @@ namespace SogetiSkills.Tests.Unit.Managers
                     EmailAddress = "bill@site.com",
                     FirstName = "Bill",
                     LastName = "Smith",
+                    PhoneNumber = new PhoneNumber("1234567890"),
                     Password = new HashedPassword { Hash = "hash", Salt = "salt" }
                 });
                 db.SaveChanges();
@@ -102,7 +104,7 @@ namespace SogetiSkills.Tests.Unit.Managers
                 _fixture.Inject<IPasswordHasher>(new PasswordHasher());
                 UserManager subject = _fixture.Create<UserManager>();
 
-                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith");
+                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
                 bool passwordIsCorrect = await subject.ValidatePasswordAsync("bill@site.com", "pass");
 
@@ -116,7 +118,7 @@ namespace SogetiSkills.Tests.Unit.Managers
                 _fixture.Inject<IPasswordHasher>(new PasswordHasher());
                 UserManager subject = _fixture.Create<UserManager>();
 
-                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith");
+                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
                 bool passwordIsCorrect = await subject.ValidatePasswordAsync("bill@site.com", "incorrect password");
 

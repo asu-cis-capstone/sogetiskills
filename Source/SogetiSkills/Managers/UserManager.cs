@@ -24,13 +24,14 @@ namespace SogetiSkills.Managers
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<T> RegisterNewUserAsync<T>(string emailAddress, string plainTextPassword, string firstName, string lastName) where T : User
+        public async Task<T> RegisterNewUserAsync<T>(string emailAddress, string plainTextPassword, string firstName, string lastName, string phoneNumber) where T : User
         {
             var user = _db.Set<T>().Create();
 
             user.EmailAddress = emailAddress;
             user.FirstName = firstName;
             user.LastName = lastName;
+            user.PhoneNumber = new PhoneNumber(phoneNumber);
             var hashedPassword = new HashedPassword();
             hashedPassword.Salt = _saltGenerator.GenerateNewSalt();
             hashedPassword.Hash = _passwordHasher.Hash(plainTextPassword, hashedPassword.Salt);

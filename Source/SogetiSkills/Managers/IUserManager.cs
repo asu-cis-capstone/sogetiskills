@@ -9,7 +9,7 @@ namespace SogetiSkills.Managers
 {
     public interface IUserManager
     {
-        Task<T> RegisterNewUserAsync<T>(string emailAddress, string plainTextPassword, string firstName, string lastName) where T : User;
+        Task<T> RegisterNewUserAsync<T>(string emailAddress, string plainTextPassword, string firstName, string lastName, string phoneNumber) where T : User;
         bool IsEmailAddressInUse(string emailAddress);
         Task<bool> IsEmailAddressInUseAsync(string emailAddress);
         Task<bool> ValidatePasswordAsync(string emailAddress, string plainTextPassword);

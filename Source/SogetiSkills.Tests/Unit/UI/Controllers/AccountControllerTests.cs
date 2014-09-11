@@ -141,16 +141,15 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
         [TestClass]
         public class Register : UnitTestBase
         {
-            private RegisterViewModel _validInput = new RegisterViewModel();
-
-            public Register()
-            {
-                _validInput.EmailAddress = "bill@site.com";
-                _validInput.Password = "pass";
-                _validInput.ConfirmPassword = "pass";
-                _validInput.FirstName = "Bill";
-                _validInput.LastName = "Smith";
-            }
+            private RegisterViewModel _validInput = new RegisterViewModel
+                {
+                    EmailAddress = "bill@site.com",
+                    Password = "pass",
+                    ConfirmPassword = "pass",
+                    FirstName = "Bill",
+                    LastName = "Smith",
+                    PhoneNumber = "1234567890"
+                };
   
             [TestMethod]
             public void Register_ReturnsAViewResult()
@@ -159,7 +158,7 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
 
                 ActionResult actionResult = subject.Register();
 
-                AssertX.IsViewResult(actionResult);
+                AssertX.IsViewResultWithModelOfType<RegisterViewModel>(actionResult);
             }
 
             [TestMethod]
@@ -175,15 +174,29 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
             }
 
             [TestMethod]
-            public async Task Register_GivenValidInput_RegistersNewConsultant()
+            public async Task Register_GivenValidInputWithConsultantAccountType_RegistersNewConsultant()
             {
                 var fakeUserManager = new Mock<IUserManager>();
                 _fixture.Inject(fakeUserManager.Object);
+                _validInput.AccountType = "Consultant";
                 AccountController subject = _fixture.Create<AccountController>();
 
                 await subject.Register(_validInput);
 
-                fakeUserManager.Verify(x => x.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith"));
+                fakeUserManager.Verify(x => x.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890"));
+            }
+
+            [TestMethod]
+            public async Task Register_GivenValidInputWithAccountExecutiveAccountType_RegistersNewConsultant()
+            {
+                var fakeUserManager = new Mock<IUserManager>();
+                _fixture.Inject(fakeUserManager.Object);
+                _validInput.AccountType = "AccountExecutive";
+                AccountController subject = _fixture.Create<AccountController>();
+
+                await subject.Register(_validInput);
+
+                fakeUserManager.Verify(x => x.RegisterNewUserAsync<AccountExecutive>("bill@site.com", "pass", "Bill", "Smith", "1234567890"));
             }
 
             [TestMethod]
