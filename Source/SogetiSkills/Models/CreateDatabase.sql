@@ -17,6 +17,7 @@ CREATE TABLE Users
 	Password_Hash nvarchar(max) NOT NULL,
 	Password_Salt nvarchar(max) NOT NULL,
 	ResumeId int NULL,
+	IsOnBeach bit NULL,
 	CONSTRAINT FK_Users_Resume FOREIGN KEY (ResumeId) REFERENCES Resumes(Id)
 );
 CREATE UNIQUE INDEX IX_Users_EmailAddress ON Users(EmailAddress);

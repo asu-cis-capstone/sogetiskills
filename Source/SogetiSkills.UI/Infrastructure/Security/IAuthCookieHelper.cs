@@ -7,10 +7,9 @@ using System.Web;
 
 namespace SogetiSkills.UI.Infrastructure.Security
 {
-    public interface IAuthentication
+    public interface IAuthCookieHelper
     {
-        Task<bool> ValidateEmailAddressAndPasswordAsync(string username, string password);
-        void SetAuthCookie(string username, HttpContextBase httpContext);
+        void SetAuthCookie(int userId, HttpContextBase httpContext);
         void ClearAuthCookie(HttpContextBase httpContext);
     }
 }

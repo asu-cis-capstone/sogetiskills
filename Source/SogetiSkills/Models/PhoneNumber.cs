@@ -46,7 +46,17 @@ namespace SogetiSkills.Models
                 return null;
             }
 
-            return string.Format("({0}{1}{2}) {3}{4}{5}-{6}{7}{8}{9}", _value.ToArray());
+            return string.Format("({0}{1}{2}) {3}{4}{5}-{6}{7}{8}{9}",
+                Value[0],
+                Value[1],
+                Value[2],
+                Value[3],
+                Value[4],
+                Value[5],
+                Value[6],
+                Value[7],
+                Value[8],
+                Value[9]);
         }
     }
 }

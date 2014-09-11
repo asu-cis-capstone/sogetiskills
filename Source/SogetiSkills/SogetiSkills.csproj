@@ -50,6 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Managers\IResumeManager.cs" />
+    <Compile Include="Managers\ITagManager.cs" />
+    <Compile Include="Managers\ResumeManager.cs" />
+    <Compile Include="Models\ResumeMetadata.cs" />
+    <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Models\AccountTypes.cs" />
     <Compile Include="Models\PhoneNumber.cs" />
     <Compile Include="Security\IPasswordHasher.cs" />

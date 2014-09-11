@@ -53,25 +53,30 @@ namespace SogetiSkills.Managers
             return await _db.Users.AnyAsync(x => x.EmailAddress == emailAddress);
         }
 
-        public virtual async Task<bool> ValidatePasswordAsync(string emailAddress, string password)
+        public async Task<User> ValidatePasswordAsync(string emailAddress, string password)
         {
-            var userPassword = await GetHashedPasswordForEmailAddressAsync(emailAddress);
-            if (userPassword == null)
+            var user = await _db.Users.FirstOrDefaultAsync(x => x.EmailAddress == emailAddress);
+            if (user == null)
             {
-                return false;
+                return null;
             }
-            var expected = userPassword.Hash;
-            var actual = _passwordHasher.Hash(password, userPassword.Salt);
+            var expected = user.Password.Hash;
+            var actual = _passwordHasher.Hash(password, user.Password.Salt);
 
             bool isValid = expected.SequenceEqual(actual);
-            return isValid;
+            if (isValid)
+            {
+                return user;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        private async Task<HashedPassword> GetHashedPasswordForEmailAddressAsync(string emailAddress)
+        public async Task<User> LoadUserById(int userId)
         {
-            return await _db.Users.Where(x => x.EmailAddress == emailAddress)
-                .Select(x => x.Password)
-                .FirstOrDefaultAsync();
+            return await _db.Users.FindAsync(userId);
         }
     }
 }

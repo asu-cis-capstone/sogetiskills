@@ -1,24 +1,20 @@
-﻿using AttributeRouting.Web.Mvc;
-using SogetiSkills.Managers;
+﻿using SogetiSkills.Managers;
 using SogetiSkills.Models;
-using SogetiSkills.UI.ViewModels.Profile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
 
-namespace SogetiSkills.UI.Controllers
+namespace SogetiSkills.UI.ViewModels.Profile
 {
-    [Authorize]
-    public partial class ProfileController : ControllerBase
+    public class DetailsViewModelBuilder
     {
         private readonly IUserManager _userManager;
         private readonly IResumeManager _resumeManager;
         private readonly ITagManager _tagManager;
 
-        public ProfileController(
+        public DetailsViewModelBuilder(
             IUserManager userManager, 
             IResumeManager resumeManager, 
             ITagManager tagManager)
@@ -28,15 +24,14 @@ namespace SogetiSkills.UI.Controllers
             _tagManager = tagManager;
         }
 
-        [GET("Profile/{Id}")]
-        public virtual async Task<ActionResult> Details(int id)
+        public async Task<DetailsViewModel> BuildAsync(int userId)
         {
             DetailsViewModel model = new DetailsViewModel();
 
-            User user = await _userManager.LoadUserById(id);
+            User user = await _userManager.LoadUserById(userId);
             if (user == null)
             {
-                return HttpNotFound();
+                return null;
             }
 
             model.FirstName = user.FirstName;
@@ -47,7 +42,7 @@ namespace SogetiSkills.UI.Controllers
 
             if (user is Consultant)
             {
-                Consultant consultant  = (Consultant)user;
+                Consultant consultant = (Consultant)user;
                 model.UserTypeDescription = "Consultant";
                 model.IsConsultant = true;
                 model.IsOnBeach = consultant.IsOnBeach ?? false;
@@ -59,7 +54,7 @@ namespace SogetiSkills.UI.Controllers
                 model.UserTypeDescription = "Account Executive";
             }
 
-            return View(model);
+            return model;
         }
     }
 }

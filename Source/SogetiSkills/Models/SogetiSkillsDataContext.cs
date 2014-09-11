@@ -39,6 +39,9 @@ namespace SogetiSkills.Models
                 .HasOptional(x => x.Resume)
                 .WithMany()
                 .HasForeignKey(x => x.ResumeId);
+            modelBuilder.ComplexType<ResumeMetadata>();
+            modelBuilder.ComplexType<ResumeMetadata>().Property(x => x.FileName).HasColumnName("FileName");
+            modelBuilder.ComplexType<ResumeMetadata>().Property(x => x.MimeType).HasColumnName("MimeType");
 
             // There is a many-to-many relationship between consultants and tags.
             modelBuilder.Entity<Consultant>()

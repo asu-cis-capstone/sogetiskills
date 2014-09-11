@@ -70,9 +70,6 @@ namespace Links
         private const string URLPATH = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        public static readonly string bootstrap_flatly_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.flatly.min.css") ? Url("bootstrap.flatly.min.css") : Url("bootstrap.flatly.css");
-             
-        public static readonly string bootstrap_flatly_min_css = Url("bootstrap.flatly.min.css");
         public static readonly string flash_messages_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/flash-messages.min.css") ? Url("flash-messages.min.css") : Url("flash-messages.css");
              
         public static readonly string Styles_scss = Url("Styles.scss");

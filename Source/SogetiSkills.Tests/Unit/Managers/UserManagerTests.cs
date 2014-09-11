@@ -98,7 +98,7 @@ namespace SogetiSkills.Tests.Unit.Managers
         public class ValidatePasswordAsync : UserManagerTests
         {
             [TestMethod]
-            public async Task ValidatePasswordAsync_GivenCorrectPassword_ReturnsTrue()
+            public async Task ValidatePasswordAsync_GivenCorrectPassword_ReturnsUser()
             {
                 _fixture.Inject<ISaltGenerator>(new SaltGenerator());
                 _fixture.Inject<IPasswordHasher>(new PasswordHasher());
@@ -106,13 +106,14 @@ namespace SogetiSkills.Tests.Unit.Managers
 
                 await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
-                bool passwordIsCorrect = await subject.ValidatePasswordAsync("bill@site.com", "pass");
+                var user = await subject.ValidatePasswordAsync("bill@site.com", "pass");
 
-                Assert.IsTrue(passwordIsCorrect);
+                Assert.IsNotNull(user);
+                Assert.AreEqual("bill@site.com", user.EmailAddress);
             }
 
             [TestMethod]
-            public async Task ValidatePasswordAsync_GivenIncorrectPassword_ReturnsFalse()
+            public async Task ValidatePasswordAsync_GivenIncorrectPassword_ReturnsNull()
             {
                 _fixture.Inject<ISaltGenerator>(new SaltGenerator());
                 _fixture.Inject<IPasswordHasher>(new PasswordHasher());
@@ -120,19 +121,19 @@ namespace SogetiSkills.Tests.Unit.Managers
 
                 await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
-                bool passwordIsCorrect = await subject.ValidatePasswordAsync("bill@site.com", "incorrect password");
+                User user = await subject.ValidatePasswordAsync("bill@site.com", "incorrect password");
 
-                Assert.IsFalse(passwordIsCorrect);
+                Assert.IsNull(user);
             }
 
             [TestMethod]
-            public async Task ValidatePasswordAsync_GivenEmailAddressThatDoesntExist_ReturnsFalse()
+            public async Task ValidatePasswordAsync_GivenEmailAddressThatDoesntExist_ReturnsNull()
             {   
                 UserManager subject = _fixture.Create<UserManager>();
 
-                bool passwordIsCorrect = await subject.ValidatePasswordAsync("does_not_exist@site.com", "password");
+                User user = await subject.ValidatePasswordAsync("does_not_exist@site.com", "password");
 
-                Assert.IsFalse(passwordIsCorrect);
+                Assert.IsNull(user);
             }
         }
     }

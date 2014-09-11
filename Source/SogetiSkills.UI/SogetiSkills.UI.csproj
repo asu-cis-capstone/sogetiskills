@@ -187,8 +187,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\DependencyResolution\StructureMapValidatorFactory.cs" />
-    <Compile Include="Infrastructure\Security\Authentication.cs" />
-    <Compile Include="Infrastructure\Security\IAuthentication.cs" />
+    <Compile Include="Infrastructure\Security\AuthCookieHelper.cs" />
+    <Compile Include="Infrastructure\Security\IAuthCookieHelper.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -206,6 +206,8 @@
     </Compile>
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\SignInViewModel.cs" />
+    <Compile Include="ViewModels\Profile\DetailsViewModel.cs" />
+    <Compile Include="ViewModels\Profile\DetailsViewModelBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

@@ -26,9 +26,6 @@ namespace SogetiSkills.UI.Controllers
     public partial class ProfileController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ProfileController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected ProfileController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -59,9 +56,10 @@ namespace SogetiSkills.UI.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Details()
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Details()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -95,7 +93,7 @@ namespace SogetiSkills.UI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Details
         {
-            public readonly string username = "username";
+            public readonly string id = "id";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -119,15 +117,15 @@ namespace SogetiSkills.UI.Controllers
         public T4MVC_ProfileController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string username);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Details(string username)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Details(int id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "username", username);
-            DetailsOverride(callInfo, username);
-            return callInfo;
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            DetailsOverride(callInfo, id);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
     }
