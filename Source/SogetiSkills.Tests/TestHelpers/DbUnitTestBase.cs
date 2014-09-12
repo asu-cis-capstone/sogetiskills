@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SogetiSkills.Models;
-using SogetiSkills.Tests.TestHelpers.Database;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,15 +16,16 @@ namespace SogetiSkills.Tests.TestHelpers
 {
     public class DbUnitTestBase : UnitTestBase
     {
-        static DbUnitTestBase()
-        {
-            TestDatabaseCreator.Create();
-        }
-       
         [TestCleanup]
         public void EmptyDatabase()
         {
-            TestDatabaseDeleter.EmptyDatabase();
+            using (var db = new SogetiSkillsDataContext())
+            {
+                db.Users.RemoveRange(db.Users);
+                db.Resumes.RemoveRange(db.Resumes);
+                db.Tags.RemoveRange(db.Tags);
+                db.SaveChanges();
+            }
         }
 
         protected SogetiSkillsDataContext DataContext

@@ -53,6 +53,11 @@
     <Compile Include="Managers\IResumeManager.cs" />
     <Compile Include="Managers\ITagManager.cs" />
     <Compile Include="Managers\ResumeManager.cs" />
+    <Compile Include="Migrations\201409120139241_Initial.cs" />
+    <Compile Include="Migrations\201409120139241_Initial.Designer.cs">
+      <DependentUpon>201409120139241_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ResumeMetadata.cs" />
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Models\AccountTypes.cs" />
@@ -73,7 +78,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Models\CreateDatabase.sql" />
+    <EmbeddedResource Include="Migrations\201409120139241_Initial.resx">
+      <DependentUpon>201409120139241_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
