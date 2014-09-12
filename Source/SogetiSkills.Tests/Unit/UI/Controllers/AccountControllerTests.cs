@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using Ploeh.AutoFixture;
 using Moq;
 using System.Web;
-using SogetiSkills.UI.Infrastructure.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web.Mvc;
 using SogetiSkills.UI.ViewModels.Account;
 using SogetiSkills.Managers;
 using SogetiSkills.Models;
+using SogetiSkills.UI.Helpers.Security;
 
 namespace SogetiSkills.Tests.Unit.UI.Controllers
 {
