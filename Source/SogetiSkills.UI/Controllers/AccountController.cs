@@ -91,7 +91,7 @@ namespace SogetiSkills.UI.Controllers
             }
 
             _authCookieHelper.SetAuthCookie(user.Id, HttpContext);
-            return RedirectToAction(MVC.Home.Index());
+            return RedirectToAction(MVC.Profile.Details(user.Id));
         }
     }
 }

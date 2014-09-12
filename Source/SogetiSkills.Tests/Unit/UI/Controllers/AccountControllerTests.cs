@@ -233,7 +233,7 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
             }
 
             [TestMethod]
-            public async Task Register_GivenValidInput_RedirectsToTheHomePage()
+            public async Task Register_GivenValidInput_RedirectsToTheNewUsersProfilePage()
             {
                 var fakeAuthenticationHelper = new Mock<IAuthCookieHelper>();
                 _fixture.Inject(fakeAuthenticationHelper.Object);
@@ -246,7 +246,7 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
 
                 var actionResult = await subject.Register(_validRegistrationInput);
 
-                AssertX.IsRedirectToRouteResult(actionResult, MVC.Home.Name, MVC.Home.ActionNames.Index);
+                AssertX.IsRedirectToRouteResult(actionResult, MVC.Profile.Name, MVC.Profile.ActionNames.Details);
             }
         }
     }
