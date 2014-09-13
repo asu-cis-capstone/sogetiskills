@@ -1,0 +1,83 @@
+/*
+Data model that conforms better to conventions/ best practices.
+Sept 13
+*/
+
+User
+----------
+UserId	Primary Key
+UserName	NOT NULL
+FirstName
+LastName
+
+Membership
+----------
+UserId	Primary Key
+Email	NOT NULL
+PasswordHash
+PasswordSalt
+LastLogin	DateTime
+
+Session
+----------
+UserId
+StartTime
+EndTime
+Primary Key (UserId, StartTime)
+
+PermissionLevel
+----------
+PermissionLevelId PRIMARY KEY
+PermissionLevelDescription
+
+Role
+----------
+RoleId	Primary Key
+RoleDescription
+PermissionLevelId	FOREIGN KEY
+
+UserRole
+----------
+UserId	Foreign Key
+RoleId	Foreign Key
+DateFrom NOT NULL
+DateTo
+PrimaryKey (UserId, RoleId)
+
+UserStatus
+----------
+UserId
+IsOnBeach
+Primary Key (UserId, IsOnBeach)
+
+
+UserResume
+----------
+UserId	Not Null
+Blob	Not Null
+PrimaryKey (UserId, Blob)
+
+
+Skill
+----------
+SkillId	Primary Key	
+SkillDescription
+FunctionalAreaId	FOREIGN KEY
+
+
+FunctionalArea
+----------
+FunctionalAreaId
+FunctionalAreaDescription
+
+
+UserSkill
+----------
+UserId	Foreign Key
+SkillId	Foreign Key
+SkillLevel
+PrimaryKey (UserId, SkillId)
+
+
+
+
