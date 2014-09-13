@@ -25,16 +25,16 @@ StartTime
 EndTime
 Primary Key (UserId, StartTime)
 
-PermissionLevel
+Permission
 ----------
-PermissionLevelId PRIMARY KEY
-PermissionLevelDescription
+PermissionId PRIMARY KEY
+PermissionDescription
 
 Role
 ----------
 RoleId	Primary Key
-RoleDescription
-PermissionLevelId	FOREIGN KEY
+RoleName
+PermissionId	FOREIGN KEY
 
 UserRole
 ----------
