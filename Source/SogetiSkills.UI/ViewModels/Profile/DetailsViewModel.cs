@@ -15,7 +15,7 @@ namespace SogetiSkills.UI.ViewModels.Profile
         public string FullName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public bool IsOnBeach { get; set; }
+        public bool? IsOnBeach { get; set; }
         public bool ProfileBelongsToCurrentUser { get; set; }
 
         public ResumeMetadata ResumeMetadata { get; set; }

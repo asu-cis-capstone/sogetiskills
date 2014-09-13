@@ -9,6 +9,6 @@ namespace SogetiSkills.Managers
 {
     public interface ITagManager
     {
-        Task<IEnumerable<Tag>> LoadTagsForConsultant(int consultantId);
+        Task<IEnumerable<Tag>> LoadTagsForConsultantAsync(int consultantId);
     }
 }

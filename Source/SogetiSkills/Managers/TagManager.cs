@@ -17,7 +17,7 @@ namespace SogetiSkills.Managers
             _db = db;
         }
 
-        public async Task<IEnumerable<Tag>> LoadTagsForConsultant(int consultantId)
+        public async Task<IEnumerable<Tag>> LoadTagsForConsultantAsync(int consultantId)
         {
             return await (from x in _db.Users.OfType<Consultant>()
                           where x.Id == consultantId

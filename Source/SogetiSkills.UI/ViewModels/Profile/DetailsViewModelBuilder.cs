@@ -46,8 +46,13 @@ namespace SogetiSkills.UI.ViewModels.Profile
                 model.UserTypeDescription = "Consultant";
                 model.IsConsultant = true;
                 model.IsOnBeach = consultant.IsOnBeach ?? false;
-                model.ResumeMetadata = await _resumeManager.LoadResumeMetadata(consultant.Id);
-                model.Tags = await _tagManager.LoadTagsForConsultant(consultant.Id);
+                
+                if (consultant.ResumeId.HasValue)
+                {
+                    model.ResumeMetadata = await _resumeManager.LoadResumeMetadataAsync(consultant.ResumeId.Value);
+                }
+
+                model.Tags = await _tagManager.LoadTagsForConsultantAsync(consultant.Id);
             }
             else if (user is AccountExecutive)
             {

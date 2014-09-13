@@ -9,7 +9,7 @@
             @Model.FullName - @Model.UserTypeDescription
             @if (Model.IsConsultant)
             {
-                if (Model.IsOnBeach)
+                if (Model.IsOnBeach == true)
                 {
                     <span class="text-success pull-right"><span class="glyphicon glyphicon-ok"></span> On the beach</span>
                 }
@@ -60,7 +60,14 @@
                 <div class="panel-body">
                     @if (Model.ResumeMetadata == null)
                     {
-                        <p>@Model.FirstName hasn't uploaded a resume yet.</p>
+                        if (Model.ProfileBelongsToCurrentUser)
+                        {
+                            <p>You haven't uploaded a resume yet.</p>
+                        }
+                        else
+                        {
+                            <p>@Model.FirstName hasn't uploaded a resume yet.</p>
+                        }
                     }
                     else
                     {
@@ -99,7 +106,15 @@
                     }
                     else
                     {
-                        <p>@Model.FirstName hasn't listed any skills yet.</p>
+                        if (Model.ProfileBelongsToCurrentUser)
+                        {
+                            <p>You haven't listed any skills yet.</p>
+                        }
+                        else
+                        {
+
+                            <p>@Model.FirstName hasn't listed any skills yet.</p>
+                        }
                     }
                 </div>
             </div>

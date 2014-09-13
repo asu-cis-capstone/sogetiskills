@@ -17,7 +17,7 @@ namespace SogetiSkills.Managers
             _db = db;
         }
 
-        public async Task<ResumeMetadata> LoadResumeMetadata(int resumeId)
+        public async Task<ResumeMetadata> LoadResumeMetadataAsync(int resumeId)
         {
             return await (from x in _db.Resumes
                           where x.Id == resumeId

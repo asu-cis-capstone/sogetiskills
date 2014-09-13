@@ -141,6 +141,7 @@
     <Compile Include="TestHelpers\AssertX.cs" />
     <Compile Include="TestHelpers\ControllerExtensions.cs" />
     <Compile Include="TestHelpers\DbUnitTestBase.cs" />
+    <Compile Include="TestHelpers\SampleData.cs" />
     <Compile Include="TestHelpers\UnitTestBase.cs" />
     <Compile Include="TestHelpers\WebModelCustomization.cs" />
     <Compile Include="Unit\Managers\UserManagerTests.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Unit\UI\Controllers\AccountControllerTests.cs" />
     <Compile Include="Unit\UI\Validators\Account\RegisterViewModelValidatorTests.cs" />
     <Compile Include="Unit\UI\Validators\Account\SignInViewModelValidatorTests.cs" />
+    <Compile Include="Unit\UI\ViewModels\Profile\DetailsViewModelBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SogetiSkills.UI\SogetiSkills.UI.csproj">
@@ -162,9 +164,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\flash-messages.css" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
