@@ -99,11 +99,16 @@ CREATE TABLE UserStatus(
 	CONSTRAINT FK_UserRole_User FOREIGN KEY (UserId) REFERENCES User(UserId)
 );
 
+/* Resume */
+CREATE TABLE Resume(
+	ResumeId	int NOT NULL PRIMARY KEY IDENTITY(1,1),
+	ResumeBlob	varbinary
+);
 
 /* Skills */
 CREATE TABLE Skill(
 	SkillId	int	PRIMARY KEY IDENTITY(1,1),
-	
+	SkillDescription	varchar(250)
 );
 
 /* UserSkill */
