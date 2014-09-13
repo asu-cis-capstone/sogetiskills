@@ -35,10 +35,11 @@ CREATE TABLE Application(
 	Description		text(50)
 );
 
+/* Removed UserName, signin based on email */
+
 /* Person */
 CREATE TABLE User (
 	UserId		int	NOT NULL PRIMARY KEY,
-	UserName	char(25)	NOT NULL,
 	FirstName	char(50)	NOT NULL,
 	LastName	char(50)	NOT NULL,
 	Email		text(50)	NOT NULL,
