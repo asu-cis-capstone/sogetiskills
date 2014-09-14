@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Humanizer;
 
 namespace SogetiSkills.UI.ViewModels.Account
 {
@@ -26,12 +25,8 @@ namespace SogetiSkills.UI.ViewModels.Account
         {
             get
             {
-                return from x in AccountTypes.All
-                       select new SelectListItem
-                       {
-                           Text = x.Humanize(LetterCasing.Title),
-                           Value = x
-                       };
+                yield return new SelectListItem { Text = "Consultant", Value = "Consultant" };
+                yield return new SelectListItem { Text = "Account Executive", Value = "AccountExecutive" };
             }
         }
     }

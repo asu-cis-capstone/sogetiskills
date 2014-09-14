@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
-using System.Data.SqlServerCe;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -16,6 +15,11 @@ namespace SogetiSkills.Tests.TestHelpers
 {
     public class DbUnitTestBase : UnitTestBase
     {
+        static DbUnitTestBase()
+        {
+            AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ""));
+        }
+
         [TestCleanup]
         public void EmptyDatabase()
         {
