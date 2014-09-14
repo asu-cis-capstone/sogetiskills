@@ -23,10 +23,13 @@ using System.Web.Routing;
 using T4MVC;
 namespace SogetiSkills.UI.Controllers
 {
-    public partial class ProfileController
+    public partial class ConsultantController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected ProfileController(Dummy d) { }
+        public ConsultantController() { }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected ConsultantController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -56,20 +59,19 @@ namespace SogetiSkills.UI.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Details()
+        public virtual System.Web.Mvc.ActionResult Details()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
-            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ProfileController Actions { get { return MVC.Profile; } }
+        public ConsultantController Actions { get { return MVC.Consultant; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Profile";
+        public readonly string Name = "Consultant";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Profile";
+        public const string NameConst = "Consultant";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -107,25 +109,25 @@ namespace SogetiSkills.UI.Controllers
             {
                 public readonly string Details = "Details";
             }
-            public readonly string Details = "~/Views/Profile/Details.cshtml";
+            public readonly string Details = "~/Views/Consultant/Details.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_ProfileController : SogetiSkills.UI.Controllers.ProfileController
+    public partial class T4MVC_ConsultantController : SogetiSkills.UI.Controllers.ConsultantController
     {
-        public T4MVC_ProfileController() : base(Dummy.Instance) { }
+        public T4MVC_ConsultantController() : base(Dummy.Instance) { }
 
         [NonAction]
         partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Details(int id)
+        public override System.Web.Mvc.ActionResult Details(int id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             DetailsOverride(callInfo, id);
-            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+            return callInfo;
         }
 
     }

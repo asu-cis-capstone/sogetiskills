@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string theme = AppSettings.DefaultTheme;
+    if (Request.Cookies["theme"] != null)
+    {
+        theme = Request.Cookies["theme"].Value;
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -6,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
 
-    <link href="@Links.Content.bootstrap_flatly_min_css" rel="stylesheet" />
+    <link id="themeCss" href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/@theme/bootstrap.min.css" rel="stylesheet" />
     <link href="@Links.Content.Styles_min_css" rel="stylesheet" />
 
     <!--[if lt IE 9]>
@@ -40,7 +47,6 @@
                         </li>
                     }
                 </ul>
-
             </div>
         </div>
     </div>
@@ -56,22 +62,41 @@
         </div>
         <div id="footer" class="row">
             <div class="col-lg-12">
-                <p class="text-muted">@AppSettings.ApplicationName @AppSettings.ApplicationVersion (@AppSettings.ApplicationReleaseProfile)</p>
+                <p class="text-muted">@AppSettings.ApplicationName Version @AppSettings.ApplicationVersion @AppSettings.ApplicationReleaseProfile (@Application.AssemblyTimestamp.ToShortDateString() @Application.AssemblyTimestamp.ToShortTimeString())</p>
             </div>
         </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    @{
-        var db = new SogetiSkills.Models.SogetiSkillsDataContext();
-        try
-        {
-            db.Users.ToArray();
-        }
-        catch(Exception ex)
-        {
-            <p>@ex.Message</p>
-        }
-    }
+    <select id="themeSwitcher" style="position: absolute; bottom: 1em; right: 1em;">
+        <option>amelia</option>
+        <option>cerulean</option>
+        <option>cosmo</option>
+        <option>cyborg</option>
+        <option>darkly</option>
+        <option>flatly</option>
+        <option>journal</option>
+        <option>lumen</option>
+        <option>paper</option>
+        <option>readable</option>
+        <option>sandstone</option>
+        <option>simplex</option>
+        <option>slate</option>
+        <option>spacelab</option>
+        <option>superhero</option>
+        <option>united</option>
+        <option>yeti</option>
+    </select>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script>
+        $(function () {
+            $('#themeSwitcher').val('@theme');
+            $('#themeSwitcher').change(function () {
+                var newTheme = $(this).val();
+                $('#themeCss').attr('href', '//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/' + newTheme + '/bootstrap.min.css');
+                $.cookie('theme', newTheme, { expires: 365, path: '@Url.Content("~/")' });
+            });
+        });
+    </script>
 </body>
 </html>

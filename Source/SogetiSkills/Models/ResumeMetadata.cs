@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Models
 {
-    public class Resume
+    public class ResumeMetadata
     {
-        public int Id { get; set; }
-        public byte[] FileData { get; set; }
-        public ResumeMetadata Metadata { get; set; }
+        public string FileName { get; set; }
+        public string MimeType { get; set; }
     }
 }

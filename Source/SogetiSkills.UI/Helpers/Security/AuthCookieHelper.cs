@@ -6,25 +6,20 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
 
-namespace SogetiSkills.UI.Infrastructure.Security
+namespace SogetiSkills.UI.Helpers.Security
 {
-    public class Authentication : IAuthentication
+    public class AuthCookieHelper : IAuthCookieHelper
     {
         private readonly IUserManager _userManager;
 
-        public Authentication(IUserManager userManager)
+        public AuthCookieHelper(IUserManager userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<bool> ValidateEmailAddressAndPasswordAsync(string emailAddress, string password)
+        public void SetAuthCookie(int userId, HttpContextBase httpContext)
         {
-            return await _userManager.ValidatePasswordAsync(emailAddress, password);
-        }
-
-        public void SetAuthCookie(string username, HttpContextBase httpContext)
-        {
-            HttpCookie authCookie = FormsAuthentication.GetAuthCookie(username, false);
+            HttpCookie authCookie = FormsAuthentication.GetAuthCookie(userId.ToString(), false);
             httpContext.Response.Cookies.Add(authCookie);
         }
 

@@ -1,11 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SogetiSkills.Models;
-using SogetiSkills.Tests.TestHelpers.Database;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
-using System.Data.SqlServerCe;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,13 +17,19 @@ namespace SogetiSkills.Tests.TestHelpers
     {
         static DbUnitTestBase()
         {
-            TestDatabaseCreator.Create();
+            AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ""));
         }
-       
+
         [TestCleanup]
         public void EmptyDatabase()
         {
-            TestDatabaseDeleter.EmptyDatabase();
+            using (var db = new SogetiSkillsDataContext())
+            {
+                db.Users.RemoveRange(db.Users);
+                db.Resumes.RemoveRange(db.Resumes);
+                db.Tags.RemoveRange(db.Tags);
+                db.SaveChanges();
+            }
         }
 
         protected SogetiSkillsDataContext DataContext

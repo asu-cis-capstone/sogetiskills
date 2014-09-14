@@ -29,15 +29,19 @@ namespace SogetiSkills.Models
             // Users are either a Consultant or an AccountExecutite.  All users have a hashed password so the
             // Users table is split between the User and HashedPassword entity.
             modelBuilder.Entity<User>()
-                .Map<AccountExecutive>(x => x.Requires("UserType").HasValue("AccountExecutive"))
-                .Map<Consultant>(x => x.Requires("UserType").HasValue("Consultant"));
+                .Map<AccountExecutive>(x => x.Requires("UserType").HasValue(AccountTypes.ACCOUNT_EXECUTIVE))
+                .Map<Consultant>(x => x.Requires("UserType").HasValue(AccountTypes.CONSULTANT));
             modelBuilder.ComplexType<HashedPassword>();
+            modelBuilder.ComplexType<PhoneNumber>().Property(x => x.Value).HasColumnName("PhoneNumber");
 
             // Consultants have a resume.
             modelBuilder.Entity<Consultant>()
                 .HasOptional(x => x.Resume)
                 .WithMany()
                 .HasForeignKey(x => x.ResumeId);
+            modelBuilder.ComplexType<ResumeMetadata>();
+            modelBuilder.ComplexType<ResumeMetadata>().Property(x => x.FileName).HasColumnName("FileName");
+            modelBuilder.ComplexType<ResumeMetadata>().Property(x => x.MimeType).HasColumnName("MimeType");
 
             // There is a many-to-many relationship between consultants and tags.
             modelBuilder.Entity<Consultant>()

@@ -2,7 +2,7 @@
 using MvcFlashMessages;
 using SogetiSkills.Managers;
 using SogetiSkills.Models;
-using SogetiSkills.UI.Infrastructure.Security;
+using SogetiSkills.UI.Helpers.Security;
 using SogetiSkills.UI.ViewModels.Account;
 using System;
 using System.Collections.Generic;
@@ -15,12 +15,12 @@ namespace SogetiSkills.UI.Controllers
 {
     public partial class AccountController : ControllerBase
     {
-        private readonly IAuthentication _authentication;
+        private readonly IAuthCookieHelper _authCookieHelper;
         private readonly IUserManager _userManager;
 
-        public AccountController(IAuthentication authentication, IUserManager userManager)
+        public AccountController(IAuthCookieHelper authCookieHelper, IUserManager userManager)
         {
-            _authentication = authentication;
+            _authCookieHelper = authCookieHelper;
             _userManager = userManager;
         }
 
@@ -29,7 +29,7 @@ namespace SogetiSkills.UI.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                _authentication.ClearAuthCookie(HttpContext);
+                _authCookieHelper.ClearAuthCookie(HttpContext);
             }
             return View();
         }
@@ -43,9 +43,10 @@ namespace SogetiSkills.UI.Controllers
                 return View(model);
             }
 
-            if (await _authentication.ValidateEmailAddressAndPasswordAsync(model.EmailAddress, model.Password))
+            var user = await _userManager.ValidatePasswordAsync(model.EmailAddress, model.Password);
+            if (user != null)
             {
-                _authentication.SetAuthCookie(model.EmailAddress, HttpContext);
+                _authCookieHelper.SetAuthCookie(user.Id, HttpContext);
                 return RedirectToAction(MVC.Home.Index());
             }
             else
@@ -58,7 +59,7 @@ namespace SogetiSkills.UI.Controllers
         [GET("Account/SignOut")]
         public virtual ActionResult SignOut()
         {
-            _authentication.ClearAuthCookie(HttpContext);
+            _authCookieHelper.ClearAuthCookie(HttpContext);
             FlashInfo("You have been signed out.");
             return RedirectToAction(MVC.Account.SignIn());
         }
@@ -66,7 +67,8 @@ namespace SogetiSkills.UI.Controllers
         [GET("Account/Register")]
         public virtual ActionResult Register()
         {
-            return View();
+            RegisterViewModel model = new RegisterViewModel();
+            return View(model);
         }
 
         [POST("Account/Register")]
@@ -78,9 +80,18 @@ namespace SogetiSkills.UI.Controllers
                 return View(model);
             }
 
-            await _userManager.RegisterNewUserAsync<Consultant>(model.EmailAddress, model.Password, model.FirstName, model.LastName);
-            _authentication.SetAuthCookie(model.EmailAddress, HttpContext);
-            return RedirectToAction(MVC.Home.Index());
+            User user = null;
+            if (model.AccountType == AccountTypes.CONSULTANT)
+            {
+                user = await _userManager.RegisterNewUserAsync<Consultant>(model.EmailAddress, model.Password, model.FirstName, model.LastName, model.PhoneNumber);
+            }
+            else if (model.AccountType == AccountTypes.ACCOUNT_EXECUTIVE)
+            {
+                user = await _userManager.RegisterNewUserAsync<AccountExecutive>(model.EmailAddress, model.Password, model.FirstName, model.LastName, model.PhoneNumber);
+            }
+
+            _authCookieHelper.SetAuthCookie(user.Id, HttpContext);
+            return RedirectToAction(MVC.Profile.Details(user.Id));
         }
     }
 }

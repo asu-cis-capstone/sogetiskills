@@ -24,13 +24,14 @@ namespace SogetiSkills.Managers
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<T> RegisterNewUserAsync<T>(string emailAddress, string plainTextPassword, string firstName, string lastName) where T : User
+        public async Task<T> RegisterNewUserAsync<T>(string emailAddress, string plainTextPassword, string firstName, string lastName, string phoneNumber) where T : User
         {
             var user = _db.Set<T>().Create();
 
             user.EmailAddress = emailAddress;
             user.FirstName = firstName;
             user.LastName = lastName;
+            user.PhoneNumber = new PhoneNumber(phoneNumber);
             var hashedPassword = new HashedPassword();
             hashedPassword.Salt = _saltGenerator.GenerateNewSalt();
             hashedPassword.Hash = _passwordHasher.Hash(plainTextPassword, hashedPassword.Salt);
@@ -52,25 +53,30 @@ namespace SogetiSkills.Managers
             return await _db.Users.AnyAsync(x => x.EmailAddress == emailAddress);
         }
 
-        public virtual async Task<bool> ValidatePasswordAsync(string emailAddress, string password)
+        public async Task<User> ValidatePasswordAsync(string emailAddress, string password)
         {
-            var userPassword = await GetHashedPasswordForEmailAddressAsync(emailAddress);
-            if (userPassword == null)
+            var user = await _db.Users.FirstOrDefaultAsync(x => x.EmailAddress == emailAddress);
+            if (user == null)
             {
-                return false;
+                return null;
             }
-            var expected = userPassword.Hash;
-            var actual = _passwordHasher.Hash(password, userPassword.Salt);
+            var expected = user.Password.Hash;
+            var actual = _passwordHasher.Hash(password, user.Password.Salt);
 
             bool isValid = expected.SequenceEqual(actual);
-            return isValid;
+            if (isValid)
+            {
+                return user;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        private async Task<HashedPassword> GetHashedPasswordForEmailAddressAsync(string emailAddress)
+        public async Task<User> LoadUserByIdAsync(int userId)
         {
-            return await _db.Users.Where(x => x.EmailAddress == emailAddress)
-                .Select(x => x.Password)
-                .FirstOrDefaultAsync();
+            return await _db.Users.FindAsync(userId);
         }
     }
 }

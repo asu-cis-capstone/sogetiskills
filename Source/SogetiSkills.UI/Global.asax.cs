@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Mvc;
+using SogetiSkills.UI.Controllers;
 using SogetiSkills.UI.Infrastructure.DependencyResolution;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,22 @@ using System.Xml.Linq;
 
 namespace SogetiSkills.UI
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class Application : System.Web.HttpApplication
     {
+        public static DateTime AssemblyTimestamp;
+
         protected void Application_Start()
         {
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ValidatorOptions.CascadeMode = CascadeMode.StopOnFirstFailure;
+            AssemblyTimestamp = GetUIAssemblyWriteTime();
+        }
+
+        private DateTime GetUIAssemblyWriteTime()
+        {
+            var uiAssembly = typeof(AccountController).Assembly;
+            var assemblyFileInfo = new FileInfo(uiAssembly.Location);
+            return assemblyFileInfo.LastWriteTime;
         }
     }
 }
