@@ -29,6 +29,10 @@ namespace SogetiSkills.Tests.TestHelpers
                 db.Resumes.RemoveRange(db.Resumes);
                 db.Tags.RemoveRange(db.Tags);
                 db.SaveChanges();
+
+                db.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Users', RESEED, 1)");
+                db.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Resumes', RESEED, 1)");
+                db.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Tags', RESEED, 1)");
             }
         }
 

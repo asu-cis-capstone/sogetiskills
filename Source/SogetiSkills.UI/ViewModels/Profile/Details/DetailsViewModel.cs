@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SogetiSkills.UI.ViewModels.Profile
+namespace SogetiSkills.UI.ViewModels.Profile.Details
 {
     public class DetailsViewModel
     {
+        public int UserId { get; set; }
         public string UserTypeDescription { get; set; }
         public bool IsConsultant { get; set; }
         public string FirstName { get; set; }

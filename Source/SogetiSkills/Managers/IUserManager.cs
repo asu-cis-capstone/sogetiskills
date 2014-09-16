@@ -9,10 +9,11 @@ namespace SogetiSkills.Managers
 {
     public interface IUserManager
     {
-        Task<T> RegisterNewUserAsync<T>(string emailAddress, string plainTextPassword, string firstName, string lastName, string phoneNumber) where T : User;
-        bool IsEmailAddressInUse(string emailAddress);
-        Task<bool> IsEmailAddressInUseAsync(string emailAddress);
+        int? GetUserIdForEmailAddress(string emailAddress);
         Task<User> ValidatePasswordAsync(string emailAddress, string plainTextPassword);
         Task<User> LoadUserByIdAsync(int userId);
+
+        Task<T> RegisterNewUserAsync<T>(string emailAddress, string plainTextPassword, string firstName, string lastName, string phoneNumber) where T : User;
+        Task UpdateContactInfoAsync(int userId, string firstName, string lastName, string emailAddress, string phoneNumber);
     }
 }

@@ -61,6 +61,26 @@ namespace SogetiSkills.UI.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
             return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> EditContactInfo()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditContactInfo);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult UploadResume()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UploadResume);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> DownloadResume()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DownloadResume);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ProfileController Actions { get { return MVC.Profile; } }
@@ -78,12 +98,18 @@ namespace SogetiSkills.UI.Controllers
         public class ActionNamesClass
         {
             public readonly string Details = "Details";
+            public readonly string EditContactInfo = "EditContactInfo";
+            public readonly string UploadResume = "UploadResume";
+            public readonly string DownloadResume = "DownloadResume";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Details = "Details";
+            public const string EditContactInfo = "EditContactInfo";
+            public const string UploadResume = "UploadResume";
+            public const string DownloadResume = "DownloadResume";
         }
 
 
@@ -93,7 +119,33 @@ namespace SogetiSkills.UI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Details
         {
-            public readonly string id = "id";
+            public readonly string userId = "userId";
+        }
+        static readonly ActionParamsClass_EditContactInfo s_params_EditContactInfo = new ActionParamsClass_EditContactInfo();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_EditContactInfo EditContactInfoParams { get { return s_params_EditContactInfo; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_EditContactInfo
+        {
+            public readonly string userId = "userId";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_UploadResume s_params_UploadResume = new ActionParamsClass_UploadResume();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UploadResume UploadResumeParams { get { return s_params_UploadResume; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UploadResume
+        {
+            public readonly string userId = "userId";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_DownloadResume s_params_DownloadResume = new ActionParamsClass_DownloadResume();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DownloadResume DownloadResumeParams { get { return s_params_DownloadResume; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DownloadResume
+        {
+            public readonly string userId = "userId";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -106,8 +158,12 @@ namespace SogetiSkills.UI.Controllers
             public class _ViewNamesClass
             {
                 public readonly string Details = "Details";
+                public readonly string EditContactInfo = "EditContactInfo";
+                public readonly string UploadResume = "UploadResume";
             }
             public readonly string Details = "~/Views/Profile/Details.cshtml";
+            public readonly string EditContactInfo = "~/Views/Profile/EditContactInfo.cshtml";
+            public readonly string UploadResume = "~/Views/Profile/UploadResume.cshtml";
         }
     }
 
@@ -117,14 +173,74 @@ namespace SogetiSkills.UI.Controllers
         public T4MVC_ProfileController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int userId);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Details(int id)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Details(int userId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            DetailsOverride(callInfo, id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
+            DetailsOverride(callInfo, userId);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void EditContactInfoOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int userId);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> EditContactInfo(int userId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditContactInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
+            EditContactInfoOverride(callInfo, userId);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void EditContactInfoOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, SogetiSkills.UI.ViewModels.Profile.EditContactInfo.EditContactInfoViewModel model);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> EditContactInfo(SogetiSkills.UI.ViewModels.Profile.EditContactInfo.EditContactInfoViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditContactInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            EditContactInfoOverride(callInfo, model);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void UploadResumeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int userId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult UploadResume(int userId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UploadResume);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
+            UploadResumeOverride(callInfo, userId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void UploadResumeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, SogetiSkills.UI.ViewModels.Profile.UploadResume.UploadResumeViewModel model);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> UploadResume(SogetiSkills.UI.ViewModels.Profile.UploadResume.UploadResumeViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UploadResume);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            UploadResumeOverride(callInfo, model);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void DownloadResumeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int userId);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> DownloadResume(int userId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DownloadResume);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
+            DownloadResumeOverride(callInfo, userId);
             return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 

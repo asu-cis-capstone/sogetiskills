@@ -85,7 +85,7 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
             }
 
             [TestMethod]
-            public async Task SignIn_GivenCorrectCredentials_RedirectsToTheHomePage()
+            public async Task SignIn_GivenCorrectCredentials_RedirectsToUsersProfile()
             {
                 var fakeUserManager = new Mock<IUserManager>();
                 fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "pass")).Returns(Task.FromResult((User)_consultant123));
@@ -96,7 +96,7 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
 
                 ActionResult actionResult = await subject.SignIn(correctUsernamePassword);
 
-                AssertX.IsRedirectToRouteResult(actionResult, MVC.Home.Name, MVC.Home.ActionNames.Index);
+                AssertX.IsRedirectToRouteResult(actionResult, MVC.Profile.Name, MVC.Profile.ActionNames.Details, new { userId = 123 });
             }
 
             [TestMethod]

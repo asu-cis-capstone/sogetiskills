@@ -1,0 +1,23 @@
+﻿@model SogetiSkills.UI.ViewModels.Profile.UploadResume.UploadResumeViewModel
+@{
+    ViewBag.Title = "Upload resume";
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <h2>Upload resume</h2>
+        @Html.ValidationSummary()
+        <p>@Html.ActionLink("Back to profile", MVC.Profile.Details(Model.UserId))</p>
+        @using (Html.BeginForm(MVC.Profile.UploadResume(Model.UserId), FormMethod.Post, new { @class = "well", enctype = "multipart/form-data" }))
+        {
+            <fieldset>
+                <div class="form-group">
+                    <label>Resume <small>(PDF or Microsoft Word document, 12MB max)</small></label>
+                    <input type="file" name="@Html.NameFor(x => x.PostedFile)" class="form-control" />
+                </div>
+            </fieldset>
+            <input class="btn btn-primary" type="submit" value="Upload" />
+            @Html.AntiForgeryToken()
+        }
+    </div>
+</div>

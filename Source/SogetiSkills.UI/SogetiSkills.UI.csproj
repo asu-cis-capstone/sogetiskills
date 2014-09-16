@@ -204,9 +204,13 @@
     </Compile>
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\SignInViewModel.cs" />
-    <Compile Include="ViewModels\Profile\DetailsViewModel.cs" />
-    <Compile Include="ViewModels\Profile\DetailsViewModelBuilder.cs" />
-    <Compile Include="ViewModels\Profile\IDetailsViewModelBuilder.cs" />
+    <Compile Include="ViewModels\Profile\Details\DetailsViewModel.cs" />
+    <Compile Include="ViewModels\Profile\Details\DetailsViewModelBuilder.cs" />
+    <Compile Include="ViewModels\Profile\EditContactInfo\EditContactInfoViewModel.cs" />
+    <Compile Include="ViewModels\Profile\EditContactInfo\EditContactInfoViewModelBuilder.cs" />
+    <Compile Include="ViewModels\Profile\Details\IDetailsViewModelBuilder.cs" />
+    <Compile Include="ViewModels\Profile\EditContactInfo\IEditContactInfoViewModelBuilder.cs" />
+    <Compile Include="ViewModels\Profile\UploadResume\UploadResumeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -219,6 +223,9 @@
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Profile\Details.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Profile\EditContactInfo.cshtml" />
+    <Content Include="Views\Home\Restricted.cshtml" />
+    <Content Include="Views\Profile\UploadResume.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

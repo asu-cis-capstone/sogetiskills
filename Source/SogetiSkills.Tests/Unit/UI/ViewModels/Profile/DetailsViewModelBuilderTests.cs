@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Ploeh.AutoFixture;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SogetiSkills.Models;
+using SogetiSkills.UI.ViewModels.Profile.Details;
 
 namespace SogetiSkills.Tests.Unit.UI.ViewModels.Profile
 {
@@ -46,6 +47,7 @@ namespace SogetiSkills.Tests.Unit.UI.ViewModels.Profile
 
             var viewModel = await subject.BuildAsync(profileUserId: 123, loggedInUserId: 0);
 
+            Assert.AreEqual(viewModel.UserId, 123);
             Assert.AreEqual(viewModel.Email, "bill@site.com");
             Assert.AreEqual(viewModel.FirstName, "Bill");
             Assert.AreEqual(viewModel.LastName, "Smith");

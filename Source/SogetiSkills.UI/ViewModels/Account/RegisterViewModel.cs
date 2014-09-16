@@ -62,36 +62,18 @@ namespace SogetiSkills.UI.ViewModels.Account
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty().WithMessage("Please enter a phone number.")
-                .Must(BeAValid10DigitPhoneNumber).WithMessage("Please enter a valid 10 digit phone number.");
+                .Must(PhoneNumber.IsValid).WithMessage("Please enter a valid 10 digit phone number.");
         }
 
         private bool BeAvailable(string emailAddress)
         {
-            bool inUse = _userManager.IsEmailAddressInUse(emailAddress);
-            return !inUse;
+            bool available = _userManager.GetUserIdForEmailAddress(emailAddress) == null;
+            return available;
         }
 
         private bool BeInTheListOfValidAccountTypes(string accountType)
         {
             return AccountTypes.All.Contains(accountType);
-        }
-
-        private bool BeAValid10DigitPhoneNumber(string phoneNumber)
-        {
-            if (string.IsNullOrWhiteSpace(phoneNumber))
-            {
-                return true;
-            }
-
-            string phoneNumberStrippedOfPunctuation = phoneNumber
-                .Replace(" ", string.Empty)
-                .Replace("(", string.Empty)
-                .Replace(")", string.Empty)
-                .Replace("-", string.Empty)
-                .Trim();
-
-            return phoneNumberStrippedOfPunctuation.Length == 10 
-                && phoneNumberStrippedOfPunctuation.All(x => char.IsDigit(x));
         }
     }
 }
