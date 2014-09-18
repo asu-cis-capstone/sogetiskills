@@ -24,33 +24,19 @@ namespace SogetiSkills.Managers
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<T> RegisterNewUserAsync<T>(string emailAddress, string plainTextPassword, string firstName, string lastName, string phoneNumber) where T : User
+        public int? GetUserIdForEmailAddress(string emailAddress)
         {
-            var user = _db.Set<T>().Create();
-
-            user.EmailAddress = emailAddress;
-            user.FirstName = firstName;
-            user.LastName = lastName;
-            user.PhoneNumber = new PhoneNumber(phoneNumber);
-            var hashedPassword = new HashedPassword();
-            hashedPassword.Salt = _saltGenerator.GenerateNewSalt();
-            hashedPassword.Hash = _passwordHasher.Hash(plainTextPassword, hashedPassword.Salt);
-            user.Password = hashedPassword;
-
-            _db.Users.Add(user);
-            await _db.SaveChangesAsync();
-
-            return user;
-        }
-
-        public bool IsEmailAddressInUse(string emailAddress)
-        {
-            return _db.Users.Any(x => x.EmailAddress == emailAddress);
-        }
-
-        public async Task<bool> IsEmailAddressInUseAsync(string emailAddress)
-        {
-            return await _db.Users.AnyAsync(x => x.EmailAddress == emailAddress);
+            int userId = _db.Users.Where(x => x.EmailAddress == emailAddress)
+                .Select(x => x.Id)
+                .FirstOrDefault();
+            if (userId == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return userId;
+            }
         }
 
         public async Task<User> ValidatePasswordAsync(string emailAddress, string password)
@@ -77,6 +63,35 @@ namespace SogetiSkills.Managers
         public async Task<User> LoadUserByIdAsync(int userId)
         {
             return await _db.Users.FindAsync(userId);
+        }
+
+        public async Task<T> RegisterNewUserAsync<T>(string emailAddress, string plainTextPassword, string firstName, string lastName, string phoneNumber) where T : User
+        {
+            var user = _db.Set<T>().Create();
+
+            user.EmailAddress = emailAddress;
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            user.PhoneNumber = new PhoneNumber(phoneNumber);
+            var hashedPassword = new HashedPassword();
+            hashedPassword.Salt = _saltGenerator.GenerateNewSalt();
+            hashedPassword.Hash = _passwordHasher.Hash(plainTextPassword, hashedPassword.Salt);
+            user.Password = hashedPassword;
+
+            _db.Users.Add(user);
+            await _db.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task UpdateContactInfoAsync(int userId, string firstName, string lastName, string emailAddress, string phoneNumber)
+        {
+            var user = await _db.Users.FindAsync(userId);
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            user.EmailAddress = emailAddress;
+            user.PhoneNumber = new PhoneNumber(phoneNumber);
+            await _db.SaveChangesAsync();
         }
     }
 }

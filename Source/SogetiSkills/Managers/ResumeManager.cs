@@ -23,5 +23,29 @@ namespace SogetiSkills.Managers
                           where x.Id == resumeId
                           select x.Metadata).FirstOrDefaultAsync();
         }
+
+        public async Task<Resume> LoadResumeById(int resumeId)
+        {
+            return await _db.Resumes.FindAsync(resumeId);
+        }
+
+        public async Task UploadResumeAsync(int userId, string fileName, string mimeType, byte[] fileData)
+        {
+            var consultant = await _db.Users.OfType<Consultant>().FirstAsync(x => x.Id == userId);
+            if (consultant.ResumeId.HasValue)
+            {
+                _db.Resumes.RemoveRange(_db.Resumes.Where(x => x.Id == consultant.ResumeId.Value));
+            }
+            consultant.Resume = new Resume
+            {
+                Metadata = new ResumeMetadata
+                {
+                    FileName = fileName,
+                    MimeType = mimeType
+                },
+                FileData = fileData
+            };
+            await _db.SaveChangesAsync();
+        }
     }
 }

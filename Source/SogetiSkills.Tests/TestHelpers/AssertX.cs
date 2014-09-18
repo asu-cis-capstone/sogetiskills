@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace SogetiSkills.Tests.TestHelpers
 {
@@ -32,7 +33,7 @@ namespace SogetiSkills.Tests.TestHelpers
             Assert.AreEqual(viewResult.Model, expectedModel);
         }
 
-        public static void IsRedirectToRouteResult(ActionResult actionResult, string controller, string actionMethod)
+        public static void IsRedirectToRouteResult(ActionResult actionResult, string controller, string actionMethod, object routeValues = null)
         {
             Assert.IsNotNull(actionResult);
             Assert.IsInstanceOfType(actionResult, typeof(RedirectToRouteResult));
@@ -41,6 +42,15 @@ namespace SogetiSkills.Tests.TestHelpers
             Assert.IsFalse(redirectToRouteResult.Permanent);
             Assert.AreEqual(redirectToRouteResult.RouteValues["Controller"], controller);
             Assert.AreEqual(redirectToRouteResult.RouteValues["Action"], actionMethod);
+
+            if (routeValues != null)
+            {
+                var routeValueDictionary = new RouteValueDictionary(routeValues);
+                foreach(var kvp  in routeValueDictionary)
+                {
+                    Assert.AreEqual(kvp.Value, redirectToRouteResult.RouteValues[kvp.Key]);
+                }
+            }
         }
 
         public static void FlashMessageSet(Controller controller, string flashMessageType, string message)
@@ -48,6 +58,16 @@ namespace SogetiSkills.Tests.TestHelpers
             FlashMessageCollection flashMessages = new FlashMessageCollection(controller.TempData);
             bool flashMessageSet = flashMessages.Any(x => x.Key == flashMessageType && x.Message == message);
             Assert.IsTrue(flashMessageSet);
+        }
+
+        public static void Is404NotFoundResult(ActionResult actionResult)
+        {
+            Assert.IsInstanceOfType(actionResult, typeof(HttpNotFoundResult));
+        }
+
+        public static void IsRedirectToRestrictedPage(ActionResult actionResult)
+        {
+            AssertX.IsRedirectToRouteResult(actionResult, MVC.Home.Name, MVC.Home.ActionNames.Restricted);
         }
     }
 }

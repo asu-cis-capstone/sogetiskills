@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SogetiSkills.Tests.Unit.UI.Validators.Account
+namespace SogetiSkills.Tests.Unit.UI.ViewModels.Account.Register
 {
     public class RegisterViewModelValidatorTests : UnitTestBase
     {
@@ -38,7 +38,7 @@ namespace SogetiSkills.Tests.Unit.UI.Validators.Account
             public void Validate_GivenEmailAddressInUse_ShouldHaveError()
             {
                 var fakeUserManager = new Mock<IUserManager>();
-                fakeUserManager.Setup(x => x.IsEmailAddressInUse("already_in_use@site.com")).Returns(true);
+                fakeUserManager.Setup(x => x.GetUserIdForEmailAddress("already_in_use@site.com")).Returns(123);
                 _fixture.Inject(fakeUserManager.Object);
                 RegisterViewModelValidator subject = _fixture.Create<RegisterViewModelValidator>();
 
@@ -49,7 +49,7 @@ namespace SogetiSkills.Tests.Unit.UI.Validators.Account
             public void Validate_GivenAvailableEmailAddress_ShouldNotHaveError()
             {
                 var fakeUserManager = new Mock<IUserManager>();
-                fakeUserManager.Setup(x => x.IsEmailAddressInUse("not_in_use@site.com")).Returns(false);
+                fakeUserManager.Setup(x => x.GetUserIdForEmailAddress("not_in_use@site.com")).Returns(null as int?);
                 _fixture.Inject(fakeUserManager.Object);
                 RegisterViewModelValidator subject = _fixture.Create<RegisterViewModelValidator>();
 

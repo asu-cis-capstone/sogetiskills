@@ -18,7 +18,8 @@ namespace SogetiSkills.UI.Infrastructure.DependencyResolution
 
         public override FluentValidation.IValidator CreateInstance(Type validatorType)
         {
-            return _container.GetInstance(validatorType) as IValidator;
+            object validator = _container.TryGetInstance(validatorType);
+            return validator as IValidator;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace SogetiSkills.UI.ViewModels.Profile
+namespace SogetiSkills.UI.ViewModels.Profile.Details
 {
     public class DetailsViewModelBuilder : IDetailsViewModelBuilder
     {
@@ -34,6 +34,7 @@ namespace SogetiSkills.UI.ViewModels.Profile
                 return null;
             }
 
+            model.UserId = user.Id;
             model.FirstName = user.FirstName;
             model.LastName = user.LastName;
             model.FullName = string.Format("{0} {1}", user.FirstName, user.LastName);

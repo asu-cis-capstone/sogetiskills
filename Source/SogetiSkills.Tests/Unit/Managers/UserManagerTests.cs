@@ -51,10 +51,10 @@ namespace SogetiSkills.Tests.Unit.Managers
         }
 
         [TestClass]
-        public class EmailAddressInUse : UserManagerTests
+        public class GetUserIdForEmailAddress : UserManagerTests
         {
             [TestMethod]
-            public async Task EmailAddressInUse_GivenAddressInUse_ReturnsTrue()
+            public void GetUserIdForEmailAddress_GivenAddressInUse_ReturnsTheUserId()
             {
                 SogetiSkillsDataContext db = new SogetiSkillsDataContext();
                 db.Users.Add(new Consultant
@@ -68,13 +68,13 @@ namespace SogetiSkills.Tests.Unit.Managers
                 db.SaveChanges();
                 UserManager subject = _fixture.Create<UserManager>();
 
-                bool emailAddressIsInUse = await subject.IsEmailAddressInUseAsync("bill@site.com");
+                int? userId = subject.GetUserIdForEmailAddress("bill@site.com");
 
-                Assert.IsTrue(emailAddressIsInUse);
+                Assert.IsNotNull(userId);
             }
 
             [TestMethod]
-            public async Task EmailAddressInUse_GivenAddressNotInUse_ReturnsFalse()
+            public void GetUserIdForEmailAddress_GivenAddressNotInUse_ReturnsNull()
             {
                 SogetiSkillsDataContext db = new SogetiSkillsDataContext();
                 db.Users.Add(new Consultant
@@ -88,9 +88,9 @@ namespace SogetiSkills.Tests.Unit.Managers
                 db.SaveChanges();
                 UserManager subject = _fixture.Create<UserManager>();
 
-                bool emailAddressIsInUse = await subject.IsEmailAddressInUseAsync("some_other_address@site.com");
+                int? userId = subject.GetUserIdForEmailAddress("some_other_address@site.com");
 
-                Assert.IsFalse(emailAddressIsInUse);
+                Assert.IsNull(userId);
             }
         }
 

@@ -15,5 +15,11 @@ namespace SogetiSkills.UI.Controllers
         {
             return View();
         }
+
+        [GET("/restricted")]
+        public virtual ActionResult Restricted()
+        {
+            return View();
+        }
     }
 }

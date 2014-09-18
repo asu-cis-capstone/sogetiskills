@@ -29,16 +29,6 @@ namespace SogetiSkills.Models
             }
         }
 
-        private string RemoveNonDigits(string input)
-        {
-            if (input == null)
-            {
-                return null;
-            }
-
-            return new string(input.Where(x => char.IsDigit(x)).ToArray());
-        }
-
         public string GetFormattedValue()
         {
             if (_value == null)
@@ -57,6 +47,26 @@ namespace SogetiSkills.Models
                 Value[7],
                 Value[8],
                 Value[9]);
+        }
+
+        public static bool IsValid(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return false;
+            }
+
+            return RemoveNonDigits(input).Length == 10;
+        }
+
+        private static string RemoveNonDigits(string input)
+        {
+            if (input == null)
+            {
+                return null;
+            }
+
+            return new string(input.Where(x => char.IsDigit(x)).ToArray());
         }
     }
 }

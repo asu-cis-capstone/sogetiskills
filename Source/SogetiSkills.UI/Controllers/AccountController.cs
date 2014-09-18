@@ -47,7 +47,7 @@ namespace SogetiSkills.UI.Controllers
             if (user != null)
             {
                 _authCookieHelper.SetAuthCookie(user.Id, HttpContext);
-                return RedirectToAction(MVC.Home.Index());
+                return RedirectToAction(MVC.Profile.Details(user.Id));
             }
             else
             {
