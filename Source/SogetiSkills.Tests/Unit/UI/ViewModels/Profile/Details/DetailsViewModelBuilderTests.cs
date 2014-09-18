@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SogetiSkills.Models;
 using SogetiSkills.UI.ViewModels.Profile.Details;
 
-namespace SogetiSkills.Tests.Unit.UI.ViewModels.Profile
+namespace SogetiSkills.Tests.Unit.UI.ViewModels.Profile.Details
 {
     [TestClass]
     public class DetailsViewModelBuilderTests : UnitTestBase

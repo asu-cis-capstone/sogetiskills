@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SogetiSkills.Tests.Unit.UI.Validators.Account
+namespace SogetiSkills.Tests.Unit.UI.ViewModels.Account.Register
 {
     public class RegisterViewModelValidatorTests : UnitTestBase
     {

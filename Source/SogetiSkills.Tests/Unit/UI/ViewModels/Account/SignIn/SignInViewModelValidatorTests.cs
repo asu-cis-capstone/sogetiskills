@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using FluentValidation.TestHelper;
 using SogetiSkills.UI.ViewModels.Account;
 
-namespace SogetiSkills.Tests.Unit.UI.Validators.Account
+namespace SogetiSkills.Tests.Unit.UI.ViewModels.Account.SignIn
 {
     [TestClass]
     public class SignInViewModelValidatorTests : UnitTestBase

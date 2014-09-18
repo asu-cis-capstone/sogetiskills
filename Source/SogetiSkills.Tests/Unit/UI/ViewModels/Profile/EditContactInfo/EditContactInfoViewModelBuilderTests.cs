@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Ploeh.AutoFixture;
 using SogetiSkills.UI.ViewModels.Profile.EditContactInfo;
 
-namespace SogetiSkills.Tests.Unit.UI.ViewModels.Profile
+namespace SogetiSkills.Tests.Unit.UI.ViewModels.Profile.EditContactInfo
 {
     [TestClass]
     public class EditContactInfoViewModelBuilderTests : UnitTestBase

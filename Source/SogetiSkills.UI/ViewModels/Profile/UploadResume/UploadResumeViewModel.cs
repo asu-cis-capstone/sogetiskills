@@ -20,6 +20,7 @@ namespace SogetiSkills.UI.ViewModels.Profile.UploadResume
         public UploadResumeViewModelValidator()
         {
             RuleFor(x => x.PostedFile)
+                .Cascade(CascadeMode.StopOnFirstFailure)
                 .Must(NotBeAnEmptyFile).WithMessage("Please select a file.")
                 .Must(BeAPdfOrWordDocument).WithMessage("Only PDFs and Microsoft Word documents are accepted.")
                 .Must(BeLessThan12Megabytes).WithMessage("File must be less than 12MB.");

@@ -136,10 +136,12 @@
     <Compile Include="Unit\Security\PasswordHasherTests.cs" />
     <Compile Include="Unit\UI\Controllers\AccountControllerTests.cs" />
     <Compile Include="Unit\UI\Controllers\ProfileControllerTests.cs" />
-    <Compile Include="Unit\UI\Validators\Account\RegisterViewModelValidatorTests.cs" />
-    <Compile Include="Unit\UI\Validators\Account\SignInViewModelValidatorTests.cs" />
-    <Compile Include="Unit\UI\ViewModels\Profile\DetailsViewModelBuilderTests.cs" />
-    <Compile Include="Unit\UI\ViewModels\Profile\EditContactInfoViewModelBuilderTests.cs" />
+    <Compile Include="Unit\UI\ViewModels\Account\Register\RegisterViewModelValidatorTests.cs" />
+    <Compile Include="Unit\UI\ViewModels\Account\SignIn\SignInViewModelValidatorTests.cs" />
+    <Compile Include="Unit\UI\ViewModels\Profile\Details\DetailsViewModelBuilderTests.cs" />
+    <Compile Include="Unit\UI\ViewModels\Profile\EditContactInfo\EditContactInfoViewModelBuilderTests.cs" />
+    <Compile Include="Unit\UI\ViewModels\Profile\EditContactInfo\EditContactInfoViewModelValidatorTests.cs" />
+    <Compile Include="Unit\UI\ViewModels\Profile\UploadResume\UploadResumeViewModelValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SogetiSkills.UI\SogetiSkills.UI.csproj">
