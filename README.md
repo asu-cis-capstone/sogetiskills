@@ -9,17 +9,15 @@ Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of recor
 ###TO-DO
 In progress
   * User maintenance
-    * Users may only maintain their own details
-    * Phone number
+    * View current beach status
+    * Edit consultant skills
 
 Product Backlog (w/Strict Prioritizing)
   * User maintenance
-    * Users may only maintain their own details
-    * Current beach status
+    * Change current beach status
     * List of keywords
       * Add new keywords
       * Remove keyword associations
-    * Resume
     * User type change
   * Account Executive dashboard
     * List all consultants currently on the beach
@@ -38,6 +36,9 @@ Complete
   * Without authentication, all web pages redirect to user login
   * User logout
   * Allow users to register
+  * Users may only maintain their own details
+  * Edit contact info
+  * Upload, edit, and download resumes
 
 ###Team & Client
 - Project Management
