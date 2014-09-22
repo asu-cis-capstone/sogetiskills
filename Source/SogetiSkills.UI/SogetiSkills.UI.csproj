@@ -226,6 +226,8 @@
     <Content Include="Views\Profile\EditContactInfo.cshtml" />
     <Content Include="Views\Home\Restricted.cshtml" />
     <Content Include="Views\Profile\UploadResume.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\NotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

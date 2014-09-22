@@ -7,17 +7,35 @@ using System.Web.Mvc;
 
 namespace SogetiSkills.UI.Controllers
 {
-    [Authorize]
-    public partial class HomeController : Controller
+    public partial class HomeController : ControllerBase
     {
         [GET("/")]
         public virtual ActionResult Index()
         {
-            return View();
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction(MVC.Profile.Details(LoggedInUserId.Value));
+            }
+            else
+            {
+                return RedirectToAction(MVC.Account.SignIn());
+            }
         }
 
         [GET("/restricted")]
         public virtual ActionResult Restricted()
+        {
+            return View();
+        }
+
+        [GET("/error")]
+        public virtual ActionResult Error()
+        {
+            return View();
+        }
+
+        [GET("/notfound")]
+        public virtual ActionResult NotFound()
         {
             return View();
         }

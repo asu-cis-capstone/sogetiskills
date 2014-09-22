@@ -60,6 +60,13 @@ namespace SogetiSkills.UI
 
             Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
             Response.Headers.Add("X-Frame-Options", "DENY");
+
+            var csrfCookie = Response.Cookies["__RequestVerificationToken"];
+            if (csrfCookie != null)
+            {
+                csrfCookie.HttpOnly = true;
+                csrfCookie.Secure = true;
+            }
         }
     }
 }
