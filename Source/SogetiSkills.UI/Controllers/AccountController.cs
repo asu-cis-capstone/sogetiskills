@@ -47,6 +47,22 @@ namespace SogetiSkills.UI.Controllers
             if (user != null)
             {
                 _authCookieHelper.SetAuthCookie(user.Id, HttpContext);
+
+                if (!string.IsNullOrWhiteSpace(model.ReturnUrl))
+                {
+                    bool returnUrlIsRelative = Uri.IsWellFormedUriString(model.ReturnUrl, UriKind.Relative);
+                    if (returnUrlIsRelative)
+                    {
+                        return Redirect(model.ReturnUrl);
+                    }
+                    
+                    bool returnUrlIsToSameHost = string.Compare(Request.Url.Host, new Uri(model.ReturnUrl).Host, ignoreCase: true) == 0;
+                    if (returnUrlIsToSameHost)
+                    {
+                        return Redirect(model.ReturnUrl);
+                    }
+                }
+
                 return RedirectToAction(MVC.Profile.Details(user.Id));
             }
             else

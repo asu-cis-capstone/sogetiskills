@@ -24,6 +24,7 @@ namespace SogetiSkills.UI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ValidatorOptions.CascadeMode = CascadeMode.StopOnFirstFailure;
             AssemblyTimestamp = GetUIAssemblyWriteTime();
+            MvcHandler.DisableMvcResponseHeader = true;
         }
 
         private DateTime GetUIAssemblyWriteTime()
@@ -31,6 +32,34 @@ namespace SogetiSkills.UI
             var uiAssembly = typeof(AccountController).Assembly;
             var assemblyFileInfo = new FileInfo(uiAssembly.Location);
             return assemblyFileInfo.LastWriteTime;
+        }
+
+        protected void Application_BeginRequest()
+        {
+            if (!Request.IsSecureConnection && Request.RequestType == "GET")
+            {
+                UriBuilder httpsUriBuilder = new UriBuilder(Request.Url)
+                {
+                    Scheme = "https",
+                    Port = -1 // -1 means the scheme's default port
+                };
+                string httpsUrl = httpsUriBuilder.Uri.ToString();
+                Response.Redirect(httpsUrl);
+                Response.Flush();
+                Response.End();
+            }     
+        }
+
+        protected void Application_PreSendRequestHeaders(object sender, EventArgs e)
+        {
+            Response.Headers.Remove("X-Powered-By");
+            Response.Headers.Remove("X-AspNet-Version");
+            Response.Headers.Remove("X-AspNetMvc-Version");
+            Response.Headers.Remove("Server");
+            Response.Headers.Remove("X-Frame-Options");
+
+            Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
+            Response.Headers.Add("X-Frame-Options", "DENY");
         }
     }
 }

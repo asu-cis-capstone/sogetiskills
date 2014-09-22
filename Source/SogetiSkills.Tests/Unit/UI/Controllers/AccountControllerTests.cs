@@ -21,6 +21,21 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
     {
         protected Consultant _consultant123 = new Consultant { Id = 123 };
         protected AccountExecutive _accountExecutive456 = new AccountExecutive { Id = 456 };
+        protected Mock<HttpContextBase> _fakeHttpContext;
+        protected Mock<IUserManager> _fakeUserManager;
+        protected Mock<IAuthCookieHelper> _fakeAuthCookieHelper;
+
+        public AccountControllerTests()
+        {
+            _fakeHttpContext = new Mock<HttpContextBase>();
+            _fixture.Inject(_fakeHttpContext);
+
+            _fakeUserManager = new Mock<IUserManager>();
+            _fixture.Inject(_fakeUserManager);
+
+            _fakeAuthCookieHelper = new Mock<IAuthCookieHelper>();
+            _fixture.Inject(_fakeAuthCookieHelper);
+        }
 
         [TestClass]
         public class SignIn : AccountControllerTests
@@ -28,26 +43,18 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
             [TestMethod]
             public void SignIn_GivenAnAuthenticatedRequest_ClearsTheAuthCookie()
             {
-                var fakeHttpContext = new Mock<HttpContextBase>();
-                fakeHttpContext.Setup(x => x.Request.IsAuthenticated).Returns(true);
-                _fixture.Inject(fakeHttpContext);
-
-                var fakeAuthentication = new Mock<IAuthCookieHelper>();
-                _fixture.Inject(fakeAuthentication);
-
+                _fakeHttpContext.Setup(x => x.Request.IsAuthenticated).Returns(true);
                 AccountController subject = _fixture.Create<AccountController>();
 
                 subject.SignIn();
 
-                fakeAuthentication.Verify(x => x.ClearAuthCookie(fakeHttpContext.Object));
+                _fakeAuthCookieHelper.Verify(x => x.ClearAuthCookie(_fakeHttpContext.Object));
             }
 
             [TestMethod]
             public void SignIn_ReturnsAViewResult()
             {
-                var fakeHttpContext = new Mock<HttpContextBase>();
-                fakeHttpContext.Setup(x => x.Request.IsAuthenticated).Returns(false);
-                _fixture.Inject(fakeHttpContext);
+                _fakeHttpContext.Setup(x => x.Request.IsAuthenticated).Returns(false);
                 AccountController subject = _fixture.Create<AccountController>();
 
                 ActionResult actionResult = subject.SignIn();
@@ -70,28 +77,75 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
             [TestMethod]
             public async Task SignIn_GivenCorrectCredentials_LogsTheUserIn()
             {
-                var fakeAuthCookieHelper = new Mock<IAuthCookieHelper>();
-                _fixture.Inject(fakeAuthCookieHelper);
-                var fakeUserManager = new Mock<IUserManager>();
-                fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "pass")).Returns(Task.FromResult((User)_consultant123));
-                _fixture.Inject(fakeUserManager);
+                _fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "pass")).Returns(Task.FromResult((User)_consultant123));
 
                 SignInViewModel correctUsernamePassword = new SignInViewModel { EmailAddress = "user@site.com", Password = "pass" };
                 AccountController subject = _fixture.Create<AccountController>();
 
                 await subject.SignIn(correctUsernamePassword);
 
-                fakeAuthCookieHelper.Verify(x => x.SetAuthCookie(123, It.IsAny<HttpContextBase>()));
+                _fakeAuthCookieHelper.Verify(x => x.SetAuthCookie(123, It.IsAny<HttpContextBase>()));
             }
 
             [TestMethod]
             public async Task SignIn_GivenCorrectCredentials_RedirectsToUsersProfile()
             {
-                var fakeUserManager = new Mock<IUserManager>();
-                fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "pass")).Returns(Task.FromResult((User)_consultant123));
-                _fixture.Inject(fakeUserManager);
-
+                _fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "pass")).Returns(Task.FromResult((User)_consultant123));
                 SignInViewModel correctUsernamePassword = new SignInViewModel { EmailAddress = "user@site.com", Password = "pass" };
+                AccountController subject = _fixture.Create<AccountController>();
+
+                ActionResult actionResult = await subject.SignIn(correctUsernamePassword);
+
+                AssertX.IsRedirectToRouteResult(actionResult, MVC.Profile.Name, MVC.Profile.ActionNames.Details, new { userId = 123 });
+            }
+
+            [TestMethod]
+            public async Task SignIn_GivenRelativeReturnUrl_RedirectsToReturnUrl()
+            {
+                _fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "pass")).Returns(Task.FromResult((User)_consultant123));
+                _fakeHttpContext.Setup(x => x.Request.Url).Returns(new Uri("http://sogetiskills.com/"));
+                SignInViewModel correctUsernamePassword = new SignInViewModel 
+                { 
+                    EmailAddress = "user@site.com", 
+                    Password = "pass",
+                    ReturnUrl = "/some_page.aspx"
+                };
+                AccountController subject = _fixture.Create<AccountController>();
+
+                ActionResult actionResult = await subject.SignIn(correctUsernamePassword);
+
+                AssertX.IsRedirectResult(actionResult, "/some_page.aspx");
+            }
+
+            [TestMethod]
+            public async Task SignIn_GivenAbsoluteReturnUrlToSameDomain_RedirectsToReturnUrl()
+            {
+                _fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "pass")).Returns(Task.FromResult((User)_consultant123));
+                _fakeHttpContext.Setup(x => x.Request.Url).Returns(new Uri("http://sogetiskills.com/"));
+                SignInViewModel correctUsernamePassword = new SignInViewModel
+                {
+                    EmailAddress = "user@site.com",
+                    Password = "pass",
+                    ReturnUrl = "http://sogetiskills.com/some_page.aspx"
+                };
+                AccountController subject = _fixture.Create<AccountController>();
+
+                ActionResult actionResult = await subject.SignIn(correctUsernamePassword);
+
+                AssertX.IsRedirectResult(actionResult, "http://sogetiskills.com/some_page.aspx");
+            }
+
+            [TestMethod]
+            public async Task SignIn_GivenReturnUrlToDifferentDomain_RedirectsToUsersProfile()
+            {
+                _fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "pass")).Returns(Task.FromResult((User)_consultant123));
+                _fakeHttpContext.Setup(x => x.Request.Url).Returns(new Uri("http://sogetiskills.com/"));
+                SignInViewModel correctUsernamePassword = new SignInViewModel
+                {
+                    EmailAddress = "user@site.com",
+                    Password = "pass",
+                    ReturnUrl = "http://www.google.com/"
+                };
                 AccountController subject = _fixture.Create<AccountController>();
 
                 ActionResult actionResult = await subject.SignIn(correctUsernamePassword);
@@ -102,10 +156,7 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
             [TestMethod]
             public async Task SignIn_GivenInorrectCredentials_RedisplaysTheForm()
             {
-                var fakeUserManager = new Mock<IUserManager>();
-                fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "incorrectpass")).Returns(Task.FromResult(null as User));
-                _fixture.Inject(fakeUserManager);
-
+                _fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "incorrectpass")).Returns(Task.FromResult(null as User));
                 SignInViewModel incorrectUsernamePassword = new SignInViewModel { EmailAddress = "user@site.com", Password = "incorrectpass" };
                 AccountController subject = _fixture.Create<AccountController>();
 
@@ -121,14 +172,11 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
             [TestMethod]
             public void SignOut_ClearsTheAuthCookie()
             {
-                var fakeAuthentication = new Mock<IAuthCookieHelper>();
-                _fixture.Inject(fakeAuthentication);
-
                 AccountController subject = _fixture.Create<AccountController>();
 
                 subject.SignOut();
 
-                fakeAuthentication.Verify(x => x.ClearAuthCookie(It.IsAny<HttpContextBase>()));
+                _fakeAuthCookieHelper.Verify(x => x.ClearAuthCookie(It.IsAny<HttpContextBase>()));
             }
 
             [TestMethod]
@@ -144,7 +192,7 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
         }
 
         [TestClass]
-        public class Register : UnitTestBase
+        public class Register : AccountControllerTests
         {
             private RegisterViewModel _validRegistrationInput = new RegisterViewModel
                 {
@@ -182,9 +230,7 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
             [TestMethod]
             public async Task Register_GivenValidInputWithConsultantAccountType_RegistersNewConsultant()
             {
-                var fakeUserManager = new Mock<IUserManager>();
-                _fixture.Inject(fakeUserManager.Object);
-                fakeUserManager
+                _fakeUserManager
                     .Setup(x => x.RegisterNewUserAsync<Consultant>(_validRegistrationInput.EmailAddress, _validRegistrationInput.Password, _validRegistrationInput.FirstName, _validRegistrationInput.LastName, _validRegistrationInput.PhoneNumber))
                     .Returns(Task.FromResult(new Consultant { Id = 123 }));
 
@@ -193,15 +239,13 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
 
                 await subject.Register(_validRegistrationInput);
 
-                fakeUserManager.Verify(x => x.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890"));
+                _fakeUserManager.Verify(x => x.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890"));
             }
 
             [TestMethod]
             public async Task Register_GivenValidInputWithAccountExecutiveAccountType_RegistersNewConsultant()
             {
-                var fakeUserManager = new Mock<IUserManager>();
-                _fixture.Inject(fakeUserManager);
-                fakeUserManager
+                _fakeUserManager
                     .Setup(x => x.RegisterNewUserAsync<AccountExecutive>(_validRegistrationInput.EmailAddress, _validRegistrationInput.Password, _validRegistrationInput.FirstName, _validRegistrationInput.LastName, _validRegistrationInput.PhoneNumber))
                     .Returns(Task.FromResult(new AccountExecutive { Id = 123 }));
                 
@@ -210,38 +254,29 @@ namespace SogetiSkills.Tests.Unit.UI.Controllers
 
                 await subject.Register(_validRegistrationInput);
 
-                fakeUserManager.Verify(x => x.RegisterNewUserAsync<AccountExecutive>("bill@site.com", "pass", "Bill", "Smith", "1234567890"));
+                _fakeUserManager.Verify(x => x.RegisterNewUserAsync<AccountExecutive>("bill@site.com", "pass", "Bill", "Smith", "1234567890"));
             }
 
             [TestMethod]
             public async Task Register_GivenValidInput_LogsTheUserIn()
             {
-                var fakeAuthenticationHelper = new Mock<IAuthCookieHelper>();
-                _fixture.Inject(fakeAuthenticationHelper);
-                
-                var fakeUserManager = new Mock<IUserManager>();
-                fakeUserManager
+                _fakeUserManager
                     .Setup(x => x.RegisterNewUserAsync<Consultant>(_validRegistrationInput.EmailAddress, _validRegistrationInput.Password, _validRegistrationInput.FirstName, _validRegistrationInput.LastName, _validRegistrationInput.PhoneNumber))
                     .Returns(Task.FromResult(new Consultant { Id = 123 }));
-                _fixture.Inject(fakeUserManager);
 
                 AccountController subject = _fixture.Create<AccountController>();
 
                 await subject.Register(_validRegistrationInput);
 
-                fakeAuthenticationHelper.Verify(x => x.SetAuthCookie(123, It.IsAny<HttpContextBase>()));
+                _fakeAuthCookieHelper.Verify(x => x.SetAuthCookie(123, It.IsAny<HttpContextBase>()));
             }
 
             [TestMethod]
             public async Task Register_GivenValidInput_RedirectsToTheNewUsersProfilePage()
             {
-                var fakeAuthenticationHelper = new Mock<IAuthCookieHelper>();
-                _fixture.Inject(fakeAuthenticationHelper.Object);
-                var fakeUserManager = new Mock<IUserManager>();
-                fakeUserManager
+                _fakeUserManager
                     .Setup(x => x.RegisterNewUserAsync<Consultant>(_validRegistrationInput.EmailAddress, _validRegistrationInput.Password, _validRegistrationInput.FirstName, _validRegistrationInput.LastName, _validRegistrationInput.PhoneNumber))
                     .Returns(Task.FromResult(new Consultant { Id = 123 }));
-                _fixture.Inject(fakeUserManager);
                 AccountController subject = _fixture.Create<AccountController>();
 
                 var actionResult = await subject.Register(_validRegistrationInput);

@@ -12,6 +12,7 @@ namespace SogetiSkills.UI.ViewModels.Account
     {
         public string EmailAddress { get; set; }
         public string Password { get; set; }
+        public string ReturnUrl { get; set; }
     }
 
     public class SignInViewModelValidator : AbstractValidator<SignInViewModel>

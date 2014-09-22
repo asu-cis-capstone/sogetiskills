@@ -60,6 +60,13 @@ namespace SogetiSkills.Tests.TestHelpers
             Assert.IsTrue(flashMessageSet);
         }
 
+        public static void IsRedirectResult(ActionResult actionResult, string expectedUrl)
+        {
+            Assert.IsInstanceOfType(actionResult, typeof(RedirectResult));
+            RedirectResult redirectResult = (RedirectResult)actionResult;
+            Assert.AreEqual(expectedUrl, redirectResult.Url);
+        }
+
         public static void Is404NotFoundResult(ActionResult actionResult)
         {
             Assert.IsInstanceOfType(actionResult, typeof(HttpNotFoundResult));
