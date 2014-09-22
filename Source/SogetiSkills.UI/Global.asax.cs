@@ -61,11 +61,9 @@ namespace SogetiSkills.UI
             Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
             Response.Headers.Add("X-Frame-Options", "DENY");
 
-            var csrfCookie = Response.Cookies["__RequestVerificationToken"];
-            if (csrfCookie != null)
+            foreach(var cookieName in Response.Cookies.AllKeys.Where(x => x != "theme")) // the theme cookie is set in js for now
             {
-                csrfCookie.HttpOnly = true;
-                csrfCookie.Secure = true;
+                Response.Cookies[cookieName].HttpOnly = true;
             }
         }
     }
