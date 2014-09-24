@@ -25,9 +25,9 @@ TOPICS
 5.	We discussed open source.  There was no real desire or opinion re this topic
 
 6.	We talked about next meeting / status to James, etc.  We decided to meet as needed.  
-        Johnm will info short status to James on Thursdays.
+        johnm will info short status to James on Thursdays.
 
-        Action item – johnm status to James on Thursdays
+        Action item – johnm will send status to James on Thursdays
 
 Meeting over @ 7:20pm
 
