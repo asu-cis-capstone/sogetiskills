@@ -1,6 +1,6 @@
 log in / out
 1)	I want the user to register to BeachTime
-2)	I want all login IDs be unique
+2)	I want all login IDs to be unique
 3)	I want the password to be NEVER be stored or displayed as plain text
 4)	I want to allow the user to login to the application
 5)	I want the User authentication to persist across all web pages.
