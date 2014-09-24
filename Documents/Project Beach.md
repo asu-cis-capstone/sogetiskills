@@ -49,7 +49,7 @@ User Registry, Login, and Maintenance
 # Required Skills #
 Developers on this project will require the following skill set:
 
-	Any web development technology (ASP.NET and C# preferred but not required)
+	Any web development technology (ASP.NET and C# preferred, but not required)
 	T-SQL (Microsoft SQL Server preferred)
 
 # Required Agreements #
