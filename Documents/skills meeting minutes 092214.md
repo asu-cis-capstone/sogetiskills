@@ -1,4 +1,4 @@
-Sogeti Skills |MINUTES		09.22.14 | 6 pm | Sogeti Office – Scottsdale
+Sogeti Skills |MINUTES		09.22.14 | 6 p.m. | Sogeti Office – Scottsdale
 
 Attendees
         James Moran – Client
