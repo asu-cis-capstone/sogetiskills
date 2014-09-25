@@ -60,33 +60,36 @@
             @Html.RenderFlash()
             @RenderBody()
         </div>
-        <div id="footer" class="row">
-            <div class="col-lg-12">
-                <p class="text-muted">@AppSettings.ApplicationName Version @AppSettings.ApplicationVersion @AppSettings.ApplicationReleaseProfile (@Application.AssemblyTimestamp.ToShortDateString() @Application.AssemblyTimestamp.ToShortTimeString())</p>
+        <div class="footer">
+            <div class="container">
+                <p class="text-muted">
+                    @AppSettings.ApplicationName Version @AppSettings.ApplicationVersion @AppSettings.ApplicationReleaseProfile (@Application.AssemblyTimestamp.ToShortDateString() @Application.AssemblyTimestamp.ToShortTimeString())
+                    |
+                    <select id="themeSwitcher">
+                        <option>amelia</option>
+                        <option>cerulean</option>
+                        <option>cosmo</option>
+                        <option>cyborg</option>
+                        <option>darkly</option>
+                        <option>flatly</option>
+                        <option>journal</option>
+                        <option>lumen</option>
+                        <option>paper</option>
+                        <option>readable</option>
+                        <option>sandstone</option>
+                        <option>simplex</option>
+                        <option>slate</option>
+                        <option>spacelab</option>
+                        <option>superhero</option>
+                        <option>united</option>
+                        <option>yeti</option>
+                    </select>
+                </p>
             </div>
         </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <select id="themeSwitcher" style="position: absolute; bottom: 1em; right: 1em;">
-        <option>amelia</option>
-        <option>cerulean</option>
-        <option>cosmo</option>
-        <option>cyborg</option>
-        <option>darkly</option>
-        <option>flatly</option>
-        <option>journal</option>
-        <option>lumen</option>
-        <option>paper</option>
-        <option>readable</option>
-        <option>sandstone</option>
-        <option>simplex</option>
-        <option>slate</option>
-        <option>spacelab</option>
-        <option>superhero</option>
-        <option>united</option>
-        <option>yeti</option>
-    </select>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script>
         $(function () {
