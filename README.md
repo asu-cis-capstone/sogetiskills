@@ -25,7 +25,8 @@ Product Backlog (w/Strict Prioritizing)
 	* Data migration
 	* Indexing / Query Tuning
   * Account Executive dashboard
-    * List all consultants currently on the beach
+    * List all consultants currently on the beach on the right side
+    * List all skills available on the left side
     * List all available tags
     * Filter by tags
     * Filter by search
