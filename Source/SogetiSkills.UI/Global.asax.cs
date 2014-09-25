@@ -68,8 +68,7 @@ namespace SogetiSkills.UI
             Response.Headers.Remove("X-AspNetMvc-Version");
             Response.Headers.Remove("Server");
             Response.Headers.Remove("X-Frame-Options");
-
-            Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
+            
             Response.Headers.Add("X-Frame-Options", "DENY");
 
             foreach(var cookieName in Response.Cookies.AllKeys.Where(x => x != "theme")) // the theme cookie is set in js for now
