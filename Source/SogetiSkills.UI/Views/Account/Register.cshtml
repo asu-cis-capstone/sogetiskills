@@ -18,7 +18,7 @@
                         @Html.TextBoxFor(x => x.EmailAddress, new { type = "email", @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        <label>Password</label>
+                        <label>Password <small>(must be at least 7 characters and contain a number and a letter)</small></label>
                         @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
@@ -43,7 +43,7 @@
                         @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        <label>Phone number</label>
+                        <label>Phone number <small>(10 digits)</small></label>
                         @Html.TextBoxFor(x => x.PhoneNumber, new { type = "tel", @class = "form-control" })
                     </div>
                 </fieldset>

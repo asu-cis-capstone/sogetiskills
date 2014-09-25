@@ -69,11 +69,35 @@ namespace SogetiSkills.UI.Tests.Unit.UI.ViewModels.Account.Register
             }
 
             [TestMethod]
-            public void Validate_GivenPopulatedPassword_ShouldNotHaveError()
+            public void Validate_GivenFewerThan7Characters_ShouldHaveError()
             {
                 RegisterViewModelValidator subject = _fixture.Create<RegisterViewModelValidator>();
 
-                subject.ShouldNotHaveValidationErrorFor(x => x.Password, "pass");
+                subject.ShouldHaveValidationErrorFor(x => x.Password, "p4ss");
+            }
+
+            [TestMethod]
+            public void Validate_GivenOnlyNumbers_ShouldHaveError()
+            {
+                RegisterViewModelValidator subject = _fixture.Create<RegisterViewModelValidator>();
+
+                subject.ShouldHaveValidationErrorFor(x => x.Password, "1234567890");
+            }
+
+            [TestMethod]
+            public void Validate_GivenOnlyLetters_ShouldHaveError()
+            {
+                RegisterViewModelValidator subject = _fixture.Create<RegisterViewModelValidator>();
+
+                subject.ShouldHaveValidationErrorFor(x => x.Password, "superawesomepassword");
+            }
+
+            [TestMethod]
+            public void Validate_GivenValidPassword_ShouldNotHaveError()
+            {
+                RegisterViewModelValidator subject = _fixture.Create<RegisterViewModelValidator>();
+
+                subject.ShouldNotHaveValidationErrorFor(x => x.Password, "passw0rd");
             }
 
             [TestMethod]
