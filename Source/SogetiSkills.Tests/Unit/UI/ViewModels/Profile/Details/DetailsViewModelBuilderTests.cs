@@ -71,10 +71,9 @@ namespace SogetiSkills.Tests.Unit.UI.ViewModels.Profile.Details
         public async Task BuildAsync_GivenConsultantWithResume_LoadsResume()
         {
             var consultant = SampleData.Consultant();
-            consultant.ResumeId = 1;
             _fakeUserManager.Setup(x => x.LoadUserByIdAsync(123)).Returns(Task.FromResult((User)consultant));
             var resume = SampleData.ResumeMetadata();
-            _fakeResumeManager.Setup(x => x.LoadResumeMetadataAsync(1)).Returns(Task.FromResult(resume));
+            _fakeResumeManager.Setup(x => x.LoadResumeMetadataByUserIdAsync(123)).Returns(Task.FromResult(resume));
             DetailsViewModelBuilder subject = _fixture.Create<DetailsViewModelBuilder>();
 
             var viewModel = await subject.BuildAsync(profileUserId: 123, loggedInUserId: 0);
@@ -86,12 +85,12 @@ namespace SogetiSkills.Tests.Unit.UI.ViewModels.Profile.Details
         public async Task BuildAsync_GivenConsultantWithoutResume_LeavesResumeNull()
         {
             _fakeUserManager.Setup(x => x.LoadUserByIdAsync(123)).Returns(Task.FromResult((User)SampleData.Consultant()));
+            _fakeResumeManager.Setup(x => x.LoadResumeMetadataByUserIdAsync(123)).Returns(Task.FromResult(null as ResumeMetadata));
             DetailsViewModelBuilder subject = _fixture.Create<DetailsViewModelBuilder>();
 
             var viewModel = await subject.BuildAsync(profileUserId: 123, loggedInUserId: 0);
 
-            Assert.IsNull(viewModel.ResumeMetadata);
-            _fakeResumeManager.Verify(x => x.LoadResumeMetadataAsync(It.IsAny<int>()), Times.Never());
+            Assert.IsNull(viewModel.ResumeMetadata);            
         }
 
         [TestMethod]

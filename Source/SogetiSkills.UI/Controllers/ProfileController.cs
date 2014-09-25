@@ -130,14 +130,13 @@ namespace SogetiSkills.UI.Controllers
                     return RedirectToAction(MVC.Home.Restricted());
                 }
             }
-
-            var consultant = (Consultant)await _userManager.LoadUserByIdAsync(userId);
-            if (consultant.ResumeId == null)
+            
+            var resume = await _resumeManager.LoadResumeByUserId(userId);
+            if (resume == null)
             {
                 return HttpNotFound();
             }
-            
-            var resume = await _resumeManager.LoadResumeById(consultant.ResumeId.Value);
+
             return File(resume.FileData, resume.Metadata.MimeType, resume.Metadata.FileName);
         }
     }

@@ -15,8 +15,7 @@ namespace SogetiSkills.Tests.TestHelpers
         public UnitTestBase()
         {
             _fixture = new Fixture();
-            _fixture.Customize(new WebModelCustomization());
-            _fixture.Inject(new SogetiSkillsDataContext());
+            _fixture.Customize(new WebModelCustomization());            
         }
     }
 }

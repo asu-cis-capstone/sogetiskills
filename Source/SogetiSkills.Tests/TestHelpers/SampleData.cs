@@ -18,8 +18,7 @@ namespace SogetiSkills.Tests.TestHelpers
                 FirstName = "Bill",
                 LastName = "Smith",
                 IsOnBeach = true,
-                PhoneNumber = new PhoneNumber("1234567890"),
-                Tags = new List<Tag>()
+                PhoneNumber = new PhoneNumber("1234567890")
             };
         }
 

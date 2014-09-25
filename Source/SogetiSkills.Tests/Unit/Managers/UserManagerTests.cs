@@ -10,6 +10,7 @@ using Ploeh.AutoFixture;
 using SogetiSkills.Models;
 using SogetiSkills.Security;
 using Moq;
+using WebMatrix.Data;
 
 namespace SogetiSkills.Tests.Unit.Managers
 {
@@ -27,8 +28,9 @@ namespace SogetiSkills.Tests.Unit.Managers
 
                 await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
-                var newUser = DataContext.Users.First(x => x.EmailAddress == "bill@site.com");
-                Assert.IsNotNull(newUser);
+                int count = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Users WHERE EmailAddress = 'bill@site.com'");
+
+                Assert.AreEqual(1, count);
             }
 
             [TestMethod]
@@ -44,9 +46,9 @@ namespace SogetiSkills.Tests.Unit.Managers
 
                 await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
-                var user = DataContext.Users.First(x => x.EmailAddress == "bill@site.com");
-                Assert.AreEqual("hashed password", user.Password.Hash);
-                Assert.AreEqual("salt", user.Password.Salt);
+                var user = TestDatabase.QuerySingle("SELECT TOP 1 * FROM Users WHERE EmailAddress = 'bill@site.com'");
+                Assert.AreEqual("hashed password", user.Password_Hash);
+                Assert.AreEqual("salt", user.Password_Salt);
             }
         }
 
@@ -56,16 +58,9 @@ namespace SogetiSkills.Tests.Unit.Managers
             [TestMethod]
             public void GetUserIdForEmailAddress_GivenAddressInUse_ReturnsTheUserId()
             {
-                SogetiSkillsDataContext db = new SogetiSkillsDataContext();
-                db.Users.Add(new Consultant
-                {
-                    EmailAddress = "bill@site.com",
-                    FirstName = "Bill",
-                    LastName = "Smith",
-                    PhoneNumber = new PhoneNumber("1234567890"),
-                    Password = new HashedPassword {  Hash = "hash", Salt = "salt" }
-                });
-                db.SaveChanges();
+                TestDatabase.Execute(
+                    @"INSERT INTO Users (UserType, EmailAddress, FirstName, LastName, PhoneNumber, Password_Hash, Password_Salt)
+                      VALUES ('Consultant', 'bill@site.com', 'Bill', 'Smith', '1234567890', 'hash', 'salt')");
                 UserManager subject = _fixture.Create<UserManager>();
 
                 int? userId = subject.GetUserIdForEmailAddress("bill@site.com");
@@ -76,16 +71,9 @@ namespace SogetiSkills.Tests.Unit.Managers
             [TestMethod]
             public void GetUserIdForEmailAddress_GivenAddressNotInUse_ReturnsNull()
             {
-                SogetiSkillsDataContext db = new SogetiSkillsDataContext();
-                db.Users.Add(new Consultant
-                {
-                    EmailAddress = "bill@site.com",
-                    FirstName = "Bill",
-                    LastName = "Smith",
-                    PhoneNumber = new PhoneNumber("1234567890"),
-                    Password = new HashedPassword { Hash = "hash", Salt = "salt" }
-                });
-                db.SaveChanges();
+                TestDatabase.Execute(
+                     @"INSERT INTO Users (UserType, EmailAddress, FirstName, LastName, PhoneNumber, Password_Hash, Password_Salt)
+                      VALUES ('Consultant', 'bill@site.com', 'Bill', 'Smith', '1234567890', 'hash', 'salt')");
                 UserManager subject = _fixture.Create<UserManager>();
 
                 int? userId = subject.GetUserIdForEmailAddress("some_other_address@site.com");

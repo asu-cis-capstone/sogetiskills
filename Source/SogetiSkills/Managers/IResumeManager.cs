@@ -9,8 +9,8 @@ namespace SogetiSkills.Managers
 {
     public interface IResumeManager
     {
-        Task<ResumeMetadata> LoadResumeMetadataAsync(int resumeId);
-        Task<Resume> LoadResumeById(int resumeId);
+        Task<ResumeMetadata> LoadResumeMetadataByUserIdAsync(int userId);
+        Task<Resume> LoadResumeByUserId(int userId);
         Task UploadResumeAsync(int userId, string fileName, string mimeType, byte[] fileData);
     }
 }

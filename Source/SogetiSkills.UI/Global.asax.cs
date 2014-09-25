@@ -1,13 +1,16 @@
 ﻿using FluentValidation;
 using FluentValidation.Mvc;
+using SogetiSkills.DatabaseMigrations;
+using SogetiSkills.Managers;
 using SogetiSkills.UI.Controllers;
 using SogetiSkills.UI.Infrastructure.DependencyResolution;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -25,6 +28,7 @@ namespace SogetiSkills.UI
             ValidatorOptions.CascadeMode = CascadeMode.StopOnFirstFailure;
             AssemblyTimestamp = GetUIAssemblyWriteTime();
             MvcHandler.DisableMvcResponseHeader = true;
+            MigrateDatabase();
         }
 
         private DateTime GetUIAssemblyWriteTime()
@@ -32,6 +36,13 @@ namespace SogetiSkills.UI
             var uiAssembly = typeof(AccountController).Assembly;
             var assemblyFileInfo = new FileInfo(uiAssembly.Location);
             return assemblyFileInfo.LastWriteTime;
+        }
+
+        private void MigrateDatabase()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["SogetiSkills"].ConnectionString;
+            SqlDatabaseMigrator migrator = new SqlDatabaseMigrator(connectionString, typeof(UserManager).Assembly, "SogetiSkills.DatabaseMigrations");
+            migrator.Migrate();
         }
 
         protected void Application_BeginRequest()

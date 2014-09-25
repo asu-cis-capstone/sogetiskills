@@ -1,51 +1,70 @@
 ﻿using SogetiSkills.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
+using SogetiSkills.Helpers;
 
 namespace SogetiSkills.Managers
 {
-    public class ResumeManager : IResumeManager
+    public class ResumeManager : ManagerBase, IResumeManager
     {
-        private readonly SogetiSkillsDataContext _db;
-
-        public ResumeManager(SogetiSkillsDataContext db)
+        public async Task<ResumeMetadata> LoadResumeMetadataByUserIdAsync(int userId)
         {
-            _db = db;
+            var command = new SqlCommand("Resume_SelectMetadataByUserId", await GetOpenConnectionAsync());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@userId", userId);
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                while(await reader.ReadAsync())
+                {
+                    var resumeMetadata = new ResumeMetadata();
+                    resumeMetadata.FileName = reader.Field<string>("FileName");
+                    resumeMetadata.MimeType = reader.Field<string>("MimeType");
+
+                    return resumeMetadata;
+                }
+            }
+            
+            return null;
         }
 
-        public async Task<ResumeMetadata> LoadResumeMetadataAsync(int resumeId)
+        public async Task<Resume> LoadResumeByUserId(int userId)
         {
-            return await (from x in _db.Resumes
-                          where x.Id == resumeId
-                          select x.Metadata).FirstOrDefaultAsync();
-        }
+            var command = new SqlCommand("Resume_SelectByUserId", await GetOpenConnectionAsync());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@userId", userId);
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    var resume = new Resume();
+                    resume.Id = reader.Field<int>("Id");
+                    resume.UserId = reader.Field<int>("UserId");
+                    resume.FileData = reader.Field<byte[]>("FileData");
+                    resume.Metadata = new ResumeMetadata();
+                    resume.Metadata.FileName = reader.Field<string>("FileName");
+                    resume.Metadata.MimeType = reader.Field<string>("MimeType");
 
-        public async Task<Resume> LoadResumeById(int resumeId)
-        {
-            return await _db.Resumes.FindAsync(resumeId);
+                    return resume;
+                }
+            }
+            
+            return null;
         }
 
         public async Task UploadResumeAsync(int userId, string fileName, string mimeType, byte[] fileData)
         {
-            var consultant = await _db.Users.OfType<Consultant>().FirstAsync(x => x.Id == userId);
-            if (consultant.ResumeId.HasValue)
-            {
-                _db.Resumes.RemoveRange(_db.Resumes.Where(x => x.Id == consultant.ResumeId.Value));
-            }
-            consultant.Resume = new Resume
-            {
-                Metadata = new ResumeMetadata
-                {
-                    FileName = fileName,
-                    MimeType = mimeType
-                },
-                FileData = fileData
-            };
-            await _db.SaveChangesAsync();
+            var command = new SqlCommand("Resume_Insert", await GetOpenConnectionAsync());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@userId", userId);
+            command.Parameters.AddWithValue("@fileName", fileName);
+            command.Parameters.AddWithValue("@mimeType", mimeType);
+            command.Parameters.AddWithValue("@fileData", fileData);
+
+            await command.ExecuteNonQueryAsync();
         }
     }
 }

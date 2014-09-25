@@ -12,7 +12,5 @@ namespace SogetiSkills.Models
         public string Keyword { get; set; }
         public string SkillDescription { get; set; }
         public bool IsCanonical { get; set; }
-
-        public ICollection<Consultant> Consultants { get; set; }
     }
 }

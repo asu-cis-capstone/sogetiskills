@@ -3,44 +3,48 @@ using SogetiSkills.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Ploeh.AutoFixture;
+using SogetiSkills.Managers;
+using SogetiSkills.DatabaseMigrations;
+using System.Data.SqlClient;
+using WebMatrix.Data;
 
 namespace SogetiSkills.Tests.TestHelpers
 {
     public class DbUnitTestBase : UnitTestBase
     {
+        protected static Database TestDatabase = null;
+
         static DbUnitTestBase()
-        {
-            AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ""));
+        {            
+            string connectionString = ConfigurationManager.ConnectionStrings["SogetiSkills"].ConnectionString;
+            SqlDatabaseMigrator migrator = new SqlDatabaseMigrator(connectionString, typeof(UserManager).Assembly, "SogetiSkills.DatabaseMigrations");
+            migrator.Migrate();
+
+            TestDatabase = Database.Open("SogetiSkills");
         }
 
         [TestCleanup]
         public void EmptyDatabase()
         {
-            using (var db = new SogetiSkillsDataContext())
+            var sqlStatements = new[] {
+                "DELETE FROM Resumes",
+                "DELETE FROM Consultant_Tag",
+                "DELETE FROM Tags",
+                "DELETE FROM Users",
+                "DBCC CHECKIDENT ('Users', RESEED, 1)",
+                "DBCC CHECKIDENT ('Resumes', RESEED, 1)",
+                "DBCC CHECKIDENT ('Tags', RESEED, 1)"
+            };
+            
+            foreach(string sqlStatement in sqlStatements)
             {
-                db.Users.RemoveRange(db.Users);
-                db.Resumes.RemoveRange(db.Resumes);
-                db.Tags.RemoveRange(db.Tags);
-                db.SaveChanges();
-
-                db.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Users', RESEED, 1)");
-                db.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Resumes', RESEED, 1)");
-                db.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Tags', RESEED, 1)");
-            }
-        }
-
-        protected SogetiSkillsDataContext DataContext
-        {
-            get
-            {
-                return _fixture.Create<SogetiSkillsDataContext>();
+                TestDatabase.Execute(sqlStatement);                    
             }
         }
     }

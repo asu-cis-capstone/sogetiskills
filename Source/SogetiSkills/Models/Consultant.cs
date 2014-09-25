@@ -8,10 +8,6 @@ namespace SogetiSkills.Models
 {
     public class Consultant : User
     {
-        public bool? IsOnBeach { get; set; }
-        public int? ResumeId { get; set; }
-
-        public Resume Resume { get; set; }
-        public ICollection<Tag> Tags { get; set; }
+        public bool IsOnBeach { get; set; }
     }
 }
