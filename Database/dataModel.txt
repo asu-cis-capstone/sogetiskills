@@ -6,7 +6,6 @@ Sept 13
 User
 ----------
 UserId	Primary Key
-UserName	NOT NULL
 FirstName
 LastName
 
@@ -25,16 +24,7 @@ StartTime
 EndTime
 Primary Key (UserId, StartTime)
 
-Permission
-----------
-PermissionId PRIMARY KEY
-PermissionDescription
 
-Role
-----------
-RoleId	Primary Key
-RoleName
-PermissionId	FOREIGN KEY
 
 UserRole
 ----------
@@ -62,22 +52,26 @@ Skill
 ----------
 SkillId	Primary Key	
 SkillDescription
-FunctionalAreaId	FOREIGN KEY
 
 
-FunctionalArea
+Proficiency
 ----------
-FunctionalAreaId
-FunctionalAreaDescription
+ProficiencyId
+ProficiencyDescription
 
 
 UserSkill
 ----------
 UserId	Foreign Key
 SkillId	Foreign Key
-SkillLevel
+ProficiencyId	FOREIGN KEY
 PrimaryKey (UserId, SkillId)
 
 
+
+stored procedures
+skills on beach
+employees on beach
+filter by skills
 
 
