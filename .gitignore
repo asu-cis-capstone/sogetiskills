@@ -205,3 +205,9 @@ Database/DatabaseSMTP.sql
 Database/SQLQuery1.sql
 
 Database/UserDefinedTable.sql
+
+Source/SogetiSkills.UI.Tests/Unit/ViewModels/Account/SignIn/SignInViewModelValidatorTests.cs
+
+Source/SogetiSkills.UI/Controllers/ProfileController.cs
+
+Source/SogetiSkills.UI/Helpers/Security/AuthCookieHelper.cs

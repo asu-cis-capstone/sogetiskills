@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Attributes;
-using SogetiSkills.Managers;
-using SogetiSkills.Models;
+using SogetiSkills.Core.Managers;
+using SogetiSkills.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +45,8 @@ namespace SogetiSkills.UI.ViewModels.Account
                 .Must(BeAvailable).WithMessage("There is already an account for {0}.", x => x.EmailAddress);
             
             RuleFor(x => x.Password)
-                .NotEmpty().WithMessage("Please enter a password.");
+                .NotEmpty().WithMessage("Please enter a password.")
+                .Must(BeAtLeast7CharactersAndContainALetterAndANumber).WithMessage("Password must be at least 7 characters and contain a number and a letter.");
             
             RuleFor(x => x.ConfirmPassword)
                 .Equal(x => x.Password).When(x => !string.IsNullOrEmpty(x.Password)).WithMessage("Passwords do not match.");
@@ -74,6 +75,18 @@ namespace SogetiSkills.UI.ViewModels.Account
         private bool BeInTheListOfValidAccountTypes(string accountType)
         {
             return AccountTypes.All.Contains(accountType);
+        }
+
+        private bool BeAtLeast7CharactersAndContainALetterAndANumber(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return true;
+            }
+
+            return input.Length >= 7
+                && input.Any(x => char.IsDigit(x))
+                && input.Any(x => char.IsLetter(x));
         }
     }
 }

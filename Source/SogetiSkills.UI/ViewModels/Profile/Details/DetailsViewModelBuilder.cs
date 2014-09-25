@@ -1,5 +1,5 @@
-﻿using SogetiSkills.Managers;
-using SogetiSkills.Models;
+﻿using SogetiSkills.Core.Managers;
+using SogetiSkills.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,13 +46,9 @@ namespace SogetiSkills.UI.ViewModels.Profile.Details
                 Consultant consultant = (Consultant)user;
                 model.UserTypeDescription = "Consultant";
                 model.IsConsultant = true;
-                model.IsOnBeach = consultant.IsOnBeach ?? false;
+                model.IsOnBeach = consultant.IsOnBeach;
                 
-                if (consultant.ResumeId.HasValue)
-                {
-                    model.ResumeMetadata = await _resumeManager.LoadResumeMetadataAsync(consultant.ResumeId.Value);
-                }
-
+                model.ResumeMetadata = await _resumeManager.LoadResumeMetadataByUserIdAsync(consultant.Id);
                 model.Tags = await _tagManager.LoadTagsForConsultantAsync(consultant.Id);
             }
             else if (user is AccountExecutive)

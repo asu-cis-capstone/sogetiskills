@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SogetiSkills.UI", "SogetiSkills.UI\SogetiSkills.UI.csproj", "{7961EAC9-E047-45E2-958B-F6D1910CE252}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SogetiSkills.Tests", "SogetiSkills.Tests\SogetiSkills.Tests.csproj", "{4033F833-4630-4452-ACA7-70E33B41EE3E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A081D964-80AE-4EF6-80A9-6BAA6FC7BE84}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -14,7 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A081D9
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SogetiSkills", "SogetiSkills\SogetiSkills.csproj", "{DA8F58DA-48E4-4BE8-9705-E238925A7504}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SogetiSkills.UI.Tests", "SogetiSkills.UI.Tests\SogetiSkills.UI.Tests.csproj", "{C58939D4-B77A-44CF-A699-0A6BA348E0F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SogetiSkills.Core", "SogetiSkills.Core\SogetiSkills.Core.csproj", "{DA8F58DA-48E4-4BE8-9705-E238925A7504}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SogetiSkills.Core.Tests", "SogetiSkills.Core.Tests\SogetiSkills.Core.Tests.csproj", "{4033F833-4630-4452-ACA7-70E33B41EE3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,14 +28,18 @@ Global
 		{7961EAC9-E047-45E2-958B-F6D1910CE252}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7961EAC9-E047-45E2-958B-F6D1910CE252}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7961EAC9-E047-45E2-958B-F6D1910CE252}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4033F833-4630-4452-ACA7-70E33B41EE3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4033F833-4630-4452-ACA7-70E33B41EE3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4033F833-4630-4452-ACA7-70E33B41EE3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4033F833-4630-4452-ACA7-70E33B41EE3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C58939D4-B77A-44CF-A699-0A6BA348E0F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C58939D4-B77A-44CF-A699-0A6BA348E0F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C58939D4-B77A-44CF-A699-0A6BA348E0F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C58939D4-B77A-44CF-A699-0A6BA348E0F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DA8F58DA-48E4-4BE8-9705-E238925A7504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DA8F58DA-48E4-4BE8-9705-E238925A7504}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA8F58DA-48E4-4BE8-9705-E238925A7504}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA8F58DA-48E4-4BE8-9705-E238925A7504}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4033F833-4630-4452-ACA7-70E33B41EE3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4033F833-4630-4452-ACA7-70E33B41EE3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4033F833-4630-4452-ACA7-70E33B41EE3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4033F833-4630-4452-ACA7-70E33B41EE3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

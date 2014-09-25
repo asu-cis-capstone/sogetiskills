@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using StructureMap.Graph;
-using SogetiSkills.Models;
+using SogetiSkills.Core.Models;
 using StructureMap.Web;
 using FluentValidation.Mvc;
 using SogetiSkills.UI.Controllers;
+using SogetiSkills.Core.Managers;
 
 namespace SogetiSkills.UI.Infrastructure.DependencyResolution
 {
@@ -20,11 +21,10 @@ namespace SogetiSkills.UI.Infrastructure.DependencyResolution
                     scan =>
                     {
                         scan.TheCallingAssembly();
-                        scan.AssemblyContainingType<SogetiSkillsDataContext>();
+                        scan.AssemblyContainingType<UserManager>();
                         scan.WithDefaultConventions();
                         scan.With(new ControllerConvention());
                     });
-                config.For<SogetiSkillsDataContext>().HttpContextScoped().Use<SogetiSkillsDataContext>();
                 foreach(var type in FluentValidation.AssemblyScanner.FindValidatorsInAssemblyContaining<HomeController>())
                 {
                     config.For(type.InterfaceType).Use(type.ValidatorType);
