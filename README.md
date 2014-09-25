@@ -40,6 +40,11 @@ Product Backlog (w/Strict Prioritizing)
   * DB Backup Strategy/ Recovery Model
     * Full/Differential backups
 	* Transactional log backups
+ * Correct AE dashboard spec with only skills (left) and consultants (right)
+ * UserId / Password recovery method
+ * Add proficieny to consultant skill
+ * Add constraint to UserId
+ * Add constraint to Password
 
 Complete
   * Create project structure
