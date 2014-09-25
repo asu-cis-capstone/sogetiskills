@@ -75,6 +75,8 @@ namespace SogetiSkills.UI.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Restricted = "Restricted";
+            public readonly string Error = "Error";
+            public readonly string NotFound = "NotFound";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -82,6 +84,8 @@ namespace SogetiSkills.UI.Controllers
         {
             public const string Index = "Index";
             public const string Restricted = "Restricted";
+            public const string Error = "Error";
+            public const string NotFound = "NotFound";
         }
 
 
@@ -95,10 +99,14 @@ namespace SogetiSkills.UI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string Error = "Error";
                 public readonly string Index = "Index";
+                public readonly string NotFound = "NotFound";
                 public readonly string Restricted = "Restricted";
             }
+            public readonly string Error = "~/Views/Home/Error.cshtml";
             public readonly string Index = "~/Views/Home/Index.cshtml";
+            public readonly string NotFound = "~/Views/Home/NotFound.cshtml";
             public readonly string Restricted = "~/Views/Home/Restricted.cshtml";
         }
     }
@@ -127,6 +135,28 @@ namespace SogetiSkills.UI.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Restricted);
             RestrictedOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ErrorOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Error()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Error);
+            ErrorOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void NotFoundOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult NotFound()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NotFound);
+            NotFoundOverride(callInfo);
             return callInfo;
         }
 

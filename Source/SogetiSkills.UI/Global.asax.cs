@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Mvc;
-using SogetiSkills.DatabaseMigrations;
-using SogetiSkills.Managers;
+using SogetiSkills.Core.DatabaseMigrations;
+using SogetiSkills.Core.Managers;
 using SogetiSkills.UI.Controllers;
 using SogetiSkills.UI.Infrastructure.DependencyResolution;
 using System;

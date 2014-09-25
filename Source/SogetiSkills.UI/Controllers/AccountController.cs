@@ -1,7 +1,7 @@
 ﻿using AttributeRouting.Web.Mvc;
 using MvcFlashMessages;
-using SogetiSkills.Managers;
-using SogetiSkills.Models;
+using SogetiSkills.Core.Managers;
+using SogetiSkills.Core.Models;
 using SogetiSkills.UI.Helpers.Security;
 using SogetiSkills.UI.ViewModels.Account;
 using System;

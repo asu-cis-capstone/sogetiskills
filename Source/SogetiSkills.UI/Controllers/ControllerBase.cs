@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MvcFlashMessages;
 using SogetiSkills.UI.Helpers.Security;
-using SogetiSkills.Managers;
+using SogetiSkills.Core.Managers;
 using System.Threading.Tasks;
 
 namespace SogetiSkills.UI.Controllers

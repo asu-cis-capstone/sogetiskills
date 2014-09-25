@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using StructureMap.Graph;
-using SogetiSkills.Models;
+using SogetiSkills.Core.Models;
 using StructureMap.Web;
 using FluentValidation.Mvc;
 using SogetiSkills.UI.Controllers;
-using SogetiSkills.Managers;
+using SogetiSkills.Core.Managers;
 
 namespace SogetiSkills.UI.Infrastructure.DependencyResolution
 {
