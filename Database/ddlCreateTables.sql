@@ -28,14 +28,14 @@ AS SNAPSHOT OF source_database_name
 */
 
 
-/* Application accessing DB */
+/* Application accessing DB 
 CREATE TABLE Application(
 	ApplicationId	int			PRIMARY KEY,
 	ApplicationName	text(50),
 	Description		text(50)
 );
+*/
 
-/* Removed UserName, signin based on email */
 
 /* Person */
 CREATE TABLE User (
@@ -62,32 +62,22 @@ CREATE TABLE Session(
 	PRIMARY KEY (UserId, StartTime)
 );
 
-
-/* Permission Levels for Roles*/
-CREATE TABLE Permission(
-	PermissionId	int PRIMARY KEY IDENTITY(1,1),
-	PermissionDescription	nvarchar(max) NOT NULL
-);
-
-
 /* Role- Account Executive or Consultant */
-CREATE TABLE Role(
-	RoleId	int	PRIMARY KEY IDENTITY(1,1),
-	RoleName	char(50)	NOT NULL,
-	PermissionId
-	CONSTRAINT FK_Role_Permission FOREIGN KEY (PermissionId) REFERENCES Permission(PermissionId)
+CREATE TABLE Type(
+	TypeId	int	PRIMARY KEY IDENTITY(1,1),
+	TypeName	char(50)	NOT NULL
 );
 
 
 /* Users in Roles */
-CREATE TABLE UserRole(
+CREATE TABLE UserType(
 	UserId	int	NOT NULL,
-	RoleId	int	NOT NULL,
+	TypeId	int	NOT NULL,
 	DateFrom	date	NOT NULL,
 	DateTo	date,
-	PRIMARY KEY (UserId, RoleId)
-	CONSTRAINT FK_UserRole_User FOREIGN KEY (UserId) REFERENCES User(UserId),
-	CONSTRAINT FK_UserRole_Role FOREIGN KEY (RoleId) REFERENCES Role(RoleId)
+	PRIMARY KEY (UserId, TypeId)
+	CONSTRAINT FK_UserType_User FOREIGN KEY (UserId) REFERENCES User(UserId),
+	CONSTRAINT FK_UserType_Type FOREIGN KEY (TypeId) REFERENCES Type(TypeId)
 );
 
 /* User Beach Status */
@@ -97,13 +87,16 @@ CREATE TABLE UserStatus(
 	DateFrom	date	NOT NULL,
 	DateTo	date,
 	PRIMARY KEY (UserId, IsOnBeach, DateFrom)
-	CONSTRAINT FK_UserRole_User FOREIGN KEY (UserId) REFERENCES User(UserId)
+	CONSTRAINT FK_UserStatus_User FOREIGN KEY (UserId) REFERENCES User(UserId)
 );
 
 /* Resume */
 CREATE TABLE Resume(
 	ResumeId	int NOT NULL PRIMARY KEY IDENTITY(1,1),
-	ResumeBlob	varbinary
+	ResumeBlob	varbinary(max)	NULL,
+	[FileName]	nvarchar(max)	NULL,
+	UserId	int	NOT NULL,
+	CONSTRAINT FK_Resume_User FOREIGN KEY (UserId) REFERENCES User(UserId)
 );
 
 /* Skills */
@@ -114,10 +107,13 @@ CREATE TABLE Skill(
 
 /* UserSkill */
 CREATE TABLE UserSkill(
-	UserId
-	SkillId
-	PRIMARY KEY (UserId, SkillId)
+	UserId		int		NOT NULL,
+	SkillId		int		NOT NULL,
+	PRIMARY KEY (UserId, SkillId),
 	CONSTRAINT FK_UserSkill_User FOREIGN KEY (UserId) REFERENCES User(UserId),
-	CONSTRAINT FK_UserSkill_Role FOREIGN KEY (SkillId) REFERENCES Skill(SkillId)
+	CONSTRAINT FK_UserSkill_Skill FOREIGN KEY (SkillId) REFERENCES Skill(SkillId)
 );
 
+/*
+Proficiency Levels for skills
+*/

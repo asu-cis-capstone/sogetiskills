@@ -8,6 +8,7 @@ User
 UserId	Primary Key
 FirstName
 LastName
+IsOnBeach
 
 Membership
 ----------
@@ -26,6 +27,7 @@ Primary Key (UserId, StartTime)
 
 
 
+---> Type, not role
 UserRole
 ----------
 UserId	Foreign Key
@@ -34,11 +36,7 @@ DateFrom NOT NULL
 DateTo
 PrimaryKey (UserId, RoleId)
 
-UserStatus
-----------
-UserId
-IsOnBeach
-Primary Key (UserId, IsOnBeach)
+
 
 
 UserResume
