@@ -70,8 +70,6 @@ namespace Links
         private const string URLPATH = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        public static readonly string flash_messages_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/flash-messages.min.css") ? Url("flash-messages.min.css") : Url("flash-messages.css");
-             
         public static readonly string Styles_scss = Url("Styles.scss");
         public static readonly string Styles_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Styles.min.css") ? Url("Styles.min.css") : Url("Styles.css");
              
