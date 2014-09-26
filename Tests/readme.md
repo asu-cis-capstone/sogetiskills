@@ -2,7 +2,7 @@
 
 
 
-From this point onward, the project repo should include a folder called `tests` and there should be some documentation in the README file about 'how to test' or 'how to run the tests'.  
+From this point onward, the project repo should include a folder called Tests and there should be some documentation in the README file about 'how to test' or 'how to run the tests'.  
 
 Tests may be automated scripts or may be written documentation of manual test procedures.  
 
