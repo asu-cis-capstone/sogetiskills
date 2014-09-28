@@ -13,7 +13,6 @@ namespace SogetiSkills.Core.DatabaseMigrations
     public class SqlDatabaseMigrator
     {
         private readonly string _connectionString;
-        private readonly string _databaseName;
         private readonly Assembly _migrationScriptsAssembly;
         private readonly string _migrationScriptsNamespace;
 
@@ -22,81 +21,112 @@ namespace SogetiSkills.Core.DatabaseMigrations
             _connectionString = connectionString;
             _migrationScriptsAssembly = migrationScriptsAssembly;
             _migrationScriptsNamespace = migrationScriptsNamespace;
-            _databaseName = ExtractDatabaseNameFromConnectionString(connectionString);
-        }
-
-        private string ExtractDatabaseNameFromConnectionString(string connectionString)
-        {
-            var connectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
-            return connectionStringBuilder.DataSource;
         }
 
         public void Migrate()
         {
+            EnsureDatabaseExists();
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 EnsureMigrationHistoryTableExists(connection);
-                long? mostRecentlyAppliedMigration = GetMostRecentlyAppliedMigration(connection);
-                var pendingMigrations = GetPendingMigrations(mostRecentlyAppliedMigration);
-                foreach(var migration in pendingMigrations)
-                {
-                    migration.Apply(connection);
-                }
+                ApplyMigrations(connection);
             }
         }
 
+        #region Ensure database exists
+        private void EnsureDatabaseExists()
+        {
+            string connectionString = CreateConnectionStringWithoutDatabaseName();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string createDatabaseStatement = @"IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = '{0}')
+	                                           BEGIN
+	                                           	  CREATE DATABASE {0}
+	                                           END";
+                string databseName = ExtractDatabaseNameFromConnectionString();
+                createDatabaseStatement = string.Format(createDatabaseStatement, databseName);
+                
+                connection.Open();
+                SqlCommand command = new SqlCommand(createDatabaseStatement, connection);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private string CreateConnectionStringWithoutDatabaseName()
+        {
+            var connectionStringBuilder = new SqlConnectionStringBuilder(_connectionString);
+            connectionStringBuilder.Remove("Database");
+            return connectionStringBuilder.ConnectionString;
+        }
+
+        private string ExtractDatabaseNameFromConnectionString()
+        {
+            var connectionStringBuilder = new SqlConnectionStringBuilder(_connectionString);
+            return connectionStringBuilder.InitialCatalog;
+        }
+        #endregion
+
+        #region Ensure migrations history table exists
         private void EnsureMigrationHistoryTableExists(SqlConnection connection)
         {
-            bool migrationHistoryTableAlreadyExists = MigrationHistoryTableAlreadyExists(connection);
-            if (!migrationHistoryTableAlreadyExists)
-            {
-                CreateMigrationHistoryTable(connection);
-            }
-        }
-
-        private bool MigrationHistoryTableAlreadyExists(SqlConnection connection)
-        {
-            string selectDatabaseCountStatement = "SELECT COUNT(*) FROM sys.Tables WHERE Name = '__MigrationHistory'";
-            SqlCommand command = new SqlCommand(selectDatabaseCountStatement, connection);
-            int count = (int)command.ExecuteScalar();
-            return count > 0;
-        }
-
-        private void CreateMigrationHistoryTable(SqlConnection connection)
-        {
-            string createMigrationHistoryTableSatement = @"CREATE TABLE __MigrationHistory
-                                                           (
-                                                               MigrationId bigint NOT NULL PRIMARY KEY,
-                                                               Name nvarchar(MAX) NOT NULL,
-                                                               Script nvarchar(MAX) NOT NULL,
-                                                               DateAppliedUtc datetime NOT NULL DEFAULT GETUTCDATE()
-                                                           );";
+            string createMigrationHistoryTableSatement =
+                @"IF NOT EXISTS (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_Name = '__MigrationHistory')
+	              BEGIN
+		              CREATE TABLE __MigrationHistory
+                      (
+                          MigrationId bigint NOT NULL PRIMARY KEY,
+                          Name nvarchar(MAX) NOT NULL,
+                          Script nvarchar(MAX) NOT NULL,
+                          DateAppliedUtc datetime NOT NULL DEFAULT GETUTCDATE()
+                      );
+	              END";
             SqlCommand command = new SqlCommand(createMigrationHistoryTableSatement, connection);
             command.ExecuteNonQuery();
         }
+        #endregion
 
-        private long? GetMostRecentlyAppliedMigration(SqlConnection connection)
+        #region Apply migrations
+        private void ApplyMigrations(SqlConnection connection)
         {
-            string selectMostRecentlyAppliedMigrationStatement = "SELECT MAX(MigrationId) FROM __MigrationHistory";
-            SqlCommand command = new SqlCommand(selectMostRecentlyAppliedMigrationStatement, connection);
-            long? mostRecentlyAppliedMigration = DataReaderHelper.CastTo<long?>(command.ExecuteScalar());
-            return mostRecentlyAppliedMigration;
+            IEnumerable<long> alreadyAppliedMigrations = GetAlreadyAppliedMigrations(connection);
+            var pendingMigrations = GetPendingMigrations(alreadyAppliedMigrations);
+            foreach (var migration in pendingMigrations)
+            {
+                migration.Apply(connection);
+            }
         }
 
-        private IEnumerable<SqlDatabaseMigration> GetPendingMigrations(long? mostRecentlyAppliedMigration)
+        private IEnumerable<long> GetAlreadyAppliedMigrations(SqlConnection connection)
         {
-            mostRecentlyAppliedMigration = mostRecentlyAppliedMigration ?? 0;
+            string selectMostRecentlyAppliedMigrationStatement = "SELECT MigrationId FROM __MigrationHistory";
+            SqlCommand command = new SqlCommand(selectMostRecentlyAppliedMigrationStatement, connection);
+            List<long> appliedMigrations = new List<long>();
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    appliedMigrations.Add(reader.Field<long>("MigrationId"));
+                }
+            }
+            return appliedMigrations;
+        }
+
+        private IEnumerable<SqlDatabaseMigration> GetPendingMigrations(IEnumerable<long> appliedMigrations)
+        {
             var resourceStreamNames = _migrationScriptsAssembly
                 .GetManifestResourceNames()
                 .Where(x => x.StartsWith(_migrationScriptsNamespace) && x.EndsWith(".sql"));
 
             List<SqlDatabaseMigration> migrations = new List<SqlDatabaseMigration>();
-            foreach(string resourceStreamName in resourceStreamNames)
+            foreach (string resourceStreamName in resourceStreamNames)
             {
                 migrations.Add(CreateMigrationFromResourceStream(resourceStreamName));
             }
-            return migrations.Where(x => x.MigartionId > mostRecentlyAppliedMigration).ToList();
+            return migrations
+                .Where(x => !appliedMigrations.Contains(x.MigartionId))
+                .OrderBy(x => x.MigartionId)
+                .ToList();
         }
 
         private SqlDatabaseMigration CreateMigrationFromResourceStream(string resourceStreamName)
@@ -113,5 +143,6 @@ namespace SogetiSkills.Core.DatabaseMigrations
             }
             return new SqlDatabaseMigration(migrationId, name, script);
         }
+        #endregion
     }
 }

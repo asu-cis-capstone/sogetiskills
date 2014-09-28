@@ -41,7 +41,7 @@ namespace SogetiSkills.UI
         private void MigrateDatabase()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["SogetiSkills"].ConnectionString;
-            SqlDatabaseMigrator migrator = new SqlDatabaseMigrator(connectionString, typeof(UserManager).Assembly, "SogetiSkills.DatabaseMigrations");
+            SqlDatabaseMigrator migrator = new SqlDatabaseMigrator(connectionString, typeof(UserManager).Assembly, "SogetiSkills.Core.DatabaseMigrations");
             migrator.Migrate();
         }
 
