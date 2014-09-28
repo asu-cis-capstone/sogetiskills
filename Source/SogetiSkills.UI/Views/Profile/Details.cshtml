@@ -1,0 +1,130 @@
+@model SogetiSkills.UI.ViewModels.Profile.Details.DetailsViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2>
+            @Model.FullName - @Model.UserTypeDescription
+            @if (Model.IsConsultant)
+            {
+                if (Model.IsOnBeach == true)
+                {
+                    <span class="text-success pull-right"><span class="glyphicon glyphicon-ok"></span> On the beach</span>
+                }
+                else
+                {
+
+                    <span class="text-muted pull-right"><span class="glyphicon glyphicon-remove"></span> Not on the beach</span>
+                }
+            }
+        </h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Contact info
+                @if (Model.ProfileBelongsToCurrentUser)
+                {
+                    <a href="@Url.Action(MVC.Profile.EditContactInfo(Model.UserId))" class="pull-right"><span class="glyphicon glyphicon-edit"></span> Edit contact info</a>
+                }
+                else
+                {
+                    <a href="#" class="pull-right"><span class="glyphicon glyphicon-send"></span> Send an email to @Model.FirstName</a>
+                }
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>Name</dt>
+                    <dd>@Model.FullName</dd>
+                    <dt>Email address</dt>
+                    <dd>@Model.Email</dd>
+                    <dt>Phone number</dt>
+                    <dd>@Model.PhoneNumber</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            @if (Model.IsConsultant)
+            {
+                <div class="panel-heading">
+                    Resume
+                    @if (Model.ProfileBelongsToCurrentUser)
+                    {
+                        <a href="@Url.Action(MVC.Profile.UploadResume(Model.UserId))" class="pull-right"><span class="glyphicon glyphicon-plus"></span> Upload a resume</a>
+                    }
+                </div>
+                <div class="panel-body">
+                    @if (Model.ResumeMetadata == null)
+                    {
+                        if (Model.ProfileBelongsToCurrentUser)
+                        {
+                            <p>You haven't uploaded a resume yet.</p>
+                        }
+                        else
+                        {
+                            <p>@Model.FirstName hasn't uploaded a resume yet.</p>
+                        }
+                    }
+                    else
+                    {
+                        <p><a href="@Url.Action(MVC.Profile.DownloadResume(Model.UserId))"><span class="glyphicon glyphicon-file"></span> @Model.ResumeMetadata.FileName</a></p>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-lg-6">
+        @if (Model.IsConsultant)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Skills
+                    @if (Model.ProfileBelongsToCurrentUser)
+                    {
+                        if (Model.Tags.Any())
+                        {
+                            <a href="#" class="pull-right">><span class="glyphicon glyphicon-edit"></span> Edit skills</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="pull-right"><span class="glyphicon glyphicon-plus"></span> Add skills</a>
+                        }
+                    }
+                </div>
+                <div class="panel-body">
+                    @if (Model.Tags.Any())
+                    {
+                        <ul>
+                            @foreach (var tag in Model.Tags)
+                            {
+                                <li>
+                                    @tag.Keyword
+                                    @if (!string.IsNullOrWhiteSpace(tag.SkillDescription))
+                                    {
+                                        <span class="text-muted">@tag.SkillDescription</span>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        if (Model.ProfileBelongsToCurrentUser)
+                        {
+                            <p>You haven't listed any skills yet.</p>
+                        }
+                        else
+                        {
+
+                            <p>@Model.FirstName hasn't listed any skills yet.</p>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.IO;
 using SogetiSkills.Core.Helpers;
+using System.Diagnostics;
 
 namespace SogetiSkills.Core.DatabaseMigrations
 {
@@ -40,21 +41,23 @@ namespace SogetiSkills.Core.DatabaseMigrations
             string connectionString = CreateConnectionStringWithoutDatabaseName();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string createDatabaseStatement = @"IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = '{0}')
-	                                           BEGIN
-	                                           	  CREATE DATABASE {0}
-	                                           END";
-                string databseName = ExtractDatabaseNameFromConnectionString();
-                createDatabaseStatement = string.Format(createDatabaseStatement, databseName);
-                
                 connection.Open();
-                SqlCommand command = new SqlCommand(createDatabaseStatement, connection);
-                command.ExecuteNonQuery();
+                string databaseName = ExtractDatabaseNameFromConnectionString();
+
+                // We check if the database exists and create the database in two separates statements because
+                // SQL Azure doesn't support creating a database inside of the usual "IF NOT EXISTS (...)" construct.
+                if (!DoesDatabaseAlreadyExist(connection, databaseName))
+                {
+                    CreateDatabase(connection, databaseName);
+                }
             }
         }
 
         private string CreateConnectionStringWithoutDatabaseName()
         {
+            // We need to strip the database name from the connection string because of course the connection
+            // will fail if the database doesn't exist.  For the EnsureDatabaseExists steps we just need to
+            // connect to the server itself.
             var connectionStringBuilder = new SqlConnectionStringBuilder(_connectionString);
             connectionStringBuilder.Remove("Database");
             return connectionStringBuilder.ConnectionString;
@@ -64,6 +67,22 @@ namespace SogetiSkills.Core.DatabaseMigrations
         {
             var connectionStringBuilder = new SqlConnectionStringBuilder(_connectionString);
             return connectionStringBuilder.InitialCatalog;
+        }
+
+        private bool DoesDatabaseAlreadyExist(SqlConnection connection, string databaseName)
+        {
+            string selectDatabaseByNameStatement = "SELECT COUNT(*) FROM sys.databases WHERE name = @databaseName";
+            SqlCommand command = new SqlCommand(selectDatabaseByNameStatement, connection);
+            command.Parameters.AddWithValue("@databaseName", databaseName);
+            int count = (int)command.ExecuteScalar();
+            return count >= 1;
+        }
+
+        private void CreateDatabase(SqlConnection connection, string databaseName)
+        {
+            string createDatabaseStatement = string.Format("CREATE DATABASE {0}", databaseName);
+            SqlCommand command = new SqlCommand(createDatabaseStatement, connection);
+            command.ExecuteNonQuery();
         }
         #endregion
 
