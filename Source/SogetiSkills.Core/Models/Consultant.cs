@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Core.Models
 {
+    /// <summary>
+    /// A consultant that may be on "the beach" and have tags.
+    /// </summary>
     public class Consultant : User
     {
+        /// <summary>
+        /// Gets or sets a flag indicating whether or not the consultant is currently on the beach.
+        /// </summary>
         public bool IsOnBeach { get; set; }
     }
 }

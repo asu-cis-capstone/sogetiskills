@@ -157,7 +157,6 @@
       <DependentUpon>Styles.css</DependentUpon>
     </Content>
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\dev-sogetiskills.pubxml" />
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

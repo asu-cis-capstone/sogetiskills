@@ -157,3 +157,6 @@ $RECYCLE.BIN/
 *.vsd
 
 *.vsd
+
+# Sandcastle documentation artifacts
+Source/Documentation/Help/
