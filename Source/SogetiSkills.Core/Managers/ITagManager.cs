@@ -7,8 +7,16 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Core.Managers
 {
+    /// <summary>
+    /// Provides data access for tags (skills).
+    /// </summary>
     public interface ITagManager
     {
+        /// <summary>
+        /// Load all of the tags that have been applied to a consultant.
+        /// </summary>
+        /// <param name="consultantId">The id of the consultant to load tags for.</param>
+        /// <returns>All the tags that have been applied to consultant</returns>
         Task<IEnumerable<Tag>> LoadTagsForConsultantAsync(int consultantId);
     }
 }

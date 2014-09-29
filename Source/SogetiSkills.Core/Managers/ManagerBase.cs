@@ -8,10 +8,17 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Core.Managers
 {
+    /// <summary>
+    /// Base class for all manager classes.  Provides and manages a database connection.
+    /// </summary>
     public abstract class ManagerBase : IDisposable
     {
         private SqlConnection _connection = null;
 
+        /// <summary>
+        /// Gets an open connection to the database.
+        /// </summary>
+        /// <returns>An open connection to the database.</returns>
         protected SqlConnection GetOpenConnection()
         {
             GetConnection();
@@ -22,6 +29,10 @@ namespace SogetiSkills.Core.Managers
             return _connection;
         }
 
+        /// <summary>
+        /// Gets an open connection to the database.
+        /// </summary>
+        /// <returns>An open connection to the database.</returns>
         protected async Task<SqlConnection> GetOpenConnectionAsync()
         {
             GetConnection();

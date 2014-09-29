@@ -13,6 +13,13 @@ namespace SogetiSkills.Core.DatabaseMigrations
         public string Name { get; private set; }
         public string Script { get; private set; }
 
+        /// <summary>
+        /// Represents a single migration to be made to the database.
+        /// </summary>
+        /// <param name="migrationId">The id of the migration.  It should be the DateTime.UtcNow.Ticks of when 
+        /// the migration script was created.</param>
+        /// <param name="name">The friendly name of the migration script.</param>
+        /// <param name="script">The actual SQL script to execute when the migration is run.</param>
         public SqlDatabaseMigration(long migrationId, string name, string script)
         {
             MigartionId = migrationId;
@@ -20,6 +27,10 @@ namespace SogetiSkills.Core.DatabaseMigrations
             Script = script;
         }
 
+        /// <summary>
+        /// Actually apply the migration by executing the migration script against the database.
+        /// </summary>
+        /// <param name="connection">An open connection to the database to be migrated.</param>
         public void Apply(SqlConnection connection)
         {
             ApplyMigrationScript(connection);
