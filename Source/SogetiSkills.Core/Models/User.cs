@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Core.Models
 {
+    /// <summary>
+    /// Abstract base class for a user of the system.  Users are either consultants or
+    /// account executives.  The user class holds contact and login information which
+    /// are applicable to both user types.
+    /// </summary>
     public abstract class User
     {
         public int Id { get; set; }

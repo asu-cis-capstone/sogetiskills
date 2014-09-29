@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Core.Models
 {
+    /// <summary>
+    /// Helper class to holder strongly typed versions of the two possible values for the
+    /// UserType discriminator column in the user table.
+    /// </summary>
     public static class AccountTypes
     {
         public const string CONSULTANT = "Consultant";

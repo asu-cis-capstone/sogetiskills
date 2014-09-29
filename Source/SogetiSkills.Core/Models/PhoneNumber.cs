@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Core.Models
 {
+    /// <summary>
+    /// Wraps a string the represents a phone number.
+    /// </summary>
     public class PhoneNumber
     {
         private string _value;
@@ -17,6 +20,9 @@ namespace SogetiSkills.Core.Models
             this.Value = value;
         }
 
+        /// <summary>
+        /// Gets or sets the raw value for the phone number.
+        /// </summary>
         public string Value
         {
             get
@@ -29,6 +35,10 @@ namespace SogetiSkills.Core.Models
             }
         }
 
+        /// <summary>
+        /// Get the phone number formated as (123) 456-7890.
+        /// </summary>
+        /// <returns>The formatted phone number</returns>
         public string GetFormattedValue()
         {
             if (_value == null)
@@ -49,6 +59,11 @@ namespace SogetiSkills.Core.Models
                 Value[9]);
         }
 
+        /// <summary>
+        /// Validate that a string represents a phone number.
+        /// </summary>
+        /// <param name="input">The string to validate.</param>
+        /// <returns>Whether or not the string represents a phone number.</returns>
         public static bool IsValid(string input)
         {
             if (string.IsNullOrWhiteSpace(input))

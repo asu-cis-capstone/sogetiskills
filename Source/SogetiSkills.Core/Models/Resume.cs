@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Core.Models
 {
+    /// <summary>
+    /// A resume uploaded by a consultant.
+    /// </summary>
     public class Resume
     {
         public int Id { get; set; }
