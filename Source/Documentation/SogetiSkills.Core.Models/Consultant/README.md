@@ -33,15 +33,15 @@ Constructors
 Properties
 ----------
 
-                   | Name              | Description                 
------------------- | ----------------- | --------------------------- 
-![Public property] | [EmailAddress][5] | (Inherited from [User][2].) 
-![Public property] | [FirstName][6]    | (Inherited from [User][2].) 
-![Public property] | [Id][7]           | (Inherited from [User][2].) 
-![Public property] | [IsOnBeach][8]    |                             
-![Public property] | [LastName][9]     | (Inherited from [User][2].) 
-![Public property] | [Password][10]    | (Inherited from [User][2].) 
-![Public property] | [PhoneNumber][11] | (Inherited from [User][2].) 
+                   | Name              | Description                                                                             
+------------------ | ----------------- | --------------------------------------------------------------------------------------- 
+![Public property] | [EmailAddress][5] | (Inherited from [User][2].)                                                             
+![Public property] | [FirstName][6]    | (Inherited from [User][2].)                                                             
+![Public property] | [Id][7]           | (Inherited from [User][2].)                                                             
+![Public property] | [IsOnBeach][8]    | Gets or sets a flag indicating whether or not the consultant is currently on the beach. 
+![Public property] | [LastName][9]     | (Inherited from [User][2].)                                                             
+![Public property] | [Password][10]    | (Inherited from [User][2].)                                                             
+![Public property] | [PhoneNumber][11] | (Inherited from [User][2].)                                                             
 
 
 See Also

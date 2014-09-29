@@ -7,14 +7,29 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Core.DatabaseMigrations
 {
+    /// <summary>
+    /// Represents a single migration to be made to the database.
+    /// </summary>
     public class SqlDatabaseMigration
     {
+        /// <summary>
+        /// Gets the migration id. It should be the DateTime.UtcNow.Ticks of when 
+        /// the migration script was created.
+        /// </summary>
         public long MigartionId { get; private set; }
+
+        /// <summary>
+        /// Gets the friendly name of the migration script.
+        /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the actual SQL script to execute when the migration is run.
+        /// </summary>
         public string Script { get; private set; }
 
         /// <summary>
-        /// Represents a single migration to be made to the database.
+        /// Instantiates a new instance of the SqlDatabaseMigration class.
         /// </summary>
         /// <param name="migrationId">The id of the migration.  It should be the DateTime.UtcNow.Ticks of when 
         /// the migration script was created.</param>

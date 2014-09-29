@@ -1,5 +1,6 @@
 SqlDatabaseMigration Class
 ==========================
+Represents a single migration to be made to the database.
 
 
 Inheritance Hierarchy
@@ -23,9 +24,9 @@ The **SqlDatabaseMigration** type exposes the following members.
 Constructors
 ------------
 
-                 | Name                      | Description                                               
----------------- | ------------------------- | --------------------------------------------------------- 
-![Public method] | [SqlDatabaseMigration][3] | Represents a single migration to be made to the database. 
+                 | Name                      | Description                                                    
+---------------- | ------------------------- | -------------------------------------------------------------- 
+![Public method] | [SqlDatabaseMigration][3] | Instantiates a new instance of the SqlDatabaseMigration class. 
 
 
 Methods
@@ -39,11 +40,11 @@ Methods
 Properties
 ----------
 
-                   | Name             | Description 
------------------- | ---------------- | ----------- 
-![Public property] | [MigartionId][5] |             
-![Public property] | [Name][6]        |             
-![Public property] | [Script][7]      |             
+                   | Name             | Description                                                                                             
+------------------ | ---------------- | ------------------------------------------------------------------------------------------------------- 
+![Public property] | [MigartionId][5] | Gets the migration id. It should be the DateTime.UtcNow.Ticks of when the migration script was created. 
+![Public property] | [Name][6]        | Gets the friendly name of the migration script.                                                         
+![Public property] | [Script][7]      | Gets the actual SQL script to execute when the migration is run.                                        
 
 
 See Also

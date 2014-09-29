@@ -1,5 +1,6 @@
 SqlDatabaseMigrator Class
 =========================
+Migrates a SQL Server database using SQL scripts embedded as resources in the assembly. The database will be created if it does not already exist. Based loosely on Rails' Active Record Migrations.
 
 
 Inheritance Hierarchy
@@ -23,9 +24,9 @@ The **SqlDatabaseMigrator** type exposes the following members.
 Constructors
 ------------
 
-                 | Name                     | Description                                                                                                                                                                                          
----------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
-![Public method] | [SqlDatabaseMigrator][3] | Migrates a SQL Server database using SQL scripts embedded as resources in the assembly. The database will be created if it does not already exist. Based loosely on Rails' Active Record Migrations. 
+                 | Name                     | Description                                                   
+---------------- | ------------------------ | ------------------------------------------------------------- 
+![Public method] | [SqlDatabaseMigrator][3] | Instantiates a new instance of the SqlDatabaseMigrator class. 
 
 
 Methods
@@ -35,6 +36,10 @@ Methods
 ---------------- | ------------ | -------------------------------------------------------------------------------------- 
 ![Public method] | [Migrate][4] | Migrate the database to the latest version by executing all pending migration scripts. 
 
+
+Remarks
+-------
+ The SQL scripts are expected to be named in the form [UTC Now Ticks]_[Migration Name].sql. By using UTC now ticks as the migration id, we can ensure that migrations are run in the order in which they were created even if multiple developers are committing changes. The idea is that these migration scripts can be used for the local development database, unit tests, and production. By embedding the scripts with the code that actually uses them we can ensure that the database schema is always in a state that the code is expecting. 
 
 See Also
 --------

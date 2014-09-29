@@ -1,5 +1,6 @@
 DataReaderHelper Class
 ======================
+Container class for helpers functions relating to reading data back from a database.
 
 
 Inheritance Hierarchy

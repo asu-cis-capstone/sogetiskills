@@ -1,5 +1,6 @@
 ConsultantIsOnBeach Property
 ============================
+Gets or sets a flag indicating whether or not the consultant is currently on the beach.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

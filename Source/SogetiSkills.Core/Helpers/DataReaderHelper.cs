@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Core.Helpers
 {
+    /// <summary>
+    /// Container class for helpers functions relating to reading data back from a database.
+    /// </summary>
     public static class DataReaderHelper
     {
         /// <summary>

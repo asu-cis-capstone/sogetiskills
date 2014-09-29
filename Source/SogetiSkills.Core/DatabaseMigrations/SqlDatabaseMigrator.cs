@@ -11,6 +11,19 @@ using System.Diagnostics;
 
 namespace SogetiSkills.Core.DatabaseMigrations
 {
+    /// <summary>
+    /// Migrates a SQL Server database using SQL scripts embedded as resources in the assembly.  The database will be created if
+    /// it does not already exist.  Based loosely on Rails' Active Record Migrations.
+    /// </summary>
+    /// /// <remarks>
+    /// The SQL scripts are expected to be named in the form [UTC Now Ticks]_[Migration Name].sql. By using UTC now 
+    /// ticks as the migration id, we can ensure that migrations are run in the order in which they were created even if multiple 
+    /// developers are committing changes.
+    /// 
+    /// The idea is that these migration scripts can be used for the local development database, unit tests, and production.  By
+    /// embedding the scripts with the code that actually uses them we can ensure that the database schema is always in a state
+    /// that the code is expecting.
+    /// </remarks>
     public class SqlDatabaseMigrator
     {
         private readonly string _connectionString;
@@ -18,18 +31,8 @@ namespace SogetiSkills.Core.DatabaseMigrations
         private readonly string _migrationScriptsNamespace;
 
         /// <summary>
-        /// Migrates a SQL Server database using SQL scripts embedded as resources in the assembly.  The database will be created if
-        /// it does not already exist.  Based loosely on Rails' Active Record Migrations.
+        /// Instantiates a new instance of the SqlDatabaseMigrator class.
         /// </summary>
-        /// <remarks>
-        /// The SQL scripts are expected to be named in the form [UTC Now Ticks]_[Migration Name].sql. By using UTC now 
-        /// ticks as the migration id, we can ensure that migrations are run in the order in which they were created even if multiple 
-        /// developers are committing changes.
-        /// 
-        /// The idea is that these migration scripts can be used for the local development database, unit tests, and production.  By
-        /// embedding the scripts with the code that actually uses them we can ensure that the database schema is always in a state
-        /// that the code is expecting.
-        /// </remarks>
         /// <param name="connectionString">The connection string for the database to be migrated.</param>
         /// <param name="migrationScriptsAssembly">The assembly containing the migration SQL scripts.</param>
         /// <param name="migrationScriptsNamespace">The namespace where the migration scripts are embedded.</param>

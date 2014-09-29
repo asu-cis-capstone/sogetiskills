@@ -1,5 +1,6 @@
 SqlDatabaseMigrationMigartionId Property
 ========================================
+Gets the migration id. It should be the DateTime.UtcNow.Ticks of when the migration script was created.
 
 **Namespace:** [SogetiSkills.Core.DatabaseMigrations][1]  
 **Assembly:**

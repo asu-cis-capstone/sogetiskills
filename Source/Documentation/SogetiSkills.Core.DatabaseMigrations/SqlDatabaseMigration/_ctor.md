@@ -1,6 +1,6 @@
 SqlDatabaseMigration Constructor
 ================================
-Represents a single migration to be made to the database.
+Instantiates a new instance of the SqlDatabaseMigration class.
 
 **Namespace:** [SogetiSkills.Core.DatabaseMigrations][1]  
 **Assembly:**

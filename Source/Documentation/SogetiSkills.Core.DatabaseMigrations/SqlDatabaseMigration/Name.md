@@ -1,5 +1,6 @@
 SqlDatabaseMigrationName Property
 =================================
+Gets the friendly name of the migration script.
 
 **Namespace:** [SogetiSkills.Core.DatabaseMigrations][1]  
 **Assembly:**

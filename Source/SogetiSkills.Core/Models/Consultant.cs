@@ -11,6 +11,9 @@ namespace SogetiSkills.Core.Models
     /// </summary>
     public class Consultant : User
     {
+        /// <summary>
+        /// Gets or sets a flag indicating whether or not the consultant is currently on the beach.
+        /// </summary>
         public bool IsOnBeach { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 SqlDatabaseMigrationScript Property
 ===================================
+Gets the actual SQL script to execute when the migration is run.
 
 **Namespace:** [SogetiSkills.Core.DatabaseMigrations][1]  
 **Assembly:**
