@@ -11,12 +11,31 @@ using System.Diagnostics;
 
 namespace SogetiSkills.Core.DatabaseMigrations
 {
+    /// <summary>
+    /// Migrates a SQL Server database using SQL scripts embedded as resources in the assembly.  The database will be created if
+    /// it does not already exist.  Based loosely on Rails' Active Record Migrations.
+    /// </summary>
+    /// /// <remarks>
+    /// The SQL scripts are expected to be named in the form [UTC Now Ticks]_[Migration Name].sql. By using UTC now 
+    /// ticks as the migration id, we can ensure that migrations are run in the order in which they were created even if multiple 
+    /// developers are committing changes.
+    /// 
+    /// The idea is that these migration scripts can be used for the local development database, unit tests, and production.  By
+    /// embedding the scripts with the code that actually uses them we can ensure that the database schema is always in a state
+    /// that the code is expecting.
+    /// </remarks>
     public class SqlDatabaseMigrator
     {
         private readonly string _connectionString;
         private readonly Assembly _migrationScriptsAssembly;
         private readonly string _migrationScriptsNamespace;
 
+        /// <summary>
+        /// Instantiates a new instance of the SqlDatabaseMigrator class.
+        /// </summary>
+        /// <param name="connectionString">The connection string for the database to be migrated.</param>
+        /// <param name="migrationScriptsAssembly">The assembly containing the migration SQL scripts.</param>
+        /// <param name="migrationScriptsNamespace">The namespace where the migration scripts are embedded.</param>
         public SqlDatabaseMigrator(string connectionString, Assembly migrationScriptsAssembly, string migrationScriptsNamespace)
         {
             _connectionString = connectionString;
@@ -24,6 +43,9 @@ namespace SogetiSkills.Core.DatabaseMigrations
             _migrationScriptsNamespace = migrationScriptsNamespace;
         }
 
+        /// <summary>
+        /// Migrate the database to the latest version by executing all pending migration scripts.
+        /// </summary>
         public void Migrate()
         {
             EnsureDatabaseExists();
@@ -38,7 +60,11 @@ namespace SogetiSkills.Core.DatabaseMigrations
         #region Ensure database exists
         private void EnsureDatabaseExists()
         {
+            // We need to strip the database name from the connection string because of course the connection
+            // will fail if the database doesn't exist.  For the EnsureDatabaseExists steps we just need to
+            // connect to the server itself.
             string connectionString = CreateConnectionStringWithoutDatabaseName();
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -55,9 +81,6 @@ namespace SogetiSkills.Core.DatabaseMigrations
 
         private string CreateConnectionStringWithoutDatabaseName()
         {
-            // We need to strip the database name from the connection string because of course the connection
-            // will fail if the database doesn't exist.  For the EnsureDatabaseExists steps we just need to
-            // connect to the server itself.
             var connectionStringBuilder = new SqlConnectionStringBuilder(_connectionString);
             connectionStringBuilder.Remove("Database");
             return connectionStringBuilder.ConnectionString;

@@ -9,8 +9,16 @@ using SogetiSkills.Core.Helpers;
 
 namespace SogetiSkills.Core.Managers
 {
+    /// <summary>
+    /// Provides data access for consultants' resumes.
+    /// </summary>
     public class ResumeManager : ManagerBase, IResumeManager
     {
+        /// <summary>
+        /// Load just the resume metadata for a consultant, if they have one.
+        /// </summary>
+        /// <param name="userId">The user id of the consultant whose resume we are loading.</param>
+        /// <returns>Metadata for the consultant's resume.</returns>
         public async Task<ResumeMetadata> LoadResumeMetadataByUserIdAsync(int userId)
         {
             var command = new SqlCommand("Resume_SelectMetadataByUserId", await GetOpenConnectionAsync());
@@ -31,6 +39,11 @@ namespace SogetiSkills.Core.Managers
             return null;
         }
 
+        /// <summary>
+        /// Loads the actual resume (including file contents) for the user.
+        /// </summary>
+        /// <param name="userId">The user id of the consultant whose resume we are loading.</param>
+        /// <returns>The consultant's resume.</returns>
         public async Task<Resume> LoadResumeByUserId(int userId)
         {
             var command = new SqlCommand("Resume_SelectByUserId", await GetOpenConnectionAsync());
@@ -55,6 +68,14 @@ namespace SogetiSkills.Core.Managers
             return null;
         }
 
+        /// <summary>
+        /// Upload a new resume for a consultant.  If the consultant already had a resume then it is
+        /// replaced with this one.
+        /// </summary>
+        /// <param name="userId">The id of the consultant that owns the resume.</param>
+        /// <param name="fileName">The name of the resume file.</param>
+        /// <param name="mimeType">The mime type of the resume file.</param>
+        /// <param name="fileData">The actual binary contents of the resume file.</param>
         public async Task UploadResumeAsync(int userId, string fileName, string mimeType, byte[] fileData)
         {
             var command = new SqlCommand("Resume_Insert", await GetOpenConnectionAsync());

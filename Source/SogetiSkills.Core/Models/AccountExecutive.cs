@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SogetiSkills.Core.Models
 {
+    /// <summary>
+    /// An account executive.  Has access to search for consultants.
+    /// </summary>
     public class AccountExecutive : User
     {
     }
