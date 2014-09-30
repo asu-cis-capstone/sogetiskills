@@ -16,7 +16,7 @@ Main Talking Points:
         unit, 
         regressive, etc.
 * other popular testing tools
-        wize to utilize multiple testing methods
+        wise to utilize multiple testing methods
 
 * background info about Selenium, 
         who, how and why 
