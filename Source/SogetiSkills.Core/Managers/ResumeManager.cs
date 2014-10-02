@@ -44,7 +44,7 @@ namespace SogetiSkills.Core.Managers
         /// </summary>
         /// <param name="userId">The user id of the consultant whose resume we are loading.</param>
         /// <returns>The consultant's resume.</returns>
-        public async Task<Resume> LoadResumeByUserId(int userId)
+        public async Task<Resume> LoadResumeByUserIdAsync(int userId)
         {
             var command = new SqlCommand("Resume_SelectByUserId", await GetOpenConnectionAsync());
             command.CommandType = System.Data.CommandType.StoredProcedure;

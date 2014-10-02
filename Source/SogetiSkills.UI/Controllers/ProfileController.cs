@@ -131,7 +131,7 @@ namespace SogetiSkills.UI.Controllers
                 }
             }
 
-            var resume = await _resumeManager.LoadResumeByUserId(userId);
+            var resume = await _resumeManager.LoadResumeByUserIdAsync(userId);
             if (resume == null)
             {
                 return HttpNotFound();

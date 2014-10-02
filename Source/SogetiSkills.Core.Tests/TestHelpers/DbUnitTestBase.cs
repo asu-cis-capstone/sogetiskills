@@ -27,10 +27,10 @@ namespace SogetiSkills.Core.Tests.TestHelpers
             migrator.Migrate();
 
             TestDatabase = Database.Open("SogetiSkills");
+            EmptyDatabase();
         }
-
-        [TestCleanup]
-        public void EmptyDatabase()
+        
+        public static void EmptyDatabase()
         {
             var sqlStatements = new[] {
                 "DELETE FROM Resumes",
@@ -44,8 +44,43 @@ namespace SogetiSkills.Core.Tests.TestHelpers
             
             foreach(string sqlStatement in sqlStatements)
             {
-                TestDatabase.Execute(sqlStatement);                    
+                TestDatabase.Execute(sqlStatement);
             }
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            EmptyDatabase();
+        }
+
+        protected int InsertUser(User user)
+        {
+            string userType = null;
+            bool isOnBeach = false;
+            if (user is Consultant)
+            {
+                userType = AccountTypes.CONSULTANT;
+                isOnBeach = ((Consultant)user).IsOnBeach;
+            }
+            else
+            {
+                userType = AccountTypes.ACCOUNT_EXECUTIVE;
+            }
+
+            string insertStatement = @"INSERT INTO Users (UserType, EmailAddress, FirstName, LastName, PhoneNumber, Password_Hash, Password_Salt, IsOnBeach)
+                                       VALUES (@0, @1, @2, @3, @4, @5, @6, @7)";
+            TestDatabase.Execute(insertStatement, userType, user.EmailAddress, user.FirstName, user.LastName, user.PhoneNumber.Value, user.Password.Hash, user.Password.Salt, isOnBeach);
+
+            return (int)TestDatabase.GetLastInsertId();
+        }
+
+        protected int InsertResume(Resume resume)
+        {
+            TestDatabase.Execute("INSERT INTO Resumes (UserId, FileData, FileName, MimeType) VALUES (@0, @1, @2, @3)",
+                resume.UserId, resume.FileData, resume.Metadata.FileName, resume.Metadata.MimeType);
+
+            return (int)TestDatabase.GetLastInsertId();
         }
     }
 }

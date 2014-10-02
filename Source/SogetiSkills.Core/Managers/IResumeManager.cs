@@ -24,7 +24,7 @@ namespace SogetiSkills.Core.Managers
         /// </summary>
         /// <param name="userId">The user id of the consultant whose resume we are loading.</param>
         /// <returns>The consultant's resume.</returns>
-        Task<Resume> LoadResumeByUserId(int userId);
+        Task<Resume> LoadResumeByUserIdAsync(int userId);
 
         /// <summary>
         /// Upload a new resume for a consultant.  If the consultant already had a resume then it is
