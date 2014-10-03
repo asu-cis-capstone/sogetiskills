@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using SogetiSkills.UI.ViewModels.Profile.EditContactInfo;
 using SogetiSkills.UI.ViewModels.Profile.Details;
 using SogetiSkills.Core.Managers;
+using SogetiSkills.Core.Models;
 
 namespace SogetiSkills.UI.Tests.Unit.UI.Controllers
 {
@@ -167,6 +168,80 @@ namespace SogetiSkills.UI.Tests.Unit.UI.Controllers
                 ActionResult actionResult = await subject.EditContactInfo(_validInput);
 
                 AssertX.IsRedirectToRouteResult(actionResult, MVC.Profile.Name, MVC.Profile.ActionNames.Details, new { userId = 123 });
+            }
+        }
+
+        [TestClass]
+        public class DownloadResume : ProfileControllerTests
+        {
+            protected readonly Mock<IUserManager> _fakeUserManager = new Mock<IUserManager>();
+            protected readonly Mock<IResumeManager> _fakeResumeManager = new Mock<IResumeManager>();
+
+            public DownloadResume()
+            {
+                _fixture.Inject(_fakeUserManager);
+                _fixture.Inject(_fakeResumeManager);
+            }
+
+            [TestMethod]
+            public async Task DownloadResume_GivenConsultantIsDownloadingOtherConsultantsResume_ReturnsRestricted()
+            {
+                // consultant with id 123 is trying to download resume for consultant #2
+                var consultant123 = (User)SampleData.Consultant();
+                _fakeUserManager.Setup(x => x.LoadUserByIdAsync(123)).Returns(Task.FromResult(consultant123));
+                SetLoggedInUserId(123);
+                var subject = _fixture.Create<ProfileController>();
+
+                var actionResult = await subject.DownloadResume(2);
+
+                AssertX.IsRedirectToRestrictedPage(actionResult);
+            }
+
+            [TestMethod]
+            public async Task DownloadResume_GivenConsultantIsDownloadingOwnResume_ReturnsResume()
+            {
+                // consultant with id 123 is trying to download their own resume
+                var consultant123 = (User)SampleData.Consultant();
+                _fakeUserManager.Setup(x => x.LoadUserByIdAsync(123)).Returns(Task.FromResult(consultant123));
+                var resume = SampleData.Resume(userId: 123);
+                _fakeResumeManager.Setup(x => x.LoadResumeByUserIdAsync(123)).Returns(Task.FromResult(resume));
+                SetLoggedInUserId(123);
+                var subject = _fixture.Create<ProfileController>();
+
+                var actionResult = await subject.DownloadResume(123);
+
+                Assert.IsInstanceOfType(actionResult, typeof(FileContentResult));
+            }
+
+            [TestMethod]
+            public async Task DownloadResume_GivenAccountExecutiveISDownloadingResume_ReturnsResume()
+            {
+                // account exec with id 456 is trying to download the resume for consultant #123
+                var accountExecutive456 = (User)SampleData.AccountExecutive();
+                _fakeUserManager.Setup(x => x.LoadUserByIdAsync(456)).Returns(Task.FromResult(accountExecutive456));
+                var resume = SampleData.Resume(userId: 123);
+                _fakeResumeManager.Setup(x => x.LoadResumeByUserIdAsync(123)).Returns(Task.FromResult(resume));
+                SetLoggedInUserId(456);
+                var subject = _fixture.Create<ProfileController>();
+
+                var actionResult = await subject.DownloadResume(123);
+
+                Assert.IsInstanceOfType(actionResult, typeof(FileContentResult));
+            }
+
+            [TestMethod]
+            public async Task DownloadResume_GivenUserThatHasNoResume_ReturnsHttpNotFound()
+            {
+                // account exec with id 456 is trying to download a resume for a consultant that doesn't have one
+                var accountExecutive456 = (User)SampleData.AccountExecutive();
+                _fakeUserManager.Setup(x => x.LoadUserByIdAsync(456)).Returns(Task.FromResult(accountExecutive456));
+                _fakeResumeManager.Setup(x => x.LoadResumeByUserIdAsync(123)).Returns(Task.FromResult((Resume)null));
+                SetLoggedInUserId(456);
+                var subject = _fixture.Create<ProfileController>();
+
+                var actionResult = await subject.DownloadResume(123);
+
+                AssertX.Is404NotFoundResult(actionResult);
             }
         }
     }
