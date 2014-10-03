@@ -82,5 +82,25 @@ namespace SogetiSkills.Core.Tests.TestHelpers
 
             return (int)TestDatabase.GetLastInsertId();
         }
+
+        protected Tag InsertTag(string keyword, string skillDescription, bool isCanonical)
+        {
+            TestDatabase.Execute("INSERT INTO Tags (Keyword, SkillDescription, IsCanonical) VALUES (@0, @1, @2)",
+                keyword, skillDescription, isCanonical);
+
+            int id = (int)TestDatabase.GetLastInsertId();
+            return new Tag
+            {
+                Id = id,
+                Keyword = keyword,
+                SkillDescription = skillDescription,
+                IsCanonical = isCanonical
+            };
+        }
+
+        protected void InsertConsultantTag(int consultantId, int tagId)
+        {
+            TestDatabase.Execute("INSERT INTO Consultant_Tag(consultantId, tagId) VALUES (@0, @1)", consultantId, tagId);
+        }
     }
 }

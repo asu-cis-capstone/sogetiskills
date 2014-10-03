@@ -85,6 +85,9 @@
     <EmbeddedResource Include="DatabaseMigrations\635471728474311694_User_Insert.sql" />
     <EmbeddedResource Include="DatabaseMigrations\635471732894598220_User_UpdateContactInfo.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DatabaseMigrations\635478678018222782_Tags_SelectCanonical.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

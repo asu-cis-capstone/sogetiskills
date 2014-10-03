@@ -40,5 +40,31 @@ namespace SogetiSkills.Core.Managers
             }
             return tags;
         }
+
+        /// <summary>
+        /// Load all of the canonical tags from the database.  Account executives maintain the list
+        /// of canonical tags.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Tag>> LoadCanonicalTagsAsync()
+        {
+            var command = new SqlCommand("Tags_SelectCanonical", await GetOpenConnectionAsync());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            List<Tag> tags = new List<Tag>();
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    Tag tag = new Tag();
+                    tag.Id = reader.Field<int>("Id");
+                    tag.Keyword = reader.Field<string>("Keyword");
+                    tag.SkillDescription = reader.Field<string>("SkillDescription");
+                    tag.IsCanonical = reader.Field<bool>("IsCanonical");
+                    tags.Add(tag);
+                }
+            }
+            return tags;
+        }
     }
 }
