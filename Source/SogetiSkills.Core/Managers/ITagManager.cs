@@ -23,7 +23,29 @@ namespace SogetiSkills.Core.Managers
         /// Load all of the canonical tags from the database.  Account executives maintain the list
         /// of canonical tags.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All canonical tags ordered by keyword.</returns>
         Task<IEnumerable<Tag>> LoadCanonicalTagsAsync();
+
+        /// <summary>
+        /// Inserts a new canonical tag.
+        /// </summary>
+        /// <param name="keyword">The tag's keyword.</param>
+        /// <param name="skillDescription">An optional tag description.</param>
+        Task AddCanonicalTag(string keyword, string skillDescription);
+
+        /// <summary>
+        /// Removes a canonical tag by changing it to no longer be canonical.
+        /// </summary>
+        /// <param name="tagId">The id of the canonical tag to remove.</param>
+        Task RemoveCanonicalTag(int tagId);
+
+        /// <summary>
+        /// Updates a tag.
+        /// </summary>
+        /// <param name="tagId">The id of the tag to update.</param>
+        /// <param name="keyword">The new keyword for the tag.</param>
+        /// <param name="skillDescription">The new skill description for the tag.</param>
+        /// <param name="isCanonical">Whether or not the tag is canonical.</param>
+        Task UpdateTag(int tagId, string keyword, string skillDescription, bool isCanonical);
     }
 }

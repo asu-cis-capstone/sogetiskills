@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE Tags_SelectCanonical
+﻿CREATE PROCEDURE Tag_SelectCanonical
 AS
 
 SELECT T.Id,

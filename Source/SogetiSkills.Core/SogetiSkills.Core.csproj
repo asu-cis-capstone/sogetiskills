@@ -86,7 +86,19 @@
     <EmbeddedResource Include="DatabaseMigrations\635471732894598220_User_UpdateContactInfo.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DatabaseMigrations\635478678018222782_Tags_SelectCanonical.sql" />
+    <EmbeddedResource Include="DatabaseMigrations\635478678018222782_Tag_SelectCanonical.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DatabaseMigrations\635478690520594448_Tag_InsertCanonical.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DatabaseMigrations\635478692348045866_Tag_DeleteCanonical.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DatabaseMigrations\635479536182817092_Tag_Update.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
