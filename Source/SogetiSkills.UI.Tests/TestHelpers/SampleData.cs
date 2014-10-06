@@ -43,6 +43,17 @@ namespace SogetiSkills.UI.Tests.TestHelpers
             };
         }
 
+        public static Resume Resume(int userId)
+        {
+            return new Resume
+            {
+                Id = 1,
+                UserId = userId,
+                Metadata = ResumeMetadata(),
+                FileData = new byte[] { 0x0, 0x1, 0x2 }
+            };
+        }
+
         public static IEnumerable<Tag> TagList()
         {
             yield return new Tag { Id = 1, Keyword = "C#", IsCanonical = true, SkillDescription = "C# Description" };

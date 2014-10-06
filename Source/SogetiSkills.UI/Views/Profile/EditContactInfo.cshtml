@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="col-lg-6">
-        <h2>Upload resume</h2>
+        <h2>Edit contact info</h2>
         @Html.ValidationSummary()
         <p>@Html.ActionLink("Back to profile", MVC.Profile.Details(Model.UserId))</p>
         @using (Html.BeginForm(MVC.Profile.EditContactInfo(Model.UserId), FormMethod.Post, new { @class = "well" }))

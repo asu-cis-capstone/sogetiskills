@@ -18,7 +18,12 @@ namespace SogetiSkills.Core.Tests.TestHelpers
                 FirstName = "Bill",
                 LastName = "Smith",
                 IsOnBeach = true,
-                PhoneNumber = new PhoneNumber("1234567890")
+                PhoneNumber = new PhoneNumber("1234567890"),
+                Password = new HashedPassword
+                {
+                    Hash = "hash",
+                    Salt = "salt"
+                }
             };
         }
 
@@ -30,16 +35,32 @@ namespace SogetiSkills.Core.Tests.TestHelpers
                 EmailAddress = "pedro@site.com",
                 FirstName = "Pedro",
                 LastName = "Garcia",
-                PhoneNumber = new PhoneNumber("0987654321")
+                PhoneNumber = new PhoneNumber("0987654321"),
+                Password = new HashedPassword
+                {
+                    Hash = "hash",
+                    Salt = "salt"
+                }
             };
         }
-
+        
         public static ResumeMetadata ResumeMetadata()
         {
             return new ResumeMetadata
             {
                 FileName = "Bill_Smith_Resume.pdf",
                 MimeType = "application/pdf"
+            };
+        }
+
+        public static Resume Resume(int userId)
+        {
+            return new Resume
+            {
+                Id = 1,
+                UserId = userId,
+                Metadata = ResumeMetadata(),
+                FileData = new byte[] { 0x0, 0x1, 0x2 }
             };
         }
 
