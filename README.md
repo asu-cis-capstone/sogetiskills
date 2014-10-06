@@ -43,8 +43,8 @@ Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of recor
  * Correct AE dashboard spec with only skills (left) and consultants (right)
  * UserId / Password recovery method
  * Add proficiency to consultant skill
- * Add constraint to UserId
- * Add constraint to Password
+* Add constraint to Password
+* Assign a proficiency level to each skill 
 
 ####Complete
   * Create project structure
