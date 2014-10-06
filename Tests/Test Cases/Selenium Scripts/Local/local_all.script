@@ -8,6 +8,7 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="local_all.script">local_all</a></td></tr>
 <tr><td><a href="local logon.html">local logon</a></td></tr>
 <tr><td><a href="local_edit_con_Profile_1.html">local_edit_con_Profile_1</a></td></tr>
 <tr><td><a href="local_edit_con_Profile_2.html">local_edit_con_Profile_2</a></td></tr>
