@@ -40,6 +40,17 @@ namespace SogetiSkills.Core.Managers
         Task<User> LoadUserByIdAsync(int userId);
 
         /// <summary>
+        /// Loads a single user by their id.
+        /// </summary>
+        /// <param name="userId">The id of the user to load.</param>
+        /// <returns>The user.  Null if there are no matching users.</returns>
+        /// <remarks>
+        /// An synchronous version is provided so that it can be used in an action filter attribute.
+        /// Async action filter attributes are not yet supported.
+        /// </remarks>
+        User LoadUserById(int userId);
+
+        /// <summary>
         /// Registers and inserts a new user.
         /// </summary>
         /// <typeparam name="T">The type of user to insert - either a Consultant or Account Executive.</typeparam>

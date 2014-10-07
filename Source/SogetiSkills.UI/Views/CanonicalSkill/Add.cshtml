@@ -1,0 +1,26 @@
+﻿@model SogetiSkills.UI.ViewModels.CanonicalSkill.AddViewModel
+@{
+    ViewBag.Title = "Add a skill";
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <h2>Add a skill</h2>
+        @Html.ValidationSummary()
+        @using (Html.BeginForm(MVC.CanonicalSkill.Add(), FormMethod.Post, new { @class = "well" }))
+        {
+            <fieldset>
+                <div class="form-group">
+                    <label>Keyword</label>
+                    @Html.TextBoxFor(x => x.Keyword, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label>Skill description</label>
+                    @Html.TextAreaFor(x => x.SkillDescription, new { @class = "form-control" })
+                </div>
+            </fieldset>
+            <input class="btn btn-primary" type="submit" value="Save" />
+            @Html.AntiForgeryToken()
+        }
+    </div>
+</div>

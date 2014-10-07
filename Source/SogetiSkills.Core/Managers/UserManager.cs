@@ -100,6 +100,48 @@ namespace SogetiSkills.Core.Managers
             command.Parameters.AddWithValue("@userId", userId);
 
             User user = null;
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    // UserType is a discriminator column on the user table.
+                    string userType = reader.Field<string>("UserType");
+                    if (userType == AccountTypes.CONSULTANT)
+                    {
+                        var consultant = new Consultant();
+                        consultant.IsOnBeach = reader.Field<bool>("IsOnBeach");
+                        user = consultant;
+                    }
+                    else if (userType == AccountTypes.ACCOUNT_EXECUTIVE)
+                    {
+                        user = new AccountExecutive();
+                    }
+
+                    user.Id = reader.Field<int>("Id");
+                    user.EmailAddress = reader.Field<string>("EmailAddress");
+                    user.FirstName = reader.Field<string>("FirstName");
+                    user.LastName = reader.Field<string>("LastName");
+                    user.PhoneNumber = new PhoneNumber(reader.Field<string>("PhoneNumber"));
+                    user.Password = new HashedPassword();
+                    user.Password.Hash = reader.Field<string>("Password_Hash");
+                    user.Password.Salt = reader.Field<string>("Password_Salt");
+                }
+            }
+            return user;
+        }
+
+        /// <summary>
+        /// Loads a single user by their id.
+        /// </summary>
+        /// <param name="userId">The id of the user to load.</param>
+        /// <returns>The user.  Null if there are no matching users.</returns>
+        public User LoadUserById(int userId)
+        {
+            var command = new SqlCommand("User_SelectById", GetOpenConnection());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@userId", userId);
+
+            User user = null;
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())

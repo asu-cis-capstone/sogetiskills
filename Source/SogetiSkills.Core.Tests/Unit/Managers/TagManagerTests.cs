@@ -85,33 +85,27 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task AddCanonicalTag_GivenNewTag_Inserts()
             {
-                InsertTag("C#", "C# description", true);
-                InsertTag("ASP.NET", "ASP.NET description", false);
-                InsertTag("JavaScript", "JavaScript description", true);
-
                 var subject = _fixture.Create<TagManager>();
 
-                var tags = await subject.LoadCanonicalTagsAsync();
+                await subject.AddCanonicalTagAsync("C#", "C# description");
 
-                Assert.AreEqual(2, tags.Count());
-                Assert.IsTrue(tags.All(x => x.IsCanonical));
+                int count = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Tags WHERE Keyword = @0", "C#");
+                Assert.AreEqual(1, count);
             }
 
-
             [TestMethod]
-            public async Task LoadCanonicalTags_ReturnsTagsOrderedByKeyword()
+            public async Task AddCanonicalTag_GivenKeywordThatAlreadyExists_UpdatesExistingTag()
             {
-                InsertTag("C#", "C# description", true);
-                InsertTag("ASP.NET", "ASP.NET description", true);
-                InsertTag("JavaScript", "JavaScript description", true);
-
+                var existingTag = InsertTag("C#", "C# description", isCanonical: false);
                 var subject = _fixture.Create<TagManager>();
 
-                var tags = await subject.LoadCanonicalTagsAsync();
+                await subject.AddCanonicalTagAsync("C#", "new C# description");
 
-                Assert.AreEqual("ASP.NET", tags.ElementAt(0).Keyword);
-                Assert.AreEqual("C#", tags.ElementAt(1).Keyword);
-                Assert.AreEqual("JavaScript", tags.ElementAt(2).Keyword);
+                dynamic newCanonicalTag = TestDatabase.QuerySingle("SELECT Id, Keyword, SkillDescription, IsCanonical FROM Tags WHERE Id = @0", existingTag.Id);
+                Assert.AreEqual(existingTag.Id, newCanonicalTag.Id);
+                Assert.AreEqual("C#", newCanonicalTag.Keyword);
+                Assert.AreEqual("new C# description", newCanonicalTag.SkillDescription);
+                Assert.AreEqual(true, newCanonicalTag.IsCanonical);
             }
         }
 
@@ -125,7 +119,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
 
                 var subject = _fixture.Create<TagManager>();
 
-                await subject.RemoveCanonicalTag(tag.Id);
+                await subject.RemoveCanonicalTagAsync(tag.Id);
 
                 bool isCanonical = TestDatabase.QueryValue("SELECT IsCanonical FROM Tags WHERE Id = @0", tag.Id);
                 Assert.IsFalse(isCanonical);
@@ -142,7 +136,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
 
                 var subject = _fixture.Create<TagManager>();
 
-                await subject.UpdateTag(tag.Id, "New Keyword", "New Skill Description", false);
+                await subject.UpdateTagAsync(tag.Id, "New Keyword", "New Skill Description", false);
 
                 var updatedTag = TestDatabase.QuerySingle("SELECT Keyword, SkillDescription, IsCanonical FROM Tags WHERE Id = @0", tag.Id);
                 Assert.AreEqual("New Keyword", updatedTag.Keyword);
@@ -156,9 +150,35 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 int idForTagThatDoesntExist = _fixture.Create<int>();
                 var subject = _fixture.Create<TagManager>();
 
-                await subject.UpdateTag(idForTagThatDoesntExist, "keyword", "skillDescription", false);
+                await subject.UpdateTagAsync(idForTagThatDoesntExist, "keyword", "skillDescription", false);
 
                 // No exception thrown
+            }
+        }
+
+        [TestClass]
+        public class LoadByKeyword : TagManagerTests
+        {
+            [TestMethod]
+            public async Task LoadByKeyword_GivenKeywordThatDoesntExist_ReturnsNull()
+            {
+                var subject = _fixture.Create<TagManager>();
+
+                var tag = await subject.LoadByKeywordAsync("Does Not Exist");
+
+                Assert.IsNull(tag);
+            }
+
+            [TestMethod]
+            public async Task LoadByKeyword_GivenKeyword_ReturnsTag()
+            {
+                InsertTag("C#", null, false);
+                InsertTag("ASP.NET", null, false);
+                var subject = _fixture.Create<TagManager>();
+
+                var tag = await subject.LoadByKeywordAsync("ASP.NET");
+
+                Assert.AreEqual("ASP.NET", tag.Keyword);
             }
         }
     }

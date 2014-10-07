@@ -116,6 +116,7 @@
     <Compile Include="TestHelpers\UnitTestBase.cs" />
     <Compile Include="TestHelpers\WebModelCustomization.cs" />
     <Compile Include="Unit\Controllers\AccountControllerTests.cs" />
+    <Compile Include="Unit\Controllers\CanonicalSkillControllerTests.cs" />
     <Compile Include="Unit\Controllers\ProfileControllerTests.cs" />
     <Compile Include="Unit\ViewModels\Account\Register\RegisterViewModelValidatorTests.cs" />
     <Compile Include="Unit\ViewModels\Account\SignIn\SignInViewModelValidatorTests.cs" />

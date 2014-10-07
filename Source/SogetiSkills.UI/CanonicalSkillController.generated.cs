@@ -23,10 +23,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace SogetiSkills.UI.Controllers
 {
-    public partial class HomeController
+    public partial class CanonicalSkillController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected HomeController(Dummy d) { }
+        protected CanonicalSkillController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -56,13 +56,13 @@ namespace SogetiSkills.UI.Controllers
 
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HomeController Actions { get { return MVC.Home; } }
+        public CanonicalSkillController Actions { get { return MVC.CanonicalSkill; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Home";
+        public readonly string Name = "CanonicalSkill";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Home";
+        public const string NameConst = "CanonicalSkill";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -70,22 +70,26 @@ namespace SogetiSkills.UI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Index = "Index";
-            public readonly string Restricted = "Restricted";
-            public readonly string Error = "Error";
-            public readonly string NotFound = "NotFound";
+            public readonly string List = "List";
+            public readonly string Add = "Add";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string Index = "Index";
-            public const string Restricted = "Restricted";
-            public const string Error = "Error";
-            public const string NotFound = "NotFound";
+            public const string List = "List";
+            public const string Add = "Add";
         }
 
 
+        static readonly ActionParamsClass_Add s_params_Add = new ActionParamsClass_Add();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Add AddParams { get { return s_params_Add; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Add
+        {
+            public readonly string model = "model";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -96,64 +100,50 @@ namespace SogetiSkills.UI.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string Error = "Error";
-                public readonly string Index = "Index";
-                public readonly string NotFound = "NotFound";
-                public readonly string Restricted = "Restricted";
+                public readonly string Add = "Add";
+                public readonly string List = "List";
             }
-            public readonly string Error = "~/Views/Home/Error.cshtml";
-            public readonly string Index = "~/Views/Home/Index.cshtml";
-            public readonly string NotFound = "~/Views/Home/NotFound.cshtml";
-            public readonly string Restricted = "~/Views/Home/Restricted.cshtml";
+            public readonly string Add = "~/Views/CanonicalSkill/Add.cshtml";
+            public readonly string List = "~/Views/CanonicalSkill/List.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_HomeController : SogetiSkills.UI.Controllers.HomeController
+    public partial class T4MVC_CanonicalSkillController : SogetiSkills.UI.Controllers.CanonicalSkillController
     {
-        public T4MVC_HomeController() : base(Dummy.Instance) { }
+        public T4MVC_CanonicalSkillController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Index()
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> List()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            IndexOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
+            ListOverride(callInfo);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void AddOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Add()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Add);
+            AddOverride(callInfo);
             return callInfo;
         }
 
         [NonAction]
-        partial void RestrictedOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void AddOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, SogetiSkills.UI.ViewModels.CanonicalSkill.AddViewModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Restricted()
+        public override System.Web.Mvc.ActionResult Add(SogetiSkills.UI.ViewModels.CanonicalSkill.AddViewModel model)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Restricted);
-            RestrictedOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void ErrorOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Error()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Error);
-            ErrorOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void NotFoundOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult NotFound()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NotFound);
-            NotFoundOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Add);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            AddOverride(callInfo, model);
             return callInfo;
         }
 

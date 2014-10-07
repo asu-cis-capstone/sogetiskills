@@ -13,12 +13,13 @@ using System.Web.Mvc;
 
 namespace SogetiSkills.UI.Controllers
 {
-    public partial class AccountController : ControllerBase
+    public partial class AccountController : SogetiSkillsControllerBase
     {
         private readonly IAuthCookieHelper _authCookieHelper;
         private readonly IUserManager _userManager;
 
         public AccountController(IAuthCookieHelper authCookieHelper, IUserManager userManager)
+            : base(userManager)
         {
             _authCookieHelper = authCookieHelper;
             _userManager = userManager;

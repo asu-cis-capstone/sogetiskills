@@ -16,7 +16,7 @@ using System.Web.Mvc;
 namespace SogetiSkills.UI.Controllers
 {
     [Authorize]
-    public partial class ProfileController : ControllerBase
+    public partial class ProfileController : SogetiSkillsControllerBase
     {
         private readonly IDetailsViewModelBuilder _detailsViewModelBuilder;
         private readonly IEditContactInfoViewModelBuilder _editContactInfoViewModelBuilder;
@@ -28,6 +28,7 @@ namespace SogetiSkills.UI.Controllers
             IEditContactInfoViewModelBuilder editContactInfoViewModelBuilder,
             IUserManager userManager,
             IResumeManager resumeManager)
+            : base(userManager)
         {
             _detailsViewModelBuilder = detailsViewModelBuilder;
             _editContactInfoViewModelBuilder = editContactInfoViewModelBuilder;

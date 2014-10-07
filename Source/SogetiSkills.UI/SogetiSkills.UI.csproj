@@ -182,10 +182,15 @@
     <Compile Include="App_Start\AttributeRoutingConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapConfig.cs" />
+    <Compile Include="CanonicalSkillController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\SogetiSkillsControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\CanonicalSkillController.cs" />
+    <Compile Include="Helpers\Security\RequireUserTypeAttribute.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -214,6 +219,7 @@
     </Compile>
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\SignInViewModel.cs" />
+    <Compile Include="ViewModels\CanonicalSkill\AddViewModel.cs" />
     <Compile Include="ViewModels\Profile\Details\DetailsViewModel.cs" />
     <Compile Include="ViewModels\Profile\Details\DetailsViewModelBuilder.cs" />
     <Compile Include="ViewModels\Profile\EditContactInfo\EditContactInfoViewModel.cs" />
@@ -232,6 +238,8 @@
     <Content Include="Views\Profile\UploadResume.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\NotFound.cshtml" />
+    <Content Include="Views\CanonicalSkill\List.cshtml" />
+    <Content Include="Views\CanonicalSkill\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
