@@ -25,20 +25,10 @@ namespace SogetiSkills.Core.Managers
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@consultantId", consultantId);
 
-            List<Tag> tags = new List<Tag>();
             using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (await reader.ReadAsync())
-                {
-                    Tag tag = new Tag();
-                    tag.Id = reader.Field<int>("Id");
-                    tag.Keyword = reader.Field<string>("Keyword");
-                    tag.SkillDescription = reader.Field<string>("SkillDescription");
-                    tag.IsCanonical = reader.Field<bool>("IsCanonical");
-                    tags.Add(tag);
-                }
+                return await ReadTagRowsAsync(reader);
             }
-            return tags;
         }
 
         /// <summary>
@@ -51,20 +41,10 @@ namespace SogetiSkills.Core.Managers
             var command = new SqlCommand("Tag_SelectCanonical", await GetOpenConnectionAsync());
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            List<Tag> tags = new List<Tag>();
             using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (await reader.ReadAsync())
-                {
-                    Tag tag = new Tag();
-                    tag.Id = reader.Field<int>("Id");
-                    tag.Keyword = reader.Field<string>("Keyword");
-                    tag.SkillDescription = reader.Field<string>("SkillDescription");
-                    tag.IsCanonical = reader.Field<bool>("IsCanonical");
-                    tags.Add(tag);
-                }
+                return await ReadTagRowsAsync(reader);
             }
-            return tags;
         }
 
         /// <summary>
@@ -138,14 +118,9 @@ namespace SogetiSkills.Core.Managers
 
             using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (await reader.ReadAsync())
+                if(await reader.ReadAsync())
                 {
-                    Tag tag = new Tag();
-                    tag.Id = reader.Field<int>("Id");
-                    tag.Keyword = reader.Field<string>("Keyword");
-                    tag.SkillDescription = reader.Field<string>("SkillDescription");
-                    tag.IsCanonical = reader.Field<bool>("IsCanonical");
-                    return tag;       
+                    return ReadTagRow(reader);
                 }
             }
             return null;
@@ -167,17 +142,35 @@ namespace SogetiSkills.Core.Managers
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
-                while (reader.Read())
+                if (reader.Read())
                 {
-                    Tag tag = new Tag();
-                    tag.Id = reader.Field<int>("Id");
-                    tag.Keyword = reader.Field<string>("Keyword");
-                    tag.SkillDescription = reader.Field<string>("SkillDescription");
-                    tag.IsCanonical = reader.Field<bool>("IsCanonical");
-                    return tag;
+                    return ReadTagRow(reader);
                 }
             }
             return null;
         }
+
+        #region Private helper methods
+        // Helper methods for creating tag objects from a data reader.
+        private async Task<IEnumerable<Tag>> ReadTagRowsAsync(SqlDataReader reader)
+        {
+            List<Tag> tags = new List<Tag>();
+            while(await reader.ReadAsync())
+            {
+                tags.Add(ReadTagRow(reader));
+            }
+            return tags;
+        }
+
+        private Tag ReadTagRow(SqlDataReader reader)
+        {
+            Tag tag = new Tag();
+            tag.Id = reader.Field<int>("Id");
+            tag.Keyword = reader.Field<string>("Keyword");
+            tag.SkillDescription = reader.Field<string>("SkillDescription");
+            tag.IsCanonical = reader.Field<bool>("IsCanonical");
+            return tag;
+        }
+        #endregion
     }
 }
