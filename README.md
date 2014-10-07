@@ -41,7 +41,6 @@ Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of recor
     * Full/Differential backups
   * Transactional log backups
   * Correct AE dashboard spec with only skills (left) and consultants (right)
-  * UserId / Password recovery method
   * Added proficieny to consultant skill
   * Add constraint to Password
 
