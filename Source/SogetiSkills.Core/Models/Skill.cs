@@ -14,11 +14,26 @@ namespace SogetiSkills.Core.Models
     /// picks from a list of canonical tags we hope to eliminate minor variations in the spelling of very 
     /// common skills.
     /// </remarks>
-    public class Tag
+    public class Skill
     {
+        /// <summary>
+        /// The id of the skill.
+        /// </summary>
         public int Id { get; set; }
-        public string Keyword { get; set; }
-        public string SkillDescription { get; set; }
+
+        /// <summary>
+        /// The name of the skill.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// A more detailed description of the skill.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Whether or not the skill is considered to be canonical.  See class remarks.
+        /// </summary>
         public bool IsCanonical { get; set; }
     }
 }

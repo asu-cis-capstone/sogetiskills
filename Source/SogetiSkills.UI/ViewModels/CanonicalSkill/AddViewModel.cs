@@ -18,9 +18,9 @@ namespace SogetiSkills.UI.ViewModels.CanonicalSkill
 
     public class AddViewModelValidator : AbstractValidator<AddViewModel>
     {
-        private readonly ITagManager _tagManager;
+        private readonly ISkillManager _tagManager;
 
-        public AddViewModelValidator(ITagManager tagManager)
+        public AddViewModelValidator(ISkillManager tagManager)
         {
             _tagManager = tagManager;
 
@@ -33,7 +33,7 @@ namespace SogetiSkills.UI.ViewModels.CanonicalSkill
 
         public bool NotAlreadyExist(string keyword)
         {
-            var existingTag = _tagManager.LoadByKeyword(keyword);
+            var existingTag = _tagManager.LoadByName(keyword);
             if (existingTag == null)
             {
                 return true;

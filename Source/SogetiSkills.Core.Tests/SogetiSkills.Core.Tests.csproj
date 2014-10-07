@@ -91,7 +91,7 @@
     <Compile Include="TestHelpers\SampleData.cs" />
     <Compile Include="TestHelpers\UnitTestBase.cs" />
     <Compile Include="Unit\Managers\ResumeManagerTests.cs" />
-    <Compile Include="Unit\Managers\TagManagerTests.cs" />
+    <Compile Include="Unit\Managers\SkillManagerTests.cs" />
     <Compile Include="Unit\Managers\UserManagerTests.cs" />
     <Compile Include="Unit\Security\PasswordHasherTests.cs" />
   </ItemGroup>

@@ -16,19 +16,19 @@ namespace SogetiSkills.UI.Controllers
     public partial class CanonicalSkillController : SogetiSkillsControllerBase
     {
         private readonly IUserManager _userManager;
-        private readonly ITagManager _tagManager;
+        private readonly ISkillManager _skillManager;
 
-        public CanonicalSkillController(IUserManager userManager, ITagManager tagManager)
+        public CanonicalSkillController(IUserManager userManager, ISkillManager skillManager)
             : base(userManager)
         {
             _userManager = userManager;
-            _tagManager = tagManager;
+            _skillManager = skillManager;
         }
 
         [GET("CanonicalSkills/List")]
         public virtual async Task<ActionResult> List()
         {
-            var model = await _tagManager.LoadCanonicalTagsAsync();
+            var model = await _skillManager.LoadCanonicalSkillsAsync();
             return View(model);
         }
         

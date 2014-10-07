@@ -15,7 +15,7 @@ namespace SogetiSkills.UI.Tests.Unit.Controllers
 {
     public class CanonicalSkillControllerTests : ControllerUnitTestBase
     {
-        protected Mock<ITagManager> _fakeTagManager = new Mock<ITagManager>();
+        protected Mock<ISkillManager> _fakeTagManager = new Mock<ISkillManager>();
 
         public CanonicalSkillControllerTests()
         {
@@ -28,8 +28,8 @@ namespace SogetiSkills.UI.Tests.Unit.Controllers
             [TestMethod]
             public async Task List_ReturnsViewWithAllCanonicalTags()
             {
-                var tags = _fixture.CreateMany<Tag>();
-                _fakeTagManager.Setup(x => x.LoadCanonicalTagsAsync()).Returns(Task.FromResult(tags));
+                var tags = _fixture.CreateMany<Skill>();
+                _fakeTagManager.Setup(x => x.LoadCanonicalSkillsAsync()).Returns(Task.FromResult(tags));
                 var subject = _fixture.Create<CanonicalSkillController>();
 
                 var actionResult = await subject.List();

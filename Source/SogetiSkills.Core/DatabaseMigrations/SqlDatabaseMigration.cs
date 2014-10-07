@@ -48,20 +48,29 @@ namespace SogetiSkills.Core.DatabaseMigrations
         /// <param name="connection">An open connection to the database to be migrated.</param>
         public void Apply(SqlConnection connection)
         {
-            ApplyMigrationScript(connection);
-            InsertMigrationHistoryRecord(connection);
+            using (SqlTransaction transaction = connection.BeginTransaction())
+            {
+                ApplyMigrationScript(connection, transaction);
+                InsertMigrationHistoryRecord(connection, transaction);
+                transaction.Commit();
+            }
         }
 
-        private void ApplyMigrationScript(SqlConnection connection)
+        private void ApplyMigrationScript(SqlConnection connection, SqlTransaction transaction)
         {
-            SqlCommand command = new SqlCommand(Script, connection);
-            command.ExecuteNonQuery();
+            foreach (string individualScript in Script.Split(new[] { "GO" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                SqlCommand command = new SqlCommand(individualScript, connection);
+                command.Transaction = transaction;
+                command.ExecuteNonQuery();
+            }
         }
 
-        private void InsertMigrationHistoryRecord(SqlConnection connection)
+        private void InsertMigrationHistoryRecord(SqlConnection connection, SqlTransaction transaction)
         {
             string insertMigrationHistoryRecordStatement = "INSERT INTO __MigrationHistory (MigrationId, Name, Script) VALUES (@migrationId, @name, @script)";
             SqlCommand command = new SqlCommand(insertMigrationHistoryRecordStatement, connection);
+            command.Transaction = transaction;
             command.Parameters.AddWithValue("@migrationId", MigartionId);
             command.Parameters.AddWithValue("@name", Name);
             command.Parameters.AddWithValue("@script", Script);

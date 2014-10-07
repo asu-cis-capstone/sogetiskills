@@ -12,16 +12,16 @@ namespace SogetiSkills.UI.ViewModels.Profile.Details
     {
         private readonly IUserManager _userManager;
         private readonly IResumeManager _resumeManager;
-        private readonly ITagManager _tagManager;
+        private readonly ISkillManager _skillManager;
 
         public DetailsViewModelBuilder(
             IUserManager userManager, 
             IResumeManager resumeManager, 
-            ITagManager tagManager)
+            ISkillManager skillManager)
         {
             _userManager = userManager;
             _resumeManager = resumeManager;
-            _tagManager = tagManager;
+            _skillManager = skillManager;
         }
 
         public async Task<DetailsViewModel> BuildAsync(int profileUserId, int loggedInUserId)
@@ -49,7 +49,7 @@ namespace SogetiSkills.UI.ViewModels.Profile.Details
                 model.IsOnBeach = consultant.IsOnBeach;
                 
                 model.ResumeMetadata = await _resumeManager.LoadResumeMetadataByUserIdAsync(consultant.Id);
-                model.Tags = await _tagManager.LoadTagsForConsultantAsync(consultant.Id);
+                model.Skills = await _skillManager.LoadSkillsForConsultantAsync(consultant.Id);
             }
             else if (user is AccountExecutive)
             {

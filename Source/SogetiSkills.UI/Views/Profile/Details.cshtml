@@ -85,7 +85,7 @@
                     Skills
                     @if (Model.ProfileBelongsToCurrentUser)
                     {
-                        if (Model.Tags.Any())
+                        if (Model.Skills.Any())
                         {
                             <a href="#" class="pull-right">><span class="glyphicon glyphicon-edit"></span> Edit skills</a>
                         }
@@ -96,16 +96,16 @@
                     }
                 </div>
                 <div class="panel-body">
-                    @if (Model.Tags.Any())
+                    @if (Model.Skills.Any())
                     {
                         <ul>
-                            @foreach (var tag in Model.Tags)
+                            @foreach (var skill in Model.Skills)
                             {
                                 <li>
-                                    @tag.Keyword
-                                    @if (!string.IsNullOrWhiteSpace(tag.SkillDescription))
+                                    @skill.Name
+                                    @if (!string.IsNullOrWhiteSpace(skill.Description))
                                     {
-                                        <span class="text-muted">@tag.SkillDescription</span>
+                                        <span class="text-muted">@skill.Description</span>
                                     }
                                 </li>
                             }

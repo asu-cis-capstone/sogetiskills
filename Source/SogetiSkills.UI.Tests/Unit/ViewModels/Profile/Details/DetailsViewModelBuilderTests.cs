@@ -19,7 +19,7 @@ namespace SogetiSkills.UI.Tests.Unit.UI.ViewModels.Profile.Details
     {
         protected Mock<IUserManager> _fakeUserManager = new Mock<IUserManager>();
         protected Mock<IResumeManager> _fakeResumeManager = new Mock<IResumeManager>();
-        protected Mock<ITagManager> _fakeTagManager = new Mock<ITagManager>();
+        protected Mock<ISkillManager> _fakeTagManager = new Mock<ISkillManager>();
 
         public DetailsViewModelBuilderTests ()
 	    {
@@ -98,12 +98,12 @@ namespace SogetiSkills.UI.Tests.Unit.UI.ViewModels.Profile.Details
         {
             _fakeUserManager.Setup(x => x.LoadUserByIdAsync(123)).Returns(Task.FromResult((User)SampleData.Consultant()));
             var tags = SampleData.TagList();
-            _fakeTagManager.Setup(x => x.LoadTagsForConsultantAsync(123)).Returns(Task.FromResult(tags));
+            _fakeTagManager.Setup(x => x.LoadSkillsForConsultantAsync(123)).Returns(Task.FromResult(tags));
             DetailsViewModelBuilder subject = _fixture.Create<DetailsViewModelBuilder>();
 
             var viewModel = await subject.BuildAsync(profileUserId: 123, loggedInUserId: 0);
 
-            Assert.AreEqual(viewModel.Tags, tags);
+            Assert.AreEqual(viewModel.Skills, tags);
         }
 
         [TestMethod]
