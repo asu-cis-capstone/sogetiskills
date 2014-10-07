@@ -1,5 +1,6 @@
 ResumeId Property
 =================
+The id of the resume.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

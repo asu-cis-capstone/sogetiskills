@@ -34,14 +34,14 @@ Constructors
 Properties
 ----------
 
-                   | Name              | Description 
------------------- | ----------------- | ----------- 
-![Public property] | [EmailAddress][6] |             
-![Public property] | [FirstName][7]    |             
-![Public property] | [Id][8]           |             
-![Public property] | [LastName][9]     |             
-![Public property] | [Password][10]    |             
-![Public property] | [PhoneNumber][11] |             
+                   | Name              | Description                                                              
+------------------ | ----------------- | ------------------------------------------------------------------------ 
+![Public property] | [EmailAddress][6] | The user's email address. This is also used when the user is logging in. 
+![Public property] | [FirstName][7]    | The user's first name.                                                   
+![Public property] | [Id][8]           | The id of the user.                                                      
+![Public property] | [LastName][9]     | The user's last name.                                                    
+![Public property] | [Password][10]    | The user's salted and hashed password.                                   
+![Public property] | [PhoneNumber][11] | The user's phone number.                                                 
 
 
 See Also

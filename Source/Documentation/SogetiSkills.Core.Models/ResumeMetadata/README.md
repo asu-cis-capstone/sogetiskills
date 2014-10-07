@@ -32,10 +32,10 @@ Constructors
 Properties
 ----------
 
-                   | Name          | Description 
------------------- | ------------- | ----------- 
-![Public property] | [FileName][4] |             
-![Public property] | [MimeType][5] |             
+                   | Name          | Description                                  
+------------------ | ------------- | -------------------------------------------- 
+![Public property] | [FileName][4] | The name of the file that was uploaded.      
+![Public property] | [MimeType][5] | The mime type of the file that was uploaded. 
 
 
 Remarks

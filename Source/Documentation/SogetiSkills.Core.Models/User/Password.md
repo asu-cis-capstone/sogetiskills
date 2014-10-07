@@ -1,5 +1,6 @@
 UserPassword Property
 =====================
+The user's salted and hashed password.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

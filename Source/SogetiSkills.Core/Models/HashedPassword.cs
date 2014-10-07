@@ -11,7 +11,14 @@ namespace SogetiSkills.Core.Models
     /// </summary>
     public class HashedPassword
     {
+        /// <summary>
+        /// The salted and hashed password.
+        /// </summary>
         public string Hash { get; set; }
+
+        /// <summary>
+        /// The salt to apply to the password.
+        /// </summary>
         public string Salt { get; set; }
     }
 }

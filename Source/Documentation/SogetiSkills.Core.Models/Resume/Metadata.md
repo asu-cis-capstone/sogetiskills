@@ -1,5 +1,6 @@
 ResumeMetadata Property
 =======================
+Metadata about the resume file name and type.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

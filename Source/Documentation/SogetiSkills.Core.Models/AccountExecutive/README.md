@@ -33,14 +33,14 @@ Constructors
 Properties
 ----------
 
-                   | Name              | Description                 
------------------- | ----------------- | --------------------------- 
-![Public property] | [EmailAddress][5] | (Inherited from [User][2].) 
-![Public property] | [FirstName][6]    | (Inherited from [User][2].) 
-![Public property] | [Id][7]           | (Inherited from [User][2].) 
-![Public property] | [LastName][8]     | (Inherited from [User][2].) 
-![Public property] | [Password][9]     | (Inherited from [User][2].) 
-![Public property] | [PhoneNumber][10] | (Inherited from [User][2].) 
+                   | Name              | Description                                                                                          
+------------------ | ----------------- | ---------------------------------------------------------------------------------------------------- 
+![Public property] | [EmailAddress][5] | The user's email address. This is also used when the user is logging in. (Inherited from [User][2].) 
+![Public property] | [FirstName][6]    | The user's first name. (Inherited from [User][2].)                                                   
+![Public property] | [Id][7]           | The id of the user. (Inherited from [User][2].)                                                      
+![Public property] | [LastName][8]     | The user's last name. (Inherited from [User][2].)                                                    
+![Public property] | [Password][9]     | The user's salted and hashed password. (Inherited from [User][2].)                                   
+![Public property] | [PhoneNumber][10] | The user's phone number. (Inherited from [User][2].)                                                 
 
 
 See Also

@@ -16,7 +16,14 @@ namespace SogetiSkills.Core.Models
     /// </remarks>
     public class ResumeMetadata
     {
+        /// <summary>
+        /// The name of the file that was uploaded.
+        /// </summary>
         public string FileName { get; set; }
+
+        /// <summary>
+        /// The mime type of the file that was uploaded.
+        /// </summary>
         public string MimeType { get; set; }
     }
 }

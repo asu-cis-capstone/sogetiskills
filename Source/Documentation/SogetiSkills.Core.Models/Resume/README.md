@@ -32,12 +32,12 @@ Constructors
 Properties
 ----------
 
-                   | Name          | Description 
------------------- | ------------- | ----------- 
-![Public property] | [FileData][4] |             
-![Public property] | [Id][5]       |             
-![Public property] | [Metadata][6] |             
-![Public property] | [UserId][7]   |             
+                   | Name          | Description                                   
+------------------ | ------------- | --------------------------------------------- 
+![Public property] | [FileData][4] | The actual file contents of the resume.       
+![Public property] | [Id][5]       | The id of the resume.                         
+![Public property] | [Metadata][6] | Metadata about the resume file name and type. 
+![Public property] | [UserId][7]   | The id of the user that owns the resume.      
 
 
 See Also

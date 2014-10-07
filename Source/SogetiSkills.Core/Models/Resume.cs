@@ -11,9 +11,24 @@ namespace SogetiSkills.Core.Models
     /// </summary>
     public class Resume
     {
+        /// <summary>
+        /// The id of the resume.
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// The id of the user that owns the resume.
+        /// </summary>
         public int UserId { get; set; }
+
+        /// <summary>
+        /// The actual file contents of the resume.
+        /// </summary>
         public byte[] FileData { get; set; }
+
+        /// <summary>
+        /// Metadata about the resume file name and type.
+        /// </summary>
         public ResumeMetadata Metadata { get; set; }
     }
 }

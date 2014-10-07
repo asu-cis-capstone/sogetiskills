@@ -1,5 +1,6 @@
 ResumeUserId Property
 =====================
+The id of the user that owns the resume.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

@@ -1,5 +1,6 @@
 UserPhoneNumber Property
 ========================
+The user's phone number.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

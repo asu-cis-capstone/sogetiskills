@@ -1,5 +1,6 @@
 HashedPasswordSalt Property
 ===========================
+The salt to apply to the password.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

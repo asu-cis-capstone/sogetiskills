@@ -24,10 +24,10 @@ The **PhoneNumber** type exposes the following members.
 Constructors
 ------------
 
-                 | Name                     | Description 
----------------- | ------------------------ | ----------- 
-![Public method] | [PhoneNumber][3]         |             
-![Public method] | [PhoneNumber(String)][4] |             
+                 | Name                     | Description                                                                    
+---------------- | ------------------------ | ------------------------------------------------------------------------------ 
+![Public method] | [PhoneNumber][3]         | Creates a new instance of the PhoneNumber class.                               
+![Public method] | [PhoneNumber(String)][4] | Creates a new instance of the PhoneNumber class from an existing phone number. 
 
 
 Methods

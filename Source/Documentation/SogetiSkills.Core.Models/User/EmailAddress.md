@@ -1,5 +1,6 @@
 UserEmailAddress Property
 =========================
+The user's email address. This is also used when the user is logging in.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

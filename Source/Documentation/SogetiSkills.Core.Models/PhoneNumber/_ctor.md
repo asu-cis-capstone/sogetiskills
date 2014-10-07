@@ -1,5 +1,6 @@
 PhoneNumber Constructor
 =======================
+Creates a new instance of the PhoneNumber class.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**
