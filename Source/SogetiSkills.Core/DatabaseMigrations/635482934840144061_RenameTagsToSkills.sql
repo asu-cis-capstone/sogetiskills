@@ -1,5 +1,5 @@
 ﻿-- Rename the tags table to skills and change the Keyword column to Name and the SkillDescription column to just Description.
-DROP INDEX Tags.IX_Tag_IsCanonical
+DROP INDEX IX_Tag_IsCanonical ON Tags
 EXEC sp_rename 'Tags.Keyword', 'Name', 'COLUMN';
 EXEC sp_rename 'Tags.SkillDescription', 'Description', 'COLUMN';
 EXEC sp_rename 'Tags', 'Skills';
