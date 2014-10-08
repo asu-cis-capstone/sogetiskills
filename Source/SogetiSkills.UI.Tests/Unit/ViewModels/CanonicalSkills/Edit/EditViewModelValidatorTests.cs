@@ -42,11 +42,5 @@ namespace SogetiSkills.UI.Tests.Unit.UI.ViewModels.CanonicalSkills.Add
 
             subject.ShouldHaveValidationErrorFor(x => x.Name, moreThan450Characters);
         }
-
-        [TestMethod]
-        public void Validate_GivenNameThatAlreadyExists_ShouldHaveError()
-        {
-            Assert.Inconclusive();
-        }
     }
 }

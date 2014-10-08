@@ -26,6 +26,7 @@ namespace SogetiSkills.UI.ViewModels.CanonicalSkill
             _skillManager = skillManager;
 
             RuleFor(x => x.Name)
+                .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage("Name is required.")
                 .Length(1, 450).WithMessage("Name must be fewer than 450 characters.")
                 .Must(NotAlreadyExist).WithMessage("There is already a skill named \"{0}\".", x => x.Name);
