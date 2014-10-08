@@ -242,6 +242,7 @@
     <Content Include="Views\CanonicalSkill\List.cshtml" />
     <Content Include="Views\CanonicalSkill\Add.cshtml" />
     <Content Include="Views\CanonicalSkill\Edit.cshtml" />
+    <Content Include="Views\Shared\MainNavigation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

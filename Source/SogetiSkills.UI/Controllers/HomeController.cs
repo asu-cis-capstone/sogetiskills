@@ -46,5 +46,13 @@ namespace SogetiSkills.UI.Controllers
         {
             return View();
         }
+
+        [AttributeRouting.Web.Mvc.Route("MainNavigation", HttpVerbs.Get, HttpVerbs.Post)]
+        [ChildActionOnly]
+        public virtual ActionResult MainNavigation()
+        {
+            var user = LoggedInUser;
+            return View(user);
+        }
     }
 }

@@ -74,6 +74,7 @@ namespace SogetiSkills.UI.Controllers
             public readonly string Restricted = "Restricted";
             public readonly string Error = "Error";
             public readonly string NotFound = "NotFound";
+            public readonly string MainNavigation = "MainNavigation";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -83,6 +84,7 @@ namespace SogetiSkills.UI.Controllers
             public const string Restricted = "Restricted";
             public const string Error = "Error";
             public const string NotFound = "NotFound";
+            public const string MainNavigation = "MainNavigation";
         }
 
 
@@ -154,6 +156,17 @@ namespace SogetiSkills.UI.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NotFound);
             NotFoundOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void MainNavigationOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult MainNavigation()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.MainNavigation);
+            MainNavigationOverride(callInfo);
             return callInfo;
         }
 

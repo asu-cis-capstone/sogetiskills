@@ -47,9 +47,10 @@
                 </dl>
             </div>
         </div>
-        <div class="panel panel-default">
-            @if (Model.IsConsultant)
-            {
+        @if (Model.IsConsultant)
+        {
+            <div class="panel panel-default">
+
                 <div class="panel-heading">
                     Resume
                     @if (Model.ProfileBelongsToCurrentUser)
@@ -74,8 +75,8 @@
                         <p><a href="@Url.Action(MVC.Profile.DownloadResume(Model.UserId))"><span class="glyphicon glyphicon-file"></span> @Model.ResumeMetadata.FileName</a></p>
                     }
                 </div>
-            }
-        </div>
+            </div>
+        }
     </div>
     <div class="col-lg-6">
         @if (Model.IsConsultant)

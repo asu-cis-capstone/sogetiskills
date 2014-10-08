@@ -4,6 +4,7 @@
     {
         theme = Request.Cookies["theme"].Value;
     }
+    var sogetiSkillsController = (SogetiSkills.UI.Controllers.SogetiSkillsControllerBase)ViewContext.Controller;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -33,20 +34,7 @@
                 </button>
             </div>
             <div class="navbar-collapse collapse" id="navbar-main" style="height: 1px;">
-                <ul class="nav navbar-nav navbar-right">
-                    @if (Request.IsAuthenticated)
-                    {
-                        <li>
-                            @Html.ActionLink("Sign out", MVC.Account.SignOut())
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            @Html.ActionLink("Sign in", MVC.Account.SignIn())
-                        </li>
-                    }
-                </ul>
+                @Html.Action(MVC.Home.MainNavigation())
             </div>
         </div>
     </div>

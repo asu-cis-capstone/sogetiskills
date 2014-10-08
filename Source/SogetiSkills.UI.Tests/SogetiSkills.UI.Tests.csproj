@@ -120,6 +120,8 @@
     <Compile Include="Unit\Controllers\ProfileControllerTests.cs" />
     <Compile Include="Unit\ViewModels\Account\Register\RegisterViewModelValidatorTests.cs" />
     <Compile Include="Unit\ViewModels\Account\SignIn\SignInViewModelValidatorTests.cs" />
+    <Compile Include="Unit\ViewModels\CanonicalSkills\Add\AddViewModelValidatorTests.cs" />
+    <Compile Include="Unit\ViewModels\CanonicalSkills\Edit\EditViewModelValidatorTests.cs" />
     <Compile Include="Unit\ViewModels\Profile\Details\DetailsViewModelBuilderTests.cs" />
     <Compile Include="Unit\ViewModels\Profile\EditContactInfo\EditContactInfoViewModelBuilderTests.cs" />
     <Compile Include="Unit\ViewModels\Profile\EditContactInfo\EditContactInfoViewModelValidatorTests.cs" />

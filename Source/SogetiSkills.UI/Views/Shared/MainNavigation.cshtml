@@ -1,0 +1,35 @@
+﻿@model SogetiSkills.Core.Models.User
+@{
+    Layout = null;
+}
+
+<ul class="nav navbar-nav navbar-right">
+    @if (Request.IsAuthenticated)
+    {
+        <li>
+            @Html.ActionLink("Your profile", MVC.Profile.Details(Model.Id))
+        </li>
+        if (Model is SogetiSkills.Core.Models.AccountExecutive)
+        {
+            <li>
+                @Html.ActionLink("Canonical skills", MVC.CanonicalSkill.List())
+            </li>
+        }
+        <li>
+            @Html.ActionLink("Sign out", MVC.Account.SignOut())
+        </li>
+    }
+    else
+    {
+        <li>
+            @Html.ActionLink("Sign in", MVC.Account.SignIn())
+        </li>
+    }
+</ul>
+
+
+
+
+
+
+

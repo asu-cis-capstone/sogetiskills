@@ -26,7 +26,7 @@ namespace SogetiSkills.UI.Controllers
             _userManager = userManager;
         }
 
-        protected int? LoggedInUserId
+        public int? LoggedInUserId
         {
             get
             {
