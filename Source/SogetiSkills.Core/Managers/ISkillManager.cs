@@ -30,8 +30,8 @@ namespace SogetiSkills.Core.Managers
         /// Inserts a new canonical skill.
         /// </summary>
         /// <param name="name">The skills's name.</param>
-        /// <param name="skillDescrisption">An optional skill description.</param>
-        Task AddCanonicalSkillAsync(string keyword, string skillDescription);
+        /// <param name="description">An optional skill description.</param>
+        Task AddCanonicalSkillAsync(string name, string description);
 
         /// <summary>
         /// Removes a canonical skill.  If the skill has been used by a consultant then it is flagged as
@@ -83,5 +83,21 @@ namespace SogetiSkills.Core.Managers
         /// <param name="id">The id of the skill to load.</param>
         /// <returns>The skill with the given id.</returns>
         Skill LoadById(int id);
+
+        /// <summary>
+        /// Adds a skill to a consultant.  If the skill does not already exist then it is inserted.
+        /// </summary>
+        /// <param name="skillName">The name of the skill to add.</param>
+        /// <param name="consultantId">The id of the consultant to add the skill to.</param>
+        /// <returns>The skill that was added to the consultant.</returns>
+        Task<Skill> AddSkillToConsultantAsync(string skillName, int consultantId);
+
+        /// <summary>
+        /// Removes a skill from a consultant.  If the skill is not marked as canonical and is not used by
+        /// any other consultants than the skill itself is deleted.
+        /// </summary>
+        /// <param name="consultantId">The id of the consultant to remove the skill from.</param>
+        /// <param name="skillId">The id of the skill to remove from the consultant.</param>
+        Task RemoveSkillFromConsultantAsync(int consultantId, int skillId);
     }
 }

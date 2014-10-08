@@ -262,5 +262,104 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 }
             }
         }
+
+        [TestClass]
+        public class AddSkillToConsultant : SkillManagerTests
+        {
+            [TestMethod]
+            public async Task AddSkillToConsultant_GivenSkillThatDoesntExist_InsertsSkillAndTiesItToConsultant()
+            {
+                int consultantId = InsertUser(SampleData.Consultant());
+                var subject = _fixture.Create<SkillManager>();
+
+                await subject.AddSkillToConsultantAsync("Brand new skill.", consultantId);
+
+                var skills = await subject.LoadSkillsForConsultantAsync(consultantId);
+                Assert.AreEqual(1, skills.Count());
+                Assert.AreEqual("Brand new skill.", skills.First().Name);
+            }
+
+            [TestMethod]
+            public async Task AddSkillToConsultant_GivenSkillThatAlreadyExists_JustTiesItToConsultant()
+            {
+                int consultantId = InsertUser(SampleData.Consultant());
+                var cSharp = InsertSkill("C#", "C# description", false);
+                var subject = _fixture.Create<SkillManager>();
+
+                await subject.AddSkillToConsultantAsync("C#", consultantId);
+
+                var skills = await subject.LoadSkillsForConsultantAsync(consultantId);
+                Assert.AreEqual(1, skills.Count());
+                Assert.AreEqual("C#", skills.First().Name);
+                Assert.AreEqual(cSharp.Id, skills.First().Id);
+            }
+        }
+
+        [TestClass]
+        public class RemoveSkillFromConsultant : SkillManagerTests
+        {
+            [TestMethod]
+            public async Task RemoveSkillFromConsultant_GivenSkillTiedToConsultant_RemovesTheManyToManyRecord()
+            {
+                int consultantId = InsertUser(SampleData.Consultant());
+                var skill = InsertSkill("C#", "C# description", false);
+                InsertConsultantSkill(consultantId, skill.Id);
+                var subject = _fixture.Create<SkillManager>();
+
+                await subject.RemoveSkillFromConsultantAsync(consultantId, skill.Id);
+
+                var skills = await subject.LoadSkillsForConsultantAsync(consultantId);
+                Assert.AreEqual(0, skills.Count());
+            }
+
+            [TestMethod]
+            public async Task RemoveSkillFromConsultant_GivenNonCanonicalSkillNotTiedToOtherConsultants_RemovesTheSkill()
+            {
+                int consultantId = InsertUser(SampleData.Consultant());
+                var skill = InsertSkill("C#", "C# description", false);
+                InsertConsultantSkill(consultantId, skill.Id);
+                var subject = _fixture.Create<SkillManager>();
+
+                await subject.RemoveSkillFromConsultantAsync(consultantId, skill.Id);
+
+                int skillCount = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Skills WHERE Id = @0", skill.Id);
+                Assert.AreEqual(0, skillCount);
+            }
+
+            [TestMethod]
+            public async Task RemoveSkillFromConsultant_GivenNonCanonicalSkillTiedToOtherConsultants_DoesNotRemoveTheSkill()
+            {
+                // Insert two consultants.
+                int consultant1Id = InsertUser(SampleData.Consultant());
+                var consultant2 = SampleData.Consultant();
+                consultant2.EmailAddress = "consultant2@site.com";
+                int consultant2Id = InsertUser(consultant2);
+                // Insert a skill.
+                var skill = InsertSkill("C#", "C# description", false);
+                // Tie the skill to both consultant.s
+                InsertConsultantSkill(consultant1Id, skill.Id);
+                InsertConsultantSkill(consultant2Id, skill.Id);
+                var subject = _fixture.Create<SkillManager>();
+
+                await subject.RemoveSkillFromConsultantAsync(consultant1Id, skill.Id);
+
+                int skillCount = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Skills WHERE Id = @0", skill.Id);
+                Assert.AreEqual(1, skillCount);
+            }
+
+            [TestMethod]
+            public async Task RemoveSkillFromConsultant_GivenCanonicalSkillTiedToNoOtherConsultants_DoesNoRemoveTheSkill()
+            {
+                int consultantId = InsertUser(SampleData.Consultant());
+                var skill = InsertSkill("C#", "C# description", true);
+                InsertConsultantSkill(consultantId, skill.Id);
+                var subject = _fixture.Create<SkillManager>();
+
+                await subject.RemoveSkillFromConsultantAsync(consultantId, skill.Id);
+
+                int skillCount = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Skills WHERE Id = @0", skill.Id);
+                Assert.AreEqual(1, skillCount);
+            }
+        }
     }
 }

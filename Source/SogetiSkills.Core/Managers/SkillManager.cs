@@ -51,20 +51,20 @@ namespace SogetiSkills.Core.Managers
         /// Inserts a new canonical skill.
         /// </summary>
         /// <param name="name">The skills's name.</param>
-        /// <param name="skillDescription">An optional skill description.</param>
-        public async Task AddCanonicalSkillAsync(string name, string skillDescription)
+        /// <param name="description">An optional skill description.</param>
+        public async Task AddCanonicalSkillAsync(string name, string description)
         {
             var tag = await LoadByNameAsync(name);
             if (tag != null)
             {
-                await UpdateSkillAsync(tag.Id, name, skillDescription, true);
+                await UpdateSkillAsync(tag.Id, name, description, true);
             }
             else
             {
                 var command = new SqlCommand("Skill_InsertCanonical", await GetOpenConnectionAsync());
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@name", name);
-                command.Parameters.AddWithValue("@description", DataAccessHelper.ValueOrDBNull(skillDescription));
+                command.Parameters.AddWithValue("@description", DataAccessHelper.ValueOrDBNull(description));
 
                 await command.ExecuteNonQueryAsync();
             }
@@ -192,6 +192,56 @@ namespace SogetiSkills.Core.Managers
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// Adds a skill to a consultant.  If the skill does not already exist then it is inserted.
+        /// </summary>
+        /// <param name="skillName">The name of the skill to add.</param>
+        /// <param name="consultantId">The id of the consultant to add the skill to.</param>
+        /// <returns>The skill that was added to the consultant.</returns>
+        public async Task<Skill> AddSkillToConsultantAsync(string skillName, int consultantId)
+        {
+            var skill = await LoadByNameAsync(skillName);
+            if (skill == null)
+            {
+                var command = new SqlCommand("Skill_InsertNonCanonicalForConsultant", await GetOpenConnectionAsync());
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@name", skillName);
+                command.Parameters.AddWithValue("@consultantId", consultantId);
+                int skillId = (int)(await command.ExecuteScalarAsync());
+                skill = new Skill
+                {
+                    Id = skillId,
+                    Name = skillName,
+                    IsCanonical = false
+                };
+            }
+            else
+            {
+                var command = new SqlCommand("Skill_AddToConsultant", await GetOpenConnectionAsync());
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@skillid", skill.Id);
+                command.Parameters.AddWithValue("@consultantId", consultantId);
+                await command.ExecuteNonQueryAsync();
+            }
+
+            return skill;
+        }
+
+        /// <summary>
+        /// Removes a skill from a consultant.  If the skill is not marked as canonical and is not used by
+        /// any other consultants than the skill itself is deleted.
+        /// </summary>
+        /// <param name="consultantId">The id of the consultant to remove the skill from.</param>
+        /// <param name="skillId">The id of the skill to remove from the consultant.</param>
+        public async Task RemoveSkillFromConsultantAsync(int consultantId, int skillId)
+        {
+            var command = new SqlCommand("Skill_RemoveFromConsultant", await GetOpenConnectionAsync());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@consultantId", consultantId);
+            command.Parameters.AddWithValue("@skillId", skillId);
+            await command.ExecuteNonQueryAsync();
         }
 
         #region Private helper methods
