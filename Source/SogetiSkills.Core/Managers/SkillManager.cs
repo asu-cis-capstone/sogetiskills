@@ -64,7 +64,7 @@ namespace SogetiSkills.Core.Managers
                 var command = new SqlCommand("Skill_InsertCanonical", await GetOpenConnectionAsync());
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@name", name);
-                command.Parameters.AddWithValue("@description", skillDescription);
+                command.Parameters.AddWithValue("@description", DataAccessHelper.ValueOrDBNull(skillDescription));
 
                 await command.ExecuteNonQueryAsync();
             }
@@ -98,7 +98,7 @@ namespace SogetiSkills.Core.Managers
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@id", skillId);
             command.Parameters.AddWithValue("@name", name);
-            command.Parameters.AddWithValue("@description", skillDescription);
+            command.Parameters.AddWithValue("@description", DataAccessHelper.ValueOrDBNull(skillDescription));
             command.Parameters.AddWithValue("@isCanonical", isCanonical);
 
             await command.ExecuteNonQueryAsync();
@@ -141,6 +141,48 @@ namespace SogetiSkills.Core.Managers
             var command = new SqlCommand("Skill_SelectByName", GetOpenConnection());
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@name", name);
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    return ReadSkill(reader);
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Loads a skill by its id.
+        /// </summary>
+        /// <param name="id">The id of the skill to load.</param>
+        /// <returns>The skill with the given id.</returns>
+        public async Task<Skill> LoadByIdAsync(int id)
+        {
+            var command = new SqlCommand("Skill_SelectById", await GetOpenConnectionAsync());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@id", id);
+
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                if (await reader.ReadAsync())
+                {
+                    return ReadSkill(reader);
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Loads a skill by its id.
+        /// </summary>
+        /// <param name="id">The id of the skill to load.</param>
+        /// <returns>The skill with the given id.</returns>
+        public Skill LoadById(int id)
+        {
+            var command = new SqlCommand("Skill_SelectById", GetOpenConnection());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@id", id);
 
             using (SqlDataReader reader = command.ExecuteReader())
             {

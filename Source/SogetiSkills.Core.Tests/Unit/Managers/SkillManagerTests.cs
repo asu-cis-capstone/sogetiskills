@@ -19,11 +19,12 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             public async Task LoadSkillsForConsultant_GivenConsultantWithNoSkills_ReturnsEmptySet()
             {
                 int userId = InsertUser(SampleData.Consultant());
-                var subject = _fixture.Create<SkillManager>();
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    var skills = await subject.LoadSkillsForConsultantAsync(userId);
 
-                var skills = await subject.LoadSkillsForConsultantAsync(userId);
-
-                Assert.AreEqual(0, skills.Count());
+                    Assert.AreEqual(0, skills.Count());
+                }
             }
 
             [TestMethod]
@@ -35,11 +36,12 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 InsertConsultantSkill(userId, cSharp.Id);
                 InsertConsultantSkill(userId, aspNet.Id);
 
-                var subject = _fixture.Create<SkillManager>();
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    var skills = await subject.LoadSkillsForConsultantAsync(userId);
 
-                var skills = await subject.LoadSkillsForConsultantAsync(userId);
-
-                Assert.AreEqual(2, skills.Count());
+                    Assert.AreEqual(2, skills.Count());
+                }
             }
         }
 
@@ -53,12 +55,13 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 InsertSkill("ASP.NET", "ASP.NET description", false);
                 InsertSkill("JavaScript", "JavaScript description", true);
 
-                var subject = _fixture.Create<SkillManager>();
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    var skills = await subject.LoadCanonicalSkillsAsync();
 
-                var skills = await subject.LoadCanonicalSkillsAsync();
-
-                Assert.AreEqual(2, skills.Count());
-                Assert.IsTrue(skills.All(x => x.IsCanonical));
+                    Assert.AreEqual(2, skills.Count());
+                    Assert.IsTrue(skills.All(x => x.IsCanonical));
+                }
             }
 
 
@@ -69,13 +72,14 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 InsertSkill("ASP.NET", "ASP.NET description", true);
                 InsertSkill("JavaScript", "JavaScript description", true);
 
-                var subject = _fixture.Create<SkillManager>();
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    var skills = await subject.LoadCanonicalSkillsAsync();
 
-                var skills = await subject.LoadCanonicalSkillsAsync();
-
-                Assert.AreEqual("ASP.NET", skills.ElementAt(0).Name);
-                Assert.AreEqual("C#", skills.ElementAt(1).Name);
-                Assert.AreEqual("JavaScript", skills.ElementAt(2).Name);
+                    Assert.AreEqual("ASP.NET", skills.ElementAt(0).Name);
+                    Assert.AreEqual("C#", skills.ElementAt(1).Name);
+                    Assert.AreEqual("JavaScript", skills.ElementAt(2).Name);
+                }
             }
         }
 
@@ -85,27 +89,41 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task AddCanonicalSkill_GivenNewSkill_Inserts()
             {
-                var subject = _fixture.Create<SkillManager>();
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    await subject.AddCanonicalSkillAsync("C#", "C# description");
 
-                await subject.AddCanonicalSkillAsync("C#", "C# description");
-
-                int count = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Skills WHERE Name = @0", "C#");
-                Assert.AreEqual(1, count);
+                    int count = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Skills WHERE Name = @0", "C#");
+                    Assert.AreEqual(1, count);
+                }
             }
 
             [TestMethod]
             public async Task AddCanonicalSkill_GivenNameThatAlreadyExists_UpdatesExistingSkill()
             {
                 var existingSkill = InsertSkill("C#", "C# description", isCanonical: false);
-                var subject = _fixture.Create<SkillManager>();
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    await subject.AddCanonicalSkillAsync("C#", "new C# description");
 
-                await subject.AddCanonicalSkillAsync("C#", "new C# description");
+                    dynamic newCanonicalSkill = TestDatabase.QuerySingle("SELECT Id, Name, [Description], IsCanonical FROM Skills WHERE Id = @0", existingSkill.Id);
+                    Assert.AreEqual(existingSkill.Id, newCanonicalSkill.Id);
+                    Assert.AreEqual("C#", newCanonicalSkill.Name);
+                    Assert.AreEqual("new C# description", newCanonicalSkill.Description);
+                    Assert.AreEqual(true, newCanonicalSkill.IsCanonical);
+                }
+            }
 
-                dynamic newCanonicalSkill = TestDatabase.QuerySingle("SELECT Id, Name, [Description], IsCanonical FROM Skills WHERE Id = @0", existingSkill.Id);
-                Assert.AreEqual(existingSkill.Id, newCanonicalSkill.Id);
-                Assert.AreEqual("C#", newCanonicalSkill.Name);
-                Assert.AreEqual("new C# description", newCanonicalSkill.Description);
-                Assert.AreEqual(true, newCanonicalSkill.IsCanonical);
+            [TestMethod]
+            public async Task AddCanonicalSkill_GivenNullDescription_Inserts()
+            {
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    await subject.AddCanonicalSkillAsync("C#", null);
+
+                    int count = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Skills WHERE Name = @0", "C#");
+                    Assert.AreEqual(1, count);
+                }
             }
         }
 
@@ -119,12 +137,13 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 var canonicalSkill = InsertSkill("C#", "C# description", true);
                 InsertConsultantSkill(userId, canonicalSkill.Id);
 
-                var subject = _fixture.Create<SkillManager>();
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    await subject.RemoveCanonicalSkillAsync(canonicalSkill.Id);
 
-                await subject.RemoveCanonicalSkillAsync(canonicalSkill.Id);
-
-                bool isCanonical = TestDatabase.QueryValue("SELECT IsCanonical FROM Skills WHERE Id = @0", canonicalSkill.Id);
-                Assert.IsFalse(isCanonical);
+                    bool isCanonical = TestDatabase.QueryValue("SELECT IsCanonical FROM Skills WHERE Id = @0", canonicalSkill.Id);
+                    Assert.IsFalse(isCanonical);
+                }
             }
 
             [TestMethod]
@@ -132,12 +151,13 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             {
                 var canonicalSkill = InsertSkill("C#", "C# description", true);
 
-                var subject = _fixture.Create<SkillManager>();
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    await subject.RemoveCanonicalSkillAsync(canonicalSkill.Id);
 
-                await subject.RemoveCanonicalSkillAsync(canonicalSkill.Id);
-
-                int count = TestDatabase.QueryValue("SELECT COUNT(*) FROM Skills WHERE Id = @0", canonicalSkill.Id);
-                Assert.AreEqual(0, count);
+                    int count = TestDatabase.QueryValue("SELECT COUNT(*) FROM Skills WHERE Id = @0", canonicalSkill.Id);
+                    Assert.AreEqual(0, count);
+                }
             }
         }
 
@@ -149,25 +169,41 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             {
                 var skill = InsertSkill("C#", "C# description", true);
 
-                var subject = _fixture.Create<SkillManager>();
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    await subject.UpdateSkillAsync(skill.Id, "New Name", "New Description", false);
 
-                await subject.UpdateSkillAsync(skill.Id, "New Name", "New Description", false);
-
-                var updatedSkill = TestDatabase.QuerySingle("SELECT Name, [Description], IsCanonical FROM Skills WHERE Id = @0", skill.Id);
-                Assert.AreEqual("New Name", updatedSkill.Name);
-                Assert.AreEqual("New Description", updatedSkill.Description);
-                Assert.AreEqual(false, updatedSkill.IsCanonical);
+                    var updatedSkill = TestDatabase.QuerySingle("SELECT Name, [Description], IsCanonical FROM Skills WHERE Id = @0", skill.Id);
+                    Assert.AreEqual("New Name", updatedSkill.Name);
+                    Assert.AreEqual("New Description", updatedSkill.Description);
+                    Assert.AreEqual(false, updatedSkill.IsCanonical);
+                }
             }
 
             [TestMethod]
             public async Task UpdateSkill_GivenIdOfSkillThatDoesntExist_DoesNotThrow()
             {
                 int idOfSkillThatDoesntExist = _fixture.Create<int>();
-                var subject = _fixture.Create<SkillManager>();
-
-                await subject.UpdateSkillAsync(idOfSkillThatDoesntExist, "keyword", "skillDescription", false);
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    await subject.UpdateSkillAsync(idOfSkillThatDoesntExist, "keyword", "skillDescription", false);
+                }
 
                 // No exception thrown
+            }
+
+            [TestMethod]
+            public async Task UpdateSkill_GivenNullDescription_UpdatesTheSkill()
+            {
+                var skill = InsertSkill("C#", "C# description", true);
+
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    await subject.UpdateSkillAsync(skill.Id, "C#", null, true);
+
+                    var updatedSkill = TestDatabase.QuerySingle("SELECT [Description] FROM Skills WHERE Id = @0", skill.Id);
+                    Assert.IsNull(updatedSkill.Description);
+                }
             }
         }
 
@@ -177,11 +213,12 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task LoadByName_GivenNameThatDoesntExist_ReturnsNull()
             {
-                var subject = _fixture.Create<SkillManager>();
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    var skill = await subject.LoadByNameAsync("Does Not Exist");
 
-                var skill = await subject.LoadByNameAsync("Does Not Exist");
-
-                Assert.IsNull(skill);
+                    Assert.IsNull(skill);
+                }
             }
 
             [TestMethod]
@@ -189,11 +226,40 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             {
                 InsertSkill("C#", null, false);
                 InsertSkill("ASP.NET", null, false);
-                var subject = _fixture.Create<SkillManager>();
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    var skill = await subject.LoadByNameAsync("ASP.NET");
 
-                var skill = await subject.LoadByNameAsync("ASP.NET");
+                    Assert.AreEqual("ASP.NET", skill.Name);
+                }
+            }
+        }
 
-                Assert.AreEqual("ASP.NET", skill.Name);
+        [TestClass]
+        public class LoadById : SkillManagerTests
+        {
+            [TestMethod]
+            public async Task LoadById_GivenIdThatDoesntExist_ReturnsNull()
+            {
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    var skill = await subject.LoadByIdAsync(_fixture.Create<int>());
+
+                    Assert.IsNull(skill);
+                }
+            }
+
+            [TestMethod]
+            public async Task LoadById_GivenId_ReturnsSkill()
+            {
+                var cSharp = InsertSkill("C#", "C# Description", false);
+                using (var subject = _fixture.Create<SkillManager>())
+                {
+                    var skill = await subject.LoadByIdAsync(cSharp.Id);
+
+                    Assert.AreEqual("C#", skill.Name);
+                    Assert.AreEqual(cSharp.Id, skill.Id);
+                }
             }
         }
     }

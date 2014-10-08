@@ -69,5 +69,19 @@ namespace SogetiSkills.Core.Managers
         /// There is a unique index on name so only one skill will be returned.
         /// </remarks>
         Skill LoadByName(string name);
+
+        /// <summary>
+        /// Loads a skill by its id.
+        /// </summary>
+        /// <param name="id">The id of the skill to load.</param>
+        /// <returns>The skill with the given id.</returns>
+        Task<Skill> LoadByIdAsync(int id);
+
+        /// <summary>
+        /// Loads a skill by its id.
+        /// </summary>
+        /// <param name="id">The id of the skill to load.</param>
+        /// <returns>The skill with the given id.</returns>
+        Skill LoadById(int id);
     }
 }

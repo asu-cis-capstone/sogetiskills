@@ -10,7 +10,7 @@ namespace SogetiSkills.Core.Helpers
     /// <summary>
     /// Container class for helpers functions relating to reading data back from a database.
     /// </summary>
-    public static class DataReaderHelper
+    public static class DataAccessHelper
     {
         /// <summary>
         /// Casts a value returned from the database to T. DBNull.Value is returned as default(T).
@@ -41,6 +41,24 @@ namespace SogetiSkills.Core.Helpers
         {
             object columnValue = reader[columnName];
             return CastTo<T>(columnValue);
+        }
+
+        /// <summary>
+        /// Returns either the value passed in or DBNull.Value if the value was null.  SQL Server will throw saying that
+        /// a parameter is missing if CLR null is sent is for the parameter value.  Instead we need to send in DBNull.Value.
+        /// </summary>
+        /// <param name="value">The value that is going to be used as a database parameter.</param>
+        /// <returns>The value or DBNull.Value.</returns>
+        public static object ValueOrDBNull(object value)
+        {
+            if (value == null)
+            {
+                return DBNull.Value;
+            }
+            else
+            {
+                return value;
+            }
         }
     }
 }

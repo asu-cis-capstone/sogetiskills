@@ -9,18 +9,19 @@ using System.Web;
 
 namespace SogetiSkills.UI.ViewModels.CanonicalSkill
 {
-    [Validator(typeof(AddViewModelValidator))]
-    public class AddViewModel
+    [Validator(typeof(EditViewModelValidator))]
+    public class EditViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
     }
 
-    public class AddViewModelValidator : AbstractValidator<AddViewModel>
+    public class EditViewModelValidator : AbstractValidator<EditViewModel>
     {
         private readonly ISkillManager _skillManager;
 
-        public AddViewModelValidator(ISkillManager skillManager)
+        public EditViewModelValidator(ISkillManager skillManager)
         {
             _skillManager = skillManager;
 
@@ -28,22 +29,30 @@ namespace SogetiSkills.UI.ViewModels.CanonicalSkill
                 .NotEmpty().WithMessage("Name is required.")
                 .Length(1, 450).WithMessage("Name must be fewer than 450 characters.")
                 .Must(NotAlreadyExist).WithMessage("There is already a skill named \"{0}\".", x => x.Name);
-
         }
 
-        public bool NotAlreadyExist(string name)
+        public bool NotAlreadyExist(EditViewModel model, string name)
         {
-            var existingSkill = _skillManager.LoadByName(name);
-            if (existingSkill == null)
+            var skill = _skillManager.LoadById(model.Id);
+            if (name == skill.Name)
             {
+                // The user is not trying to change the skill name.
                 return true;
             }
-            else if (existingSkill.IsCanonical == false)
+            else
             {
-                return true;
-            }
+                var existingOtherSkill = _skillManager.LoadByName(name);
+                if (existingOtherSkill == null)
+                {
+                    return true;
+                }
+                else if (existingOtherSkill.IsCanonical == false)
+                {
+                    return true;
+                }
 
-            return false;
+                return false;
+            }
         }
     }
 }

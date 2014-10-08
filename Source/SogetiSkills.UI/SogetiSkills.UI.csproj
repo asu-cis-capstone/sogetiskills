@@ -220,6 +220,7 @@
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\SignInViewModel.cs" />
     <Compile Include="ViewModels\CanonicalSkill\AddViewModel.cs" />
+    <Compile Include="ViewModels\CanonicalSkill\EditViewModel.cs" />
     <Compile Include="ViewModels\Profile\Details\DetailsViewModel.cs" />
     <Compile Include="ViewModels\Profile\Details\DetailsViewModelBuilder.cs" />
     <Compile Include="ViewModels\Profile\EditContactInfo\EditContactInfoViewModel.cs" />
@@ -240,6 +241,7 @@
     <Content Include="Views\Home\NotFound.cshtml" />
     <Content Include="Views\CanonicalSkill\List.cshtml" />
     <Content Include="Views\CanonicalSkill\Add.cshtml" />
+    <Content Include="Views\CanonicalSkill\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

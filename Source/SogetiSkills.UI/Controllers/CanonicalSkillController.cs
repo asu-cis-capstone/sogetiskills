@@ -40,9 +40,60 @@ namespace SogetiSkills.UI.Controllers
 
         [ValidateAntiForgeryToken]
         [POST("CanonicalSkill/Add")]
-        public virtual ActionResult Add(AddViewModel model)
+        public virtual async Task<ActionResult> Add(AddViewModel model)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _skillManager.AddCanonicalSkillAsync(model.Name, model.Description);
+            FlashSuccess(string.Format("{0} was added.", model.Name));
+            return RedirectToAction(MVC.CanonicalSkill.List());
+        }
+
+        [GET("CanonicalSkill/Edit/{id}")]
+        public virtual async Task<ActionResult> Edit(int id)
+        {
+            var skill = await _skillManager.LoadByIdAsync(id);
+            if (skill == null)
+            {
+                return HttpNotFound();
+            }
+
+            EditViewModel model = new EditViewModel();
+            model.Id = skill.Id;
+            model.Name = skill.Name;
+            model.Description = skill.Description;
+
+            return View(model);
+        }
+
+        [ValidateAntiForgeryToken]
+        [POST("CanonicalSkill/Edit/{id}")]
+        public virtual async Task<ActionResult> Edit(EditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _skillManager.UpdateSkillAsync(model.Id, model.Name, model.Description, true);
+            FlashSuccess(string.Format("{0} updated.", model.Name));
+            return RedirectToAction(MVC.CanonicalSkill.List());
+        }
+
+        [ValidateAntiForgeryToken]
+        [POST("CanonicalSkill/Delete")]
+        public virtual async Task<ActionResult> Delete(int skillId)
+        {
+            var skill = await _skillManager.LoadByIdAsync(skillId);
+            if (skill != null)
+            {
+                await _skillManager.RemoveCanonicalSkillAsync(skillId);
+                FlashSuccess(string.Format("{0} was removed.", skill.Name));
+            }
+            return RedirectToAction(MVC.CanonicalSkill.List());
         }
     }
 }
