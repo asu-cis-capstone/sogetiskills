@@ -1,0 +1,75 @@
+/*
+Data model that conforms better to conventions/ best practices.
+Sept 13
+*/
+
+User
+----------
+UserId	Primary Key
+FirstName
+LastName
+IsOnBeach
+
+Membership
+----------
+UserId	Primary Key
+Email	NOT NULL
+PasswordHash
+PasswordSalt
+LastLogin	DateTime
+
+Session
+----------
+UserId
+StartTime
+EndTime
+Primary Key (UserId, StartTime)
+
+
+
+---> Type, not role
+UserRole
+----------
+UserId	Foreign Key
+RoleId	Foreign Key
+DateFrom NOT NULL
+DateTo
+PrimaryKey (UserId, RoleId)
+
+
+
+
+UserResume
+----------
+UserId	Not Null
+Blob	Not Null
+PrimaryKey (UserId, Blob)
+
+
+Skill
+----------
+SkillId	Primary Key	
+SkillDescription
+
+
+Proficiency
+----------
+ProficiencyId
+ProficiencyDescription
+
+
+UserSkill
+----------
+UserId	Foreign Key
+SkillId	Foreign Key
+ProficiencyId	FOREIGN KEY
+PrimaryKey (UserId, SkillId)
+
+
+
+stored procedures
+skills on beach
+employees on beach
+filter by skills
+
+
