@@ -154,9 +154,9 @@ $RECYCLE.BIN/
 # Mac desktop service store files
 .DS_Store
 
-*.vsd
+# *.vsd changed this to a comment to allow visio files
 
-*.vsd
+# *.vsd changed this to a comment to allow visio files
 
 # Sandcastle documentation artifacts
 Source/Documentation/Help/
