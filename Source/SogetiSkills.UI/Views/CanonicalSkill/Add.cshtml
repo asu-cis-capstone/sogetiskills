@@ -1,0 +1,29 @@
+﻿@model SogetiSkills.UI.ViewModels.CanonicalSkill.AddViewModel
+@{
+    ViewBag.Title = "Add a skill";
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <h2>Add a canonical skill</h2>
+        @Html.ValidationSummary()
+        <p>
+            @Html.ActionLink("Back to skills list", MVC.CanonicalSkill.List())
+        </p>
+        @using (Html.BeginForm(MVC.CanonicalSkill.Add(), FormMethod.Post, new { @class = "well" }))
+        {
+            <fieldset>
+                <div class="form-group">
+                    <label>Name</label>
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control", rows = 5 })
+                </div>
+            </fieldset>
+            <input class="btn btn-primary" type="submit" value="Save" />
+            @Html.AntiForgeryToken()
+        }
+    </div>
+</div>

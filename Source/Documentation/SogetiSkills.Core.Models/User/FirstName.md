@@ -1,5 +1,6 @@
 UserFirstName Property
 ======================
+The user's first name.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

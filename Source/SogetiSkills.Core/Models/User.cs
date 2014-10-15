@@ -13,11 +13,34 @@ namespace SogetiSkills.Core.Models
     /// </summary>
     public abstract class User
     {
+        /// <summary>
+        /// The id of the user.
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// The user's email address.  This is also used when the user is logging in.
+        /// </summary>
         public string EmailAddress { get; set; }
+
+        /// <summary>
+        /// The user's first name.
+        /// </summary>
         public string FirstName { get; set; }
+
+        /// <summary>
+        /// The user's last name.
+        /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// The user's phone number.
+        /// </summary>
         public PhoneNumber PhoneNumber { get; set; }
+
+        /// <summary>
+        /// The user's salted and hashed password.
+        /// </summary>
         public HashedPassword Password { get; set; }
     }
 }

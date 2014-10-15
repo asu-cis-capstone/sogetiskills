@@ -1,5 +1,6 @@
 ResumeFileData Property
 =======================
+The actual file contents of the resume.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

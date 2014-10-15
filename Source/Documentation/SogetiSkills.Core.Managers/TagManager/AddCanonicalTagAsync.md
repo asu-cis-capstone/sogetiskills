@@ -1,0 +1,45 @@
+TagManagerAddCanonicalTagAsync Method
+=====================================
+Inserts a new canonical tag.
+
+**Namespace:** [SogetiSkills.Core.Managers][1]  
+**Assembly:**
+
+Syntax
+------
+
+```csharp
+public Task AddCanonicalTagAsync(
+	string keyword,
+	string skillDescription
+)
+```
+
+### Parameters
+
+#### *keyword*
+Type: [SystemString][2]  
+The tag's keyword.
+
+#### *skillDescription*
+Type: [SystemString][2]  
+An optional tag description.
+
+### Return Value
+Type: [Task][3]
+### Implements
+[ITagManagerAddCanonicalTagAsync(String, String)][4]  
+
+
+See Also
+--------
+
+### Reference
+[TagManager Class][5]  
+[SogetiSkills.Core.Managers Namespace][1]  
+
+[1]: ../README.md
+[2]: http://msdn.microsoft.com/en-us/library/s1wwdcbf
+[3]: http://msdn.microsoft.com/en-us/library/dd235678
+[4]: ../ITagManager/AddCanonicalTagAsync.md
+[5]: README.md

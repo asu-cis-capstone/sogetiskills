@@ -24,13 +24,14 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             {
                 _fixture.Inject<ISaltGenerator>(new SaltGenerator());
                 _fixture.Inject<IPasswordHasher>(new PasswordHasher());
-                UserManager subject = _fixture.Create<UserManager>();
+                using (var subject = _fixture.Create<UserManager>())
+                {
+                    await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
-                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
+                    int count = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Users WHERE EmailAddress = 'bill@site.com'");
 
-                int count = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Users WHERE EmailAddress = 'bill@site.com'");
-
-                Assert.AreEqual(1, count);
+                    Assert.AreEqual(1, count);
+                }
             }
 
             [TestMethod]
@@ -42,13 +43,14 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 var fakeSaltGenerator = new Mock<ISaltGenerator>();
                 fakeSaltGenerator.Setup(x => x.GenerateNewSalt()).Returns("salt");
                 _fixture.Inject(fakeSaltGenerator);
-                UserManager subject = _fixture.Create<UserManager>();
+                using (var subject = _fixture.Create<UserManager>())
+                {
+                    await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
-                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
-
-                var user = TestDatabase.QuerySingle("SELECT TOP 1 * FROM Users WHERE EmailAddress = 'bill@site.com'");
-                Assert.AreEqual("hashed password", user.Password_Hash);
-                Assert.AreEqual("salt", user.Password_Salt);
+                    var user = TestDatabase.QuerySingle("SELECT TOP 1 * FROM Users WHERE EmailAddress = 'bill@site.com'");
+                    Assert.AreEqual("hashed password", user.Password_Hash);
+                    Assert.AreEqual("salt", user.Password_Salt);
+                }
             }
         }
 
@@ -61,11 +63,12 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 TestDatabase.Execute(
                     @"INSERT INTO Users (UserType, EmailAddress, FirstName, LastName, PhoneNumber, Password_Hash, Password_Salt)
                       VALUES ('Consultant', 'bill@site.com', 'Bill', 'Smith', '1234567890', 'hash', 'salt')");
-                UserManager subject = _fixture.Create<UserManager>();
+                using (var subject = _fixture.Create<UserManager>())
+                {
+                    int? userId = subject.GetUserIdForEmailAddress("bill@site.com");
 
-                int? userId = subject.GetUserIdForEmailAddress("bill@site.com");
-
-                Assert.IsNotNull(userId);
+                    Assert.IsNotNull(userId);
+                }
             }
 
             [TestMethod]
@@ -74,11 +77,12 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 TestDatabase.Execute(
                      @"INSERT INTO Users (UserType, EmailAddress, FirstName, LastName, PhoneNumber, Password_Hash, Password_Salt)
                       VALUES ('Consultant', 'bill@site.com', 'Bill', 'Smith', '1234567890', 'hash', 'salt')");
-                UserManager subject = _fixture.Create<UserManager>();
+                using(var subject = _fixture.Create<UserManager>())
+                {
+                    int? userId = subject.GetUserIdForEmailAddress("some_other_address@site.com");
 
-                int? userId = subject.GetUserIdForEmailAddress("some_other_address@site.com");
-
-                Assert.IsNull(userId);
+                    Assert.IsNull(userId);
+                }
             }
         }
 
@@ -90,14 +94,15 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             {
                 _fixture.Inject<ISaltGenerator>(new SaltGenerator());
                 _fixture.Inject<IPasswordHasher>(new PasswordHasher());
-                UserManager subject = _fixture.Create<UserManager>();
+                using (var subject = _fixture.Create<UserManager>())
+                {
+                    await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
-                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
+                    var user = await subject.ValidatePasswordAsync("bill@site.com", "pass");
 
-                var user = await subject.ValidatePasswordAsync("bill@site.com", "pass");
-
-                Assert.IsNotNull(user);
-                Assert.AreEqual("bill@site.com", user.EmailAddress);
+                    Assert.IsNotNull(user);
+                    Assert.AreEqual("bill@site.com", user.EmailAddress);
+                }
             }
 
             [TestMethod]
@@ -105,23 +110,25 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             {
                 _fixture.Inject<ISaltGenerator>(new SaltGenerator());
                 _fixture.Inject<IPasswordHasher>(new PasswordHasher());
-                UserManager subject = _fixture.Create<UserManager>();
+                using (var subject = _fixture.Create<UserManager>())
+                {
+                    await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
 
-                await subject.RegisterNewUserAsync<Consultant>("bill@site.com", "pass", "Bill", "Smith", "1234567890");
+                    User user = await subject.ValidatePasswordAsync("bill@site.com", "incorrect password");
 
-                User user = await subject.ValidatePasswordAsync("bill@site.com", "incorrect password");
-
-                Assert.IsNull(user);
+                    Assert.IsNull(user);
+                }
             }
 
             [TestMethod]
             public async Task ValidatePasswordAsync_GivenEmailAddressThatDoesntExist_ReturnsNull()
-            {   
-                UserManager subject = _fixture.Create<UserManager>();
+            {
+                using (var subject = _fixture.Create<UserManager>())
+                {
+                    User user = await subject.ValidatePasswordAsync("does_not_exist@site.com", "password");
 
-                User user = await subject.ValidatePasswordAsync("does_not_exist@site.com", "password");
-
-                Assert.IsNull(user);
+                    Assert.IsNull(user);
+                }
             }
         }
     }

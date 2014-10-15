@@ -47,9 +47,10 @@
                 </dl>
             </div>
         </div>
-        <div class="panel panel-default">
-            @if (Model.IsConsultant)
-            {
+        @if (Model.IsConsultant)
+        {
+            <div class="panel panel-default">
+
                 <div class="panel-heading">
                     Resume
                     @if (Model.ProfileBelongsToCurrentUser)
@@ -74,8 +75,8 @@
                         <p><a href="@Url.Action(MVC.Profile.DownloadResume(Model.UserId))"><span class="glyphicon glyphicon-file"></span> @Model.ResumeMetadata.FileName</a></p>
                     }
                 </div>
-            }
-        </div>
+            </div>
+        }
     </div>
     <div class="col-lg-6">
         @if (Model.IsConsultant)
@@ -85,27 +86,27 @@
                     Skills
                     @if (Model.ProfileBelongsToCurrentUser)
                     {
-                        if (Model.Tags.Any())
+                        if (Model.Skills.Any())
                         {
-                            <a href="#" class="pull-right">><span class="glyphicon glyphicon-edit"></span> Edit skills</a>
+                            <a href="@Url.Action(MVC.Profile.Skills(Model.UserId))" class="pull-right"><span class="glyphicon glyphicon-edit"></span> Edit skills</a>
                         }
                         else
                         {
-                            <a href="#" class="pull-right"><span class="glyphicon glyphicon-plus"></span> Add skills</a>
+                            <a href="@Url.Action(MVC.Profile.Skills(Model.UserId))" class="pull-right"><span class="glyphicon glyphicon-plus"></span> Add skills</a>
                         }
                     }
                 </div>
                 <div class="panel-body">
-                    @if (Model.Tags.Any())
+                    @if (Model.Skills.Any())
                     {
                         <ul>
-                            @foreach (var tag in Model.Tags)
+                            @foreach (var skill in Model.Skills)
                             {
                                 <li>
-                                    @tag.Keyword
-                                    @if (!string.IsNullOrWhiteSpace(tag.SkillDescription))
+                                    @skill.Name
+                                    @if (!string.IsNullOrWhiteSpace(skill.Description))
                                     {
-                                        <span class="text-muted">@tag.SkillDescription</span>
+                                        <span class="text-muted">@skill.Description</span>
                                     }
                                 </li>
                             }

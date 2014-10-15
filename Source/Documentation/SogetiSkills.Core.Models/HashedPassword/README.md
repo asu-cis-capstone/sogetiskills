@@ -32,10 +32,10 @@ Constructors
 Properties
 ----------
 
-                   | Name      | Description 
------------------- | --------- | ----------- 
-![Public property] | [Hash][4] |             
-![Public property] | [Salt][5] |             
+                   | Name      | Description                        
+------------------ | --------- | ---------------------------------- 
+![Public property] | [Hash][4] | The salted and hashed password.    
+![Public property] | [Salt][5] | The salt to apply to the password. 
 
 
 See Also

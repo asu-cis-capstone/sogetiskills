@@ -1,0 +1,30 @@
+﻿@model SogetiSkills.UI.ViewModels.CanonicalSkill.EditViewModel
+@{
+    ViewBag.Title = "Edit skill";
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <h2>Edit skill</h2>
+        @Html.ValidationSummary()
+        <p>
+            @Html.ActionLink("Back to skills list", MVC.CanonicalSkill.List())
+        </p>
+        @using (Html.BeginForm(MVC.CanonicalSkill.Edit(), FormMethod.Post, new { @class = "well" }))
+        {
+            <fieldset>
+                <div class="form-group">
+                    <label>Name</label>
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control", rows = 5 })
+                </div>
+            </fieldset>
+            <input class="btn btn-primary" type="submit" value="Save" />
+            @Html.HiddenFor(x => x.Id)
+            @Html.AntiForgeryToken()
+        }
+    </div>
+</div>

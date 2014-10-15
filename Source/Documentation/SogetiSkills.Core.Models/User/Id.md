@@ -1,5 +1,6 @@
 UserId Property
 ===============
+The id of the user.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

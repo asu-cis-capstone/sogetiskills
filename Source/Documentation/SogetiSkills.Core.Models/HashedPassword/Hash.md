@@ -1,5 +1,6 @@
 HashedPasswordHash Property
 ===========================
+The salted and hashed password.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

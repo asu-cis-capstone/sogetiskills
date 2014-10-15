@@ -34,12 +34,12 @@ namespace SogetiSkills.Core.Tests.TestHelpers
         {
             var sqlStatements = new[] {
                 "DELETE FROM Resumes",
-                "DELETE FROM Consultant_Tag",
-                "DELETE FROM Tags",
+                "DELETE FROM Consultant_Skill",
+                "DELETE FROM Skills",
                 "DELETE FROM Users",
                 "DBCC CHECKIDENT ('Users', RESEED, 1)",
                 "DBCC CHECKIDENT ('Resumes', RESEED, 1)",
-                "DBCC CHECKIDENT ('Tags', RESEED, 1)"
+                "DBCC CHECKIDENT ('Skills', RESEED, 1)"
             };
             
             foreach(string sqlStatement in sqlStatements)
@@ -81,6 +81,26 @@ namespace SogetiSkills.Core.Tests.TestHelpers
                 resume.UserId, resume.FileData, resume.Metadata.FileName, resume.Metadata.MimeType);
 
             return (int)TestDatabase.GetLastInsertId();
+        }
+
+        protected Skill InsertSkill(string name, string description, bool isCanonical)
+        {
+            TestDatabase.Execute("INSERT INTO Skills (Name, Description, IsCanonical) VALUES (@0, @1, @2)",
+                name, description, isCanonical);
+
+            int id = (int)TestDatabase.GetLastInsertId();
+            return new Skill
+            {
+                Id = id,
+                Name = name,
+                Description = description,
+                IsCanonical = isCanonical
+            };
+        }
+
+        protected void InsertConsultantSkill(int consultantId, int skillId)
+        {
+            TestDatabase.Execute("INSERT INTO Consultant_Skill(consultantId, skillId) VALUES (@0, @1)", consultantId, skillId);
         }
     }
 }

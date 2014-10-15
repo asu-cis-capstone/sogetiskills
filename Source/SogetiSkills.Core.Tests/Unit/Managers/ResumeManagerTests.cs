@@ -18,23 +18,27 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task LoadResumeMetadataByUserId_GivenIdOfUserThatDoesExist_ReturnsNull()
             {
-                var subject = _fixture.Create<ResumeManager>();
-                int idOfUserThatDoesntExist = 123456;
+                using (var subject = _fixture.Create<ResumeManager>())
+                {
+                    int idOfUserThatDoesntExist = 123456;
 
-                var resumeMetadata = await subject.LoadResumeMetadataByUserIdAsync(idOfUserThatDoesntExist);
-                
-                Assert.IsNull(resumeMetadata);
+                    var resumeMetadata = await subject.LoadResumeMetadataByUserIdAsync(idOfUserThatDoesntExist);
+
+                    Assert.IsNull(resumeMetadata);
+                }
             }
 
             [TestMethod]
             public async Task LoadResumeMetadataByUserId_GivenIdOfUserThatHasNoResume_ReturnsNull()
             {
                 int userId = InsertUser(SampleData.Consultant());
-                var subject = _fixture.Create<ResumeManager>();
 
-                var resumeMetadata = await subject.LoadResumeMetadataByUserIdAsync(userId);
+                using(var subject = _fixture.Create<ResumeManager>())
+                {
+                    var resumeMetadata = await subject.LoadResumeMetadataByUserIdAsync(userId);
                 
-                Assert.IsNull(resumeMetadata);
+                    Assert.IsNull(resumeMetadata);
+                }
             }
 
             [TestMethod]
@@ -43,12 +47,13 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 int userId = InsertUser(SampleData.Consultant());
                 var expected = SampleData.Resume(userId: userId);
                 InsertResume(expected);
-                var subject = _fixture.Create<ResumeManager>();
+                using (var subject = _fixture.Create<ResumeManager>())
+                {
+                    var resumeMetadata = await subject.LoadResumeMetadataByUserIdAsync(userId);
 
-                var resumeMetadata = await subject.LoadResumeMetadataByUserIdAsync(userId);
-
-                Assert.AreEqual(expected.Metadata.FileName, resumeMetadata.FileName);
-                Assert.AreEqual(expected.Metadata.MimeType, resumeMetadata.MimeType);
+                    Assert.AreEqual(expected.Metadata.FileName, resumeMetadata.FileName);
+                    Assert.AreEqual(expected.Metadata.MimeType, resumeMetadata.MimeType);
+                }
             }
         }
 
@@ -58,23 +63,26 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task LoadResumeByUserId_GivenIdOfUserThatDoesExist_ReturnsNull()
             {
-                var subject = _fixture.Create<ResumeManager>();
-                int idOfUserThatDoesntExist = 123456;
+                using (var subject = _fixture.Create<ResumeManager>())
+                {
+                    int idOfUserThatDoesntExist = 123456;
 
-                var resumeMetadata = await subject.LoadResumeByUserIdAsync(idOfUserThatDoesntExist);
+                    var resumeMetadata = await subject.LoadResumeByUserIdAsync(idOfUserThatDoesntExist);
 
-                Assert.IsNull(resumeMetadata);
+                    Assert.IsNull(resumeMetadata);
+                }
             }
 
             [TestMethod]
             public async Task LoadResumeByUserId_GivenIdOfUserThatHasNoResume_ReturnsNull()
             {
                 int uesrId = InsertUser(SampleData.Consultant());
-                var subject = _fixture.Create<ResumeManager>();
+                using (var subject = _fixture.Create<ResumeManager>())
+                {
+                    var resumeMetadata = await subject.LoadResumeMetadataByUserIdAsync(uesrId);
 
-                var resumeMetadata = await subject.LoadResumeMetadataByUserIdAsync(uesrId);
-
-                Assert.IsNull(resumeMetadata);
+                    Assert.IsNull(resumeMetadata);
+                }
             }
 
             [TestMethod]
@@ -83,14 +91,15 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 int userId = InsertUser(SampleData.Consultant());
                 var expected = SampleData.Resume(userId: userId);
                 InsertResume(expected);
-                var subject = _fixture.Create<ResumeManager>();
+                using (var subject = _fixture.Create<ResumeManager>())
+                {
+                    var resume = await subject.LoadResumeByUserIdAsync(userId);
 
-                var resume = await subject.LoadResumeByUserIdAsync(userId);
-
-                Assert.AreEqual(expected.UserId, resume.UserId);
-                Assert.IsTrue(expected.FileData.SequenceEqual(resume.FileData));
-                Assert.AreEqual(expected.Metadata.FileName, resume.Metadata.FileName);
-                Assert.AreEqual(expected.Metadata.MimeType, resume.Metadata.MimeType);
+                    Assert.AreEqual(expected.UserId, resume.UserId);
+                    Assert.IsTrue(expected.FileData.SequenceEqual(resume.FileData));
+                    Assert.AreEqual(expected.Metadata.FileName, resume.Metadata.FileName);
+                    Assert.AreEqual(expected.Metadata.MimeType, resume.Metadata.MimeType);
+                }
             }
         }
 
@@ -104,12 +113,13 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 var oldResume = SampleData.Resume(userId: userId);
                 InsertResume(oldResume);
                 string newFileName = "brand_new_resume.pdf";
-                var subject = _fixture.Create<ResumeManager>();
+                using (var subject = _fixture.Create<ResumeManager>())
+                {
+                    await subject.UploadResumeAsync(userId, newFileName, oldResume.Metadata.MimeType, oldResume.FileData);
 
-                await subject.UploadResumeAsync(userId, newFileName, oldResume.Metadata.MimeType, oldResume.FileData);
-
-                string actual = TestDatabase.QueryValue("SELECT FileName FROM Resumes WHERE UserId = @0", userId);
-                Assert.AreEqual(newFileName, actual);
+                    string actual = TestDatabase.QueryValue("SELECT FileName FROM Resumes WHERE UserId = @0", userId);
+                    Assert.AreEqual(newFileName, actual);
+                }
             }
         }
     }

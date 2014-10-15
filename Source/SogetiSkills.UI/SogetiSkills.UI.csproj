@@ -73,6 +73,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvcFlashMessages.0.2.2\lib\MvcFlashMessages.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.3.1.2.138\lib\net40\StructureMap.dll</HintPath>
@@ -182,10 +185,15 @@
     <Compile Include="App_Start\AttributeRoutingConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapConfig.cs" />
+    <Compile Include="CanonicalSkillController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\SogetiSkillsControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\CanonicalSkillController.cs" />
+    <Compile Include="Helpers\Security\RequireUserTypeAttribute.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -214,12 +222,17 @@
     </Compile>
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\SignInViewModel.cs" />
+    <Compile Include="ViewModels\CanonicalSkill\AddViewModel.cs" />
+    <Compile Include="ViewModels\CanonicalSkill\EditViewModel.cs" />
     <Compile Include="ViewModels\Profile\Details\DetailsViewModel.cs" />
     <Compile Include="ViewModels\Profile\Details\DetailsViewModelBuilder.cs" />
     <Compile Include="ViewModels\Profile\EditContactInfo\EditContactInfoViewModel.cs" />
     <Compile Include="ViewModels\Profile\EditContactInfo\EditContactInfoViewModelBuilder.cs" />
     <Compile Include="ViewModels\Profile\Details\IDetailsViewModelBuilder.cs" />
     <Compile Include="ViewModels\Profile\EditContactInfo\IEditContactInfoViewModelBuilder.cs" />
+    <Compile Include="ViewModels\Profile\Skills\ISkillsViewModelBuilder.cs" />
+    <Compile Include="ViewModels\Profile\Skills\SkillsViewModel.cs" />
+    <Compile Include="ViewModels\Profile\Skills\SkillsViewModelBuilder.cs" />
     <Compile Include="ViewModels\Profile\UploadResume\UploadResumeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +245,11 @@
     <Content Include="Views\Profile\UploadResume.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\NotFound.cshtml" />
+    <Content Include="Views\CanonicalSkill\List.cshtml" />
+    <Content Include="Views\CanonicalSkill\Add.cshtml" />
+    <Content Include="Views\CanonicalSkill\Edit.cshtml" />
+    <Content Include="Views\Shared\MainNavigation.cshtml" />
+    <Content Include="Views\Profile\Skills.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -250,6 +268,9 @@
       <Project>{da8f58da-48e4-4be8-9705-e238925a7504}</Project>
       <Name>SogetiSkills.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

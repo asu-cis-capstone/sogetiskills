@@ -1,5 +1,6 @@
 ResumeMetadataFileName Property
 ===============================
+The name of the file that was uploaded.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

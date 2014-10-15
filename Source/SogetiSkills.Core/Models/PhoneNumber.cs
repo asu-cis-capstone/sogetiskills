@@ -13,8 +13,15 @@ namespace SogetiSkills.Core.Models
     {
         private string _value;
 
+        /// <summary>
+        /// Creates a new instance of the PhoneNumber class.
+        /// </summary>
         public PhoneNumber() { }
 
+        /// <summary>
+        /// Creates a new instance of the PhoneNumber class from an existing phone number.
+        /// </summary>
+        /// <param name="value">The phone number value.</param>
         public PhoneNumber(string value)
         {
             this.Value = value;

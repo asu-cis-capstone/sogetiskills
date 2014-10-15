@@ -4,6 +4,7 @@
     {
         theme = Request.Cookies["theme"].Value;
     }
+    var sogetiSkillsController = (SogetiSkills.UI.Controllers.SogetiSkillsControllerBase)ViewContext.Controller;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +15,7 @@
     <title></title>
 
     <link id="themeCss" href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/@theme/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/flick/jquery-ui.css" />
     <link href="@Links.Content.Styles_min_css" rel="stylesheet" />
 
     <!--[if lt IE 9]>
@@ -33,20 +35,7 @@
                 </button>
             </div>
             <div class="navbar-collapse collapse" id="navbar-main" style="height: 1px;">
-                <ul class="nav navbar-nav navbar-right">
-                    @if (Request.IsAuthenticated)
-                    {
-                        <li>
-                            @Html.ActionLink("Sign out", MVC.Account.SignOut())
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            @Html.ActionLink("Sign in", MVC.Account.SignIn())
-                        </li>
-                    }
-                </ul>
+                @Html.Action(MVC.Home.MainNavigation())
             </div>
         </div>
     </div>
@@ -89,8 +78,10 @@
         </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
     <script>
         $(function () {
             $('#themeSwitcher').val('@theme');
@@ -101,5 +92,6 @@
             });
         });
     </script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

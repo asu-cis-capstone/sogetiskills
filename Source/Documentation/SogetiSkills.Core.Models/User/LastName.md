@@ -1,5 +1,6 @@
 UserLastName Property
 =====================
+The user's last name.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**

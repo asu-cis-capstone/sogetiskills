@@ -1,4 +1,5 @@
 ﻿using AttributeRouting.Web.Mvc;
+using SogetiSkills.Core.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,14 @@ using System.Web.Mvc;
 
 namespace SogetiSkills.UI.Controllers
 {
-    public partial class HomeController : ControllerBase
+    public partial class HomeController : SogetiSkillsControllerBase
     {
+        public HomeController(IUserManager userManager)
+            : base(userManager)
+        {
+
+        }
+
         [GET("/")]
         public virtual ActionResult Index()
         {
@@ -38,6 +45,14 @@ namespace SogetiSkills.UI.Controllers
         public virtual ActionResult NotFound()
         {
             return View();
+        }
+
+        [AttributeRouting.Web.Mvc.Route("MainNavigation", HttpVerbs.Get, HttpVerbs.Post)]
+        [ChildActionOnly]
+        public virtual ActionResult MainNavigation()
+        {
+            var user = LoggedInUser;
+            return View(user);
         }
     }
 }

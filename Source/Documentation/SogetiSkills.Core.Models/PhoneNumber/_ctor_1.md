@@ -1,5 +1,6 @@
 PhoneNumber Constructor (String)
 ================================
+Creates a new instance of the PhoneNumber class from an existing phone number.
 
 **Namespace:** [SogetiSkills.Core.Models][1]  
 **Assembly:**
@@ -17,7 +18,7 @@ public PhoneNumber(
 
 #### *value*
 Type: [SystemString][2]  
-
+The phone number value.
 
 
 See Also
