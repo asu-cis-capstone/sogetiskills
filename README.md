@@ -37,23 +37,30 @@ Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of recor
   * User type change
 
 ####Complete
-##### v0.1
+v0.1
+
   * Create project structure
   * Database design
   * User login
   * User authentication persists across all pages
   * Without authentication, all web pages redirect to user login
   * User logout
-##### v0.2
+
+v0.2
+
   * Allow users to register
   * Users may only maintain their own details
   * Edit contact info
   * Upload, edit, and download resumes
   * View current beach status
-##### v0.3
+
+v0.3
+
   * Added documentation of the SogetiSkills.Core assembly at https://github.com/asu-cis-capstone/sogetiskills/tree/master/Source/Documentation/
   * Add constraint to Password
-##### v0.4
+
+v0.4
+
   * User maintenance
   * Edit consultant skills
   * Data migrations
