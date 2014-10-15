@@ -49,7 +49,7 @@ namespace SogetiSkills.UI.ViewModels.Profile.Details
                 model.IsOnBeach = consultant.IsOnBeach;
                 
                 model.ResumeMetadata = await _resumeManager.LoadResumeMetadataByUserIdAsync(consultant.Id);
-                model.Skills = await _skillManager.LoadSkillsForConsultantAsync(consultant.Id);
+                model.Skills = (await _skillManager.LoadSkillsForConsultantAsync(consultant.Id)).OrderBy(x => x.Name);
             }
             else if (user is AccountExecutive)
             {

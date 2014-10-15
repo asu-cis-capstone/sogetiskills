@@ -1,0 +1,101 @@
+﻿@model SogetiSkills.UI.ViewModels.Profile.Skills.SkillsViewModel
+@{
+    ViewBag.Title = string.Format("{0} - Skills", Model.ConsultantName);
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2>@Model.ConsultantName - Skills</h2>
+        <p>@Html.ActionLink("Back to profile", MVC.Profile.Details(@Model.ConsultantId))</p>
+        <form class="form-inline well">
+            <div class="form-group">
+                <input id="newSkillText" type="text" style="width: 70em;" class="form-control" placeholder="C#, Ruby on Rails, Postgres SQL, etc" />
+                <button data-bind="click: addSkill" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add
+                </button>
+            </div>
+        </form>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: sortedSkills">
+                    <tr>
+                        <td data-bind="text: Name"></td>
+                        <td data-bind="text: Description"></td>
+                        <td class="col-md-2">
+                            <div class="pull-right">
+                                <a data-bind="click: $parent.removeSkill" href="#">
+                                    <span class="glyphicon glyphicon-remove"></span> Remove
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+    <script>
+        var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented));
+        $('#newSkillText').autocomplete({ source: model.CanonicalSkillNames });
+
+        var ViewModel = function() {
+            var self = this;
+            self.skills = ko.observableArray(model.ConsultantSkills);
+            self.sortedSkills = ko.computed(function() {
+                var list = [];
+                for (var i = 0; i < self.skills().length; i++) {
+                    list.push(self.skills()[i]);
+                }
+                list = _.sortBy(list, function(x) { 
+                    return x.Name; 
+                });
+                console.log(list);
+                list = _.unique(list, function(x) { return x.Id; });
+                return list;
+            });
+            self.addSkill = function() {
+                var skillName = $('#newSkillText').val();
+                $.ajax({
+                    type: 'POST',
+                    data: { consultantId: model.ConsultantId, skillName: skillName },
+                    url: '@Url.Action(MVC.Profile.AddSkill())',
+                    success: function(skill) {
+                        if (skill) {
+                            self.skills.push(skill);
+                        }
+                    },
+                    error: function() {
+                        alert('Unable to add ' + skillName);
+                    }
+                });
+            };
+            self.removeSkill = function(skill) {
+                if (confirm('Are you sure you want to remove ' + skill.Name + '?')) {
+                    $.ajax({
+                        type: 'POST',
+                        data: { consultantId: model.ConsultantId, skillId: skill.Id },
+                        url: '@Url.Action(MVC.Profile.RemoveSkill())',
+                        success: function() {
+                            self.skills.remove(skill);
+                        },
+                        error: function() {
+                            alert('Unable to remove ' + skill.Name);
+                        }
+                    });
+                }
+            }
+            return this;
+        };
+        ko.applyBindings(new ViewModel());
+    </script>
+}

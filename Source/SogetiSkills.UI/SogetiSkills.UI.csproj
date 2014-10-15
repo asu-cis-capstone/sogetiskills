@@ -73,6 +73,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvcFlashMessages.0.2.2\lib\MvcFlashMessages.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.3.1.2.138\lib\net40\StructureMap.dll</HintPath>
@@ -227,6 +230,9 @@
     <Compile Include="ViewModels\Profile\EditContactInfo\EditContactInfoViewModelBuilder.cs" />
     <Compile Include="ViewModels\Profile\Details\IDetailsViewModelBuilder.cs" />
     <Compile Include="ViewModels\Profile\EditContactInfo\IEditContactInfoViewModelBuilder.cs" />
+    <Compile Include="ViewModels\Profile\Skills\ISkillsViewModelBuilder.cs" />
+    <Compile Include="ViewModels\Profile\Skills\SkillsViewModel.cs" />
+    <Compile Include="ViewModels\Profile\Skills\SkillsViewModelBuilder.cs" />
     <Compile Include="ViewModels\Profile\UploadResume\UploadResumeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +249,7 @@
     <Content Include="Views\CanonicalSkill\Add.cshtml" />
     <Content Include="Views\CanonicalSkill\Edit.cshtml" />
     <Content Include="Views\Shared\MainNavigation.cshtml" />
+    <Content Include="Views\Profile\Skills.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -261,6 +268,9 @@
       <Project>{da8f58da-48e4-4be8-9705-e238925a7504}</Project>
       <Name>SogetiSkills.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

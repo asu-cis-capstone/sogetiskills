@@ -4,11 +4,13 @@ using SogetiSkills.Core.Models;
 using SogetiSkills.UI.ViewModels.Profile;
 using SogetiSkills.UI.ViewModels.Profile.Details;
 using SogetiSkills.UI.ViewModels.Profile.EditContactInfo;
+using SogetiSkills.UI.ViewModels.Profile.Skills;
 using SogetiSkills.UI.ViewModels.Profile.UploadResume;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -20,20 +22,26 @@ namespace SogetiSkills.UI.Controllers
     {
         private readonly IDetailsViewModelBuilder _detailsViewModelBuilder;
         private readonly IEditContactInfoViewModelBuilder _editContactInfoViewModelBuilder;
+        private readonly ISkillsViewModelBuilder _skillsViewModelBuilder;
         private readonly IUserManager _userManager;
         private readonly IResumeManager _resumeManager;
+        private readonly ISkillManager _skillManager;
 
         public ProfileController(
             IDetailsViewModelBuilder detailsViewModelBuilder,
             IEditContactInfoViewModelBuilder editContactInfoViewModelBuilder,
+            ISkillsViewModelBuilder skillsViewModelBuilder,
             IUserManager userManager,
-            IResumeManager resumeManager)
+            IResumeManager resumeManager,
+            ISkillManager skillManager)
             : base(userManager)
         {
             _detailsViewModelBuilder = detailsViewModelBuilder;
             _editContactInfoViewModelBuilder = editContactInfoViewModelBuilder;
+            _skillsViewModelBuilder = skillsViewModelBuilder;
             _userManager = userManager;
             _resumeManager = resumeManager;
+            _skillManager = skillManager;
         }
 
         [GET("Profile/{UserId}")]
@@ -139,6 +147,42 @@ namespace SogetiSkills.UI.Controllers
             }
 
             return File(resume.FileData, resume.Metadata.MimeType, resume.Metadata.FileName);
+        }
+
+        [GET("Profile/Skills/{ConsultantId}")]
+        public virtual async Task<ActionResult> Skills(int consultantId)
+        {
+            var loggedInUser = await _userManager.LoadUserByIdAsync(LoggedInUserId.Value);
+            if (loggedInUser.Id != consultantId)
+            {
+                return RedirectToAction(MVC.Home.Restricted());
+            }
+            var viewModel = await _skillsViewModelBuilder.BuildAsync(consultantId);
+            return View(viewModel);
+        }
+
+        [POST("Profile/Skills/Add")]
+        public virtual async Task<ActionResult> AddSkill(int consultantId, string skillName)
+        {
+            var loggedInUser = await _userManager.LoadUserByIdAsync(LoggedInUserId.Value);
+            if (loggedInUser.Id != consultantId)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+            var skill = await _skillManager.AddSkillToConsultantAsync(skillName, consultantId);
+            return Json(skill);
+        }
+
+        [POST("Profile/Skills/Remove")]
+        public virtual async Task<ActionResult> RemoveSkill(int consultantId, int skillId)
+        {
+            var loggedInUser = await _userManager.LoadUserByIdAsync(LoggedInUserId.Value);
+            if (loggedInUser.Id != consultantId)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+            await _skillManager.RemoveSkillFromConsultantAsync(consultantId, skillId);
+            return Json(true);
         }
     }
 }

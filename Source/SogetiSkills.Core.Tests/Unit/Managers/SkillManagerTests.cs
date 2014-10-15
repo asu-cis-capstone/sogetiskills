@@ -280,6 +280,20 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             }
 
             [TestMethod]
+            public async Task AddSkillToConsultant_GivenSkillTheConsultantAlreadyHas_DoesNotInsertNewManyToManyRecord()
+            {
+                int consultantId = InsertUser(SampleData.Consultant());
+                var skill = InsertSkill("C#", null, false);
+                InsertConsultantSkill(consultantId, skill.Id);
+                var subject = _fixture.Create<SkillManager>();
+
+                await subject.AddSkillToConsultantAsync("C#", consultantId);
+
+                var skills = await subject.LoadSkillsForConsultantAsync(consultantId);
+                Assert.AreEqual(1, skills.Count());
+            }
+
+            [TestMethod]
             public async Task AddSkillToConsultant_GivenSkillThatAlreadyExists_JustTiesItToConsultant()
             {
                 int consultantId = InsertUser(SampleData.Consultant());

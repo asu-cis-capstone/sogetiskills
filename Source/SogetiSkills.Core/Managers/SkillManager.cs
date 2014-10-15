@@ -221,7 +221,7 @@ namespace SogetiSkills.Core.Managers
             {
                 var command = new SqlCommand("Skill_AddToConsultant", await GetOpenConnectionAsync());
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@skillid", skill.Id);
+                command.Parameters.AddWithValue("@skillId", skill.Id);
                 command.Parameters.AddWithValue("@consultantId", consultantId);
                 await command.ExecuteNonQueryAsync();
             }

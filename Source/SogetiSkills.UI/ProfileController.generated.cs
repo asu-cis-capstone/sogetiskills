@@ -81,6 +81,27 @@ namespace SogetiSkills.UI.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DownloadResume);
             return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Skills()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Skills);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> AddSkill()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddSkill);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> RemoveSkill()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RemoveSkill);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ProfileController Actions { get { return MVC.Profile; } }
@@ -101,6 +122,9 @@ namespace SogetiSkills.UI.Controllers
             public readonly string EditContactInfo = "EditContactInfo";
             public readonly string UploadResume = "UploadResume";
             public readonly string DownloadResume = "DownloadResume";
+            public readonly string Skills = "Skills";
+            public readonly string AddSkill = "AddSkill";
+            public readonly string RemoveSkill = "RemoveSkill";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -110,6 +134,9 @@ namespace SogetiSkills.UI.Controllers
             public const string EditContactInfo = "EditContactInfo";
             public const string UploadResume = "UploadResume";
             public const string DownloadResume = "DownloadResume";
+            public const string Skills = "Skills";
+            public const string AddSkill = "AddSkill";
+            public const string RemoveSkill = "RemoveSkill";
         }
 
 
@@ -147,6 +174,32 @@ namespace SogetiSkills.UI.Controllers
         {
             public readonly string userId = "userId";
         }
+        static readonly ActionParamsClass_Skills s_params_Skills = new ActionParamsClass_Skills();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Skills SkillsParams { get { return s_params_Skills; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Skills
+        {
+            public readonly string consultantId = "consultantId";
+        }
+        static readonly ActionParamsClass_AddSkill s_params_AddSkill = new ActionParamsClass_AddSkill();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AddSkill AddSkillParams { get { return s_params_AddSkill; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AddSkill
+        {
+            public readonly string consultantId = "consultantId";
+            public readonly string skillName = "skillName";
+        }
+        static readonly ActionParamsClass_RemoveSkill s_params_RemoveSkill = new ActionParamsClass_RemoveSkill();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_RemoveSkill RemoveSkillParams { get { return s_params_RemoveSkill; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_RemoveSkill
+        {
+            public readonly string consultantId = "consultantId";
+            public readonly string skillId = "skillId";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -159,10 +212,12 @@ namespace SogetiSkills.UI.Controllers
             {
                 public readonly string Details = "Details";
                 public readonly string EditContactInfo = "EditContactInfo";
+                public readonly string Skills = "Skills";
                 public readonly string UploadResume = "UploadResume";
             }
             public readonly string Details = "~/Views/Profile/Details.cshtml";
             public readonly string EditContactInfo = "~/Views/Profile/EditContactInfo.cshtml";
+            public readonly string Skills = "~/Views/Profile/Skills.cshtml";
             public readonly string UploadResume = "~/Views/Profile/UploadResume.cshtml";
         }
     }
@@ -241,6 +296,44 @@ namespace SogetiSkills.UI.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DownloadResume);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
             DownloadResumeOverride(callInfo, userId);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void SkillsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int consultantId);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Skills(int consultantId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Skills);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "consultantId", consultantId);
+            SkillsOverride(callInfo, consultantId);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void AddSkillOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int consultantId, string skillName);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> AddSkill(int consultantId, string skillName)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddSkill);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "consultantId", consultantId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "skillName", skillName);
+            AddSkillOverride(callInfo, consultantId, skillName);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void RemoveSkillOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int consultantId, int skillId);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> RemoveSkill(int consultantId, int skillId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RemoveSkill);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "consultantId", consultantId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "skillId", skillId);
+            RemoveSkillOverride(callInfo, consultantId, skillId);
             return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 

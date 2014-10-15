@@ -88,11 +88,11 @@
                     {
                         if (Model.Skills.Any())
                         {
-                            <a href="#" class="pull-right">><span class="glyphicon glyphicon-edit"></span> Edit skills</a>
+                            <a href="@Url.Action(MVC.Profile.Skills(Model.UserId))" class="pull-right"><span class="glyphicon glyphicon-edit"></span> Edit skills</a>
                         }
                         else
                         {
-                            <a href="#" class="pull-right"><span class="glyphicon glyphicon-plus"></span> Add skills</a>
+                            <a href="@Url.Action(MVC.Profile.Skills(Model.UserId))" class="pull-right"><span class="glyphicon glyphicon-plus"></span> Add skills</a>
                         }
                     }
                 </div>
