@@ -6,14 +6,14 @@ Repository for project sogeti skills inventory
 Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of record keeping software to track consultants and their skills; a summary website; and small web application that will allow users at Sogeti USA to find consultants who are on "the beach."  Master branch builds are automatically pushed to http://dev-sogetiskills.azurewebsites.net/.
 
 ###TO-DO
-####In progress
+####In progress (v0.5)
   * Change current beach status
   * Added proficiency to consultant skill
   * Database
     * Roles- Management of logins/users and permissions
     * DB Schema/ Dictionary
 
-####Product Backlog (w/Strict Prioritizing)
+####Product Backlog
   * Database
   * Indexing / Query Tuning
   * Account Executive dashboard
@@ -37,22 +37,26 @@ Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of recor
   * User type change
 
 ####Complete
+##### v0.1
   * Create project structure
   * Database design
   * User login
   * User authentication persists across all pages
   * Without authentication, all web pages redirect to user login
   * User logout
+##### v0.2
   * Allow users to register
   * Users may only maintain their own details
   * Edit contact info
   * Upload, edit, and download resumes
-  * Added documentation of the SogetiSkills.Core assembly at https://github.com/asu-cis-capstone/sogetiskills/tree/master/Source/Documentation/
-  * User maintenance
   * View current beach status
+##### v0.3
+  * Added documentation of the SogetiSkills.Core assembly at https://github.com/asu-cis-capstone/sogetiskills/tree/master/Source/Documentation/
+  * Add constraint to Password
+##### v0.4
+  * User maintenance
   * Edit consultant skills
   * Data migrations
-  * Add constraint to Password
 
 ###Team & Client
 - Project Management
