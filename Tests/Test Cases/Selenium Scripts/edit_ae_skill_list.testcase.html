@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://dev-sogetiskills.azurewebsites.net/" />
+<title>edit_ae_skill_list.testcase</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">edit_ae_skill_list.testcase</td></tr>
+</thead><tbody>
+<tr>
+	<td>pause</td>
+	<td>4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=EmailAddress</td>
+	<td>ae@ae.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>oliver11</td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>javascript{(new Date().getTime())}</td>
+	<td>datetime</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${datetime}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>oliver11</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${datetime}@email.com</td>
+	<td>email</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${password}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${email}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Edit contact info</td>
+	<td>Edit contact info</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Canonical skills</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add canonical skill</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Name</td>
+	<td>${email}</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Back to skills list</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this skill?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Add canonical skill</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Sign out</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=EmailAddress</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

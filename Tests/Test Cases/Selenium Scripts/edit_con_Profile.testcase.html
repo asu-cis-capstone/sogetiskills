@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://change-this-to-the-site-you-are-testing/" />
+<title>local_edit_con_Profile_1</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">local_edit_con_Profile_1</td></tr>
+</thead><tbody>
+<!--valid email + valid pswd -->
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=EmailAddress</td>
+	<td>con@con.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>oliver11</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Edit contact info</td>
+	<td>Edit contact info</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Upload a resume</td>
+	<td>Upload a resume</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit contact info</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=FirstName</td>
+	<td>Mary</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.alert.alert-success</td>
+	<td>Contact info updated.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit contact info</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=FirstName</td>
+	<td>billy</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.alert.alert-success</td>
+	<td>Contact info updated.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit contact info</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=LastName</td>
+	<td>jones</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.alert.alert-success</td>
+	<td>Contact info updated.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit contact info</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=PhoneNumber</td>
+	<td>111-111-1111</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.alert.alert-success</td>
+	<td>Contact info updated.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Sign out</td>
+	<td></td>
+</tr>
+<!--signed out-->
+</tbody></table>
+</body>
+</html>

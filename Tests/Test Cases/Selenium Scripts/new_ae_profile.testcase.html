@@ -1,0 +1,376 @@
+dev<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- <link rel="selenium.base" href="https://localhost:44301/" /> -->
+<title>register new con</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">register new con</td></tr>
+</thead><tbody>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>javascript{(new Date().getTime())}</td>
+	<td>datetime</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${datetime}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>11password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${datetime}@email.com</td>
+	<td>email</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${password}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${email}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=EmailAddress</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td></td>
+</tr>
+<!--create a new ae profile = email password, password, acct type, fname, lname, te-->
+<!--all blank, each blank, all invalid, all valid-->
+<!--DISABLE LASTPASS AND AUTOFILL  !!!!!!!!!!-->
+<tr>
+	<td>pause</td>
+	<td>11</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Register</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Register</td>
+	<td></td>
+</tr>
+<!--comment-->
+<tr>
+	<td>type</td>
+	<td>id=EmailAddress</td>
+	<td>${email}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=EmailAddress</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>//li[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=EmailAddress</td>
+	<td>${email}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.validation-summary-errors &gt; ul &gt; li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.validation-summary-errors &gt; ul &gt; li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ConfirmPassword</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.validation-summary-errors &gt; ul &gt; li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ConfirmPassword</td>
+	<td>${password}</td>
+</tr>
+<!--create a new ae profile-->
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.validation-summary-errors &gt; ul &gt; li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ConfirmPassword</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.validation-summary-errors &gt; ul &gt; li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ConfirmPassword</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=AccountType</td>
+	<td>label=Account Executive</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.validation-summary-errors &gt; ul &gt; li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ConfirmPassword</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=FirstName</td>
+	<td>john</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=LastName</td>
+	<td>steele account exec</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=LastName</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.validation-summary-errors &gt; ul &gt; li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ConfirmPassword</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=LastName</td>
+	<td>account exec</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=PhoneNumber</td>
+	<td>2255290</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ConfirmPassword</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.validation-summary-errors &gt; ul &gt; li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>css=div.validation-summary-errors &gt; ul &gt; li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ConfirmPassword</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=PhoneNumber</td>
+	<td>9999999999</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Password</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ConfirmPassword</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Sign out</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=p</td>
+	<td>exact:Don't have an account? Register</td>
+</tr>
+</tbody></table>
+</body>
+</html>
