@@ -94,16 +94,17 @@ namespace SogetiSkills.UI.Tests.Unit.UI.ViewModels.Profile.Details
         }
 
         [TestMethod]
-        public async Task BuildAsync_GivenConsultant_LoadsTags()
+        public async Task BuildAsync_GivenConsultant_LoadsTagsOrderedByName()
         {
             _fakeUserManager.Setup(x => x.LoadUserByIdAsync(123)).Returns(Task.FromResult((User)SampleData.Consultant()));
             var tags = SampleData.TagList();
+            var tagsOrderedByName = tags.OrderBy(x => x.Name);
             _fakeTagManager.Setup(x => x.LoadSkillsForConsultantAsync(123)).Returns(Task.FromResult(tags));
             DetailsViewModelBuilder subject = _fixture.Create<DetailsViewModelBuilder>();
 
             var viewModel = await subject.BuildAsync(profileUserId: 123, loggedInUserId: 0);
 
-            Assert.AreEqual(viewModel.Skills, tags);
+            Assert.IsTrue(tagsOrderedByName.SequenceEqual(viewModel.Skills));
         }
 
         [TestMethod]
