@@ -13,8 +13,7 @@ namespace SogetiSkills.UI.ViewModels.CanonicalSkill
     public class EditViewModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; }        
     }
 
     public class EditViewModelValidator : AbstractValidator<EditViewModel>

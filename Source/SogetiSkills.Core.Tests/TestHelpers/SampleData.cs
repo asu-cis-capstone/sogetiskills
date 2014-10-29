@@ -66,9 +66,9 @@ namespace SogetiSkills.Core.Tests.TestHelpers
 
         public static IEnumerable<Skill> TagList()
         {
-            yield return new Skill { Id = 1, Name = "C#", IsCanonical = true, Description = "C# Description" };
-            yield return new Skill { Id = 2, Name = "ASP.NET", IsCanonical = true, Description = "ASP.NET Description" };
-            yield return new Skill { Id = 3, Name = "JavaScript", IsCanonical = true, Description = "JavaScript Description" };
+            yield return new Skill { Id = 1, Name = "C#", IsCanonical = true };
+            yield return new Skill { Id = 2, Name = "ASP.NET", IsCanonical = true };
+            yield return new Skill { Id = 3, Name = "JavaScript", IsCanonical = true };
         }
     }
 }

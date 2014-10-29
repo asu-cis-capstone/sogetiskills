@@ -31,8 +31,8 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             public async Task LoadSkillsForConsultant_GivenConsultantWithSkills_ReturnsSkills()
             {
                 int userId = InsertUser(SampleData.Consultant());
-                var cSharp = InsertSkill("C#", "C# description", true);
-                var aspNet = InsertSkill("ASP.NET", "ASP.NET description", false);
+                var cSharp = InsertSkill("C#", true);
+                var aspNet = InsertSkill("ASP.NET", false);
                 InsertConsultantSkill(userId, cSharp.Id);
                 InsertConsultantSkill(userId, aspNet.Id);
 
@@ -51,9 +51,9 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task LoadCanonicalSkills_ReturnsOnlyCanonicalSkills()
             {
-                InsertSkill("C#", "C# description", true);
-                InsertSkill("ASP.NET", "ASP.NET description", false);
-                InsertSkill("JavaScript", "JavaScript description", true);
+                InsertSkill("C#", true);
+                InsertSkill("ASP.NET", false);
+                InsertSkill("JavaScript", true);
 
                 using (var subject = _fixture.Create<SkillManager>())
                 {
@@ -68,9 +68,9 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task LoadCanonicalSkills_ReturnsSkillsOrderedByKeyword()
             {
-                InsertSkill("C#", "C# description", true);
-                InsertSkill("ASP.NET", "ASP.NET description", true);
-                InsertSkill("JavaScript", "JavaScript description", true);
+                InsertSkill("C#", true);
+                InsertSkill("ASP.NET", true);
+                InsertSkill("JavaScript", true);
 
                 using (var subject = _fixture.Create<SkillManager>())
                 {
@@ -91,7 +91,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             {
                 using (var subject = _fixture.Create<SkillManager>())
                 {
-                    await subject.AddCanonicalSkillAsync("C#", "C# description");
+                    await subject.AddCanonicalSkillAsync("C#");
 
                     int count = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Skills WHERE Name = @0", "C#");
                     Assert.AreEqual(1, count);
@@ -101,15 +101,14 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task AddCanonicalSkill_GivenNameThatAlreadyExists_UpdatesExistingSkill()
             {
-                var existingSkill = InsertSkill("C#", "C# description", isCanonical: false);
+                var existingSkill = InsertSkill("C#", isCanonical: false);
                 using (var subject = _fixture.Create<SkillManager>())
                 {
-                    await subject.AddCanonicalSkillAsync("C#", "new C# description");
+                    await subject.AddCanonicalSkillAsync("C#");
 
-                    dynamic newCanonicalSkill = TestDatabase.QuerySingle("SELECT Id, Name, [Description], IsCanonical FROM Skills WHERE Id = @0", existingSkill.Id);
+                    dynamic newCanonicalSkill = TestDatabase.QuerySingle("SELECT Id, Name, IsCanonical FROM Skills WHERE Id = @0", existingSkill.Id);
                     Assert.AreEqual(existingSkill.Id, newCanonicalSkill.Id);
                     Assert.AreEqual("C#", newCanonicalSkill.Name);
-                    Assert.AreEqual("new C# description", newCanonicalSkill.Description);
                     Assert.AreEqual(true, newCanonicalSkill.IsCanonical);
                 }
             }
@@ -119,7 +118,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             {
                 using (var subject = _fixture.Create<SkillManager>())
                 {
-                    await subject.AddCanonicalSkillAsync("C#", null);
+                    await subject.AddCanonicalSkillAsync("C#");
 
                     int count = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Skills WHERE Name = @0", "C#");
                     Assert.AreEqual(1, count);
@@ -134,7 +133,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             public async Task RemoveCanonicalSkill_GivenCanonicalSkillInUse_SetsIsCanonicalToFalse()
             {
                 int userId = InsertUser(SampleData.Consultant());
-                var canonicalSkill = InsertSkill("C#", "C# description", true);
+                var canonicalSkill = InsertSkill("C#", true);
                 InsertConsultantSkill(userId, canonicalSkill.Id);
 
                 using (var subject = _fixture.Create<SkillManager>())
@@ -149,7 +148,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task RemoveCanonicalSkill_GivenCanonicalSkillNotInUse_DeletesSkill()
             {
-                var canonicalSkill = InsertSkill("C#", "C# description", true);
+                var canonicalSkill = InsertSkill("C#", true);
 
                 using (var subject = _fixture.Create<SkillManager>())
                 {
@@ -167,15 +166,14 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task UpdateSkill_GivenAllNewValues_UpdatesTheSkill()
             {
-                var skill = InsertSkill("C#", "C# description", true);
+                var skill = InsertSkill("C#", true);
 
                 using (var subject = _fixture.Create<SkillManager>())
                 {
-                    await subject.UpdateSkillAsync(skill.Id, "New Name", "New Description", false);
+                    await subject.UpdateSkillAsync(skill.Id, "New Name", false);
 
-                    var updatedSkill = TestDatabase.QuerySingle("SELECT Name, [Description], IsCanonical FROM Skills WHERE Id = @0", skill.Id);
+                    var updatedSkill = TestDatabase.QuerySingle("SELECT Name, IsCanonical FROM Skills WHERE Id = @0", skill.Id);
                     Assert.AreEqual("New Name", updatedSkill.Name);
-                    Assert.AreEqual("New Description", updatedSkill.Description);
                     Assert.AreEqual(false, updatedSkill.IsCanonical);
                 }
             }
@@ -186,24 +184,10 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 int idOfSkillThatDoesntExist = _fixture.Create<int>();
                 using (var subject = _fixture.Create<SkillManager>())
                 {
-                    await subject.UpdateSkillAsync(idOfSkillThatDoesntExist, "keyword", "skillDescription", false);
+                    await subject.UpdateSkillAsync(idOfSkillThatDoesntExist, "keyword", false);
                 }
 
                 // No exception thrown
-            }
-
-            [TestMethod]
-            public async Task UpdateSkill_GivenNullDescription_UpdatesTheSkill()
-            {
-                var skill = InsertSkill("C#", "C# description", true);
-
-                using (var subject = _fixture.Create<SkillManager>())
-                {
-                    await subject.UpdateSkillAsync(skill.Id, "C#", null, true);
-
-                    var updatedSkill = TestDatabase.QuerySingle("SELECT [Description] FROM Skills WHERE Id = @0", skill.Id);
-                    Assert.IsNull(updatedSkill.Description);
-                }
             }
         }
 
@@ -224,8 +208,8 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task LoadByName_GivenName_ReturnsSkill()
             {
-                InsertSkill("C#", null, false);
-                InsertSkill("ASP.NET", null, false);
+                InsertSkill("C#", false);
+                InsertSkill("ASP.NET", false);
                 using (var subject = _fixture.Create<SkillManager>())
                 {
                     var skill = await subject.LoadByNameAsync("ASP.NET");
@@ -252,7 +236,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             [TestMethod]
             public async Task LoadById_GivenId_ReturnsSkill()
             {
-                var cSharp = InsertSkill("C#", "C# Description", false);
+                var cSharp = InsertSkill("C#", false);
                 using (var subject = _fixture.Create<SkillManager>())
                 {
                     var skill = await subject.LoadByIdAsync(cSharp.Id);
@@ -272,22 +256,23 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 int consultantId = InsertUser(SampleData.Consultant());
                 var subject = _fixture.Create<SkillManager>();
 
-                await subject.AddSkillToConsultantAsync("Brand new skill.", consultantId);
+                await subject.AddSkillToConsultantAsync("Brand new skill.", consultantId, 3);
 
                 var skills = await subject.LoadSkillsForConsultantAsync(consultantId);
                 Assert.AreEqual(1, skills.Count());
-                Assert.AreEqual("Brand new skill.", skills.First().Name);
+                Assert.AreEqual("Brand new skill.", skills.First().SkillName);
+                Assert.AreEqual(3, skills.First().Proficiency.Level);
             }
 
             [TestMethod]
             public async Task AddSkillToConsultant_GivenSkillTheConsultantAlreadyHas_DoesNotInsertNewManyToManyRecord()
             {
                 int consultantId = InsertUser(SampleData.Consultant());
-                var skill = InsertSkill("C#", null, false);
+                var skill = InsertSkill("C#", false);
                 InsertConsultantSkill(consultantId, skill.Id);
                 var subject = _fixture.Create<SkillManager>();
 
-                await subject.AddSkillToConsultantAsync("C#", consultantId);
+                await subject.AddSkillToConsultantAsync("C#", consultantId, 2);
 
                 var skills = await subject.LoadSkillsForConsultantAsync(consultantId);
                 Assert.AreEqual(1, skills.Count());
@@ -297,15 +282,16 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             public async Task AddSkillToConsultant_GivenSkillThatAlreadyExists_JustTiesItToConsultant()
             {
                 int consultantId = InsertUser(SampleData.Consultant());
-                var cSharp = InsertSkill("C#", "C# description", false);
+                var cSharp = InsertSkill("C#", false);
                 var subject = _fixture.Create<SkillManager>();
 
-                await subject.AddSkillToConsultantAsync("C#", consultantId);
+                await subject.AddSkillToConsultantAsync("C#", consultantId, 4);
 
                 var skills = await subject.LoadSkillsForConsultantAsync(consultantId);
                 Assert.AreEqual(1, skills.Count());
-                Assert.AreEqual("C#", skills.First().Name);
-                Assert.AreEqual(cSharp.Id, skills.First().Id);
+                Assert.AreEqual("C#", skills.First().SkillName);
+                Assert.AreEqual(cSharp.Id, skills.First().SkillId);
+                Assert.AreEqual(4, skills.First().Proficiency.Level);
             }
         }
 
@@ -316,7 +302,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             public async Task RemoveSkillFromConsultant_GivenSkillTiedToConsultant_RemovesTheManyToManyRecord()
             {
                 int consultantId = InsertUser(SampleData.Consultant());
-                var skill = InsertSkill("C#", "C# description", false);
+                var skill = InsertSkill("C#", false);
                 InsertConsultantSkill(consultantId, skill.Id);
                 var subject = _fixture.Create<SkillManager>();
 
@@ -330,7 +316,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             public async Task RemoveSkillFromConsultant_GivenNonCanonicalSkillNotTiedToOtherConsultants_RemovesTheSkill()
             {
                 int consultantId = InsertUser(SampleData.Consultant());
-                var skill = InsertSkill("C#", "C# description", false);
+                var skill = InsertSkill("C#", false);
                 InsertConsultantSkill(consultantId, skill.Id);
                 var subject = _fixture.Create<SkillManager>();
 
@@ -349,7 +335,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 consultant2.EmailAddress = "consultant2@site.com";
                 int consultant2Id = InsertUser(consultant2);
                 // Insert a skill.
-                var skill = InsertSkill("C#", "C# description", false);
+                var skill = InsertSkill("C#", false);
                 // Tie the skill to both consultant.s
                 InsertConsultantSkill(consultant1Id, skill.Id);
                 InsertConsultantSkill(consultant2Id, skill.Id);
@@ -365,7 +351,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             public async Task RemoveSkillFromConsultant_GivenCanonicalSkillTiedToNoOtherConsultants_DoesNoRemoveTheSkill()
             {
                 int consultantId = InsertUser(SampleData.Consultant());
-                var skill = InsertSkill("C#", "C# description", true);
+                var skill = InsertSkill("C#", true);
                 InsertConsultantSkill(consultantId, skill.Id);
                 var subject = _fixture.Create<SkillManager>();
 
@@ -373,6 +359,28 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
 
                 int skillCount = (int)TestDatabase.QueryValue("SELECT COUNT(*) FROM Skills WHERE Id = @0", skill.Id);
                 Assert.AreEqual(1, skillCount);
+            }
+        }
+
+        [TestClass]
+        public class LoadProficiencyLevels : SkillManagerTests
+        {
+            [TestMethod]
+            public async Task LoadProficiencyLevels_LoadsAllProficiencyLevelsOrderedByLevel()
+            {
+                var subject = _fixture.Create<SkillManager>();
+
+                var proficiencyLevels = await subject.LoadProficiencyLevelsAsync();
+
+                Assert.AreEqual(5, proficiencyLevels.Count());
+                Assert.AreEqual("Fundamental Awareness", proficiencyLevels.ElementAt(0).Name);
+                Assert.AreEqual("Novice", proficiencyLevels.ElementAt(1).Name);
+                Assert.AreEqual("Intermediate", proficiencyLevels.ElementAt(2).Name);
+                Assert.AreEqual("Advanced", proficiencyLevels.ElementAt(3).Name);
+                Assert.AreEqual("Expert", proficiencyLevels.ElementAt(4).Name);
+
+                Assert.IsNotNull(proficiencyLevels.ElementAt(0).SecondPersonDescription);
+                Assert.IsNotNull(proficiencyLevels.ElementAt(0).ThirdPersonDescription);
             }
         }
     }

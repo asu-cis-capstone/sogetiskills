@@ -20,6 +20,6 @@ namespace SogetiSkills.UI.ViewModels.Profile.Details
         public bool ProfileBelongsToCurrentUser { get; set; }
 
         public ResumeMetadata ResumeMetadata { get; set; }
-        public IEnumerable<Skill> Skills { get; set; }
+        public IEnumerable<ConsultantSkill> ConsultantSkills { get; set; }
     }
 }

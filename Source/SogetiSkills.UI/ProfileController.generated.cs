@@ -190,6 +190,7 @@ namespace SogetiSkills.UI.Controllers
         {
             public readonly string consultantId = "consultantId";
             public readonly string skillName = "skillName";
+            public readonly string proficiencyLevel = "proficiencyLevel";
         }
         static readonly ActionParamsClass_RemoveSkill s_params_RemoveSkill = new ActionParamsClass_RemoveSkill();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -312,15 +313,16 @@ namespace SogetiSkills.UI.Controllers
         }
 
         [NonAction]
-        partial void AddSkillOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int consultantId, string skillName);
+        partial void AddSkillOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int consultantId, string skillName, int proficiencyLevel);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> AddSkill(int consultantId, string skillName)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> AddSkill(int consultantId, string skillName, int proficiencyLevel)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddSkill);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "consultantId", consultantId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "skillName", skillName);
-            AddSkillOverride(callInfo, consultantId, skillName);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "proficiencyLevel", proficiencyLevel);
+            AddSkillOverride(callInfo, consultantId, skillName, proficiencyLevel);
             return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 

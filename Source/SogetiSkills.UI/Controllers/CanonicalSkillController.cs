@@ -47,7 +47,7 @@ namespace SogetiSkills.UI.Controllers
                 return View(model);
             }
 
-            await _skillManager.AddCanonicalSkillAsync(model.Name, model.Description);
+            await _skillManager.AddCanonicalSkillAsync(model.Name);
             FlashSuccess(string.Format("{0} was added.", model.Name));
             return RedirectToAction(MVC.CanonicalSkill.List());
         }
@@ -64,7 +64,6 @@ namespace SogetiSkills.UI.Controllers
             EditViewModel model = new EditViewModel();
             model.Id = skill.Id;
             model.Name = skill.Name;
-            model.Description = skill.Description;
 
             return View(model);
         }
@@ -78,7 +77,7 @@ namespace SogetiSkills.UI.Controllers
                 return View(model);
             }
 
-            await _skillManager.UpdateSkillAsync(model.Id, model.Name, model.Description, true);
+            await _skillManager.UpdateSkillAsync(model.Id, model.Name, true);
             FlashSuccess(string.Format("{0} updated.", model.Name));
             return RedirectToAction(MVC.CanonicalSkill.List());
         }

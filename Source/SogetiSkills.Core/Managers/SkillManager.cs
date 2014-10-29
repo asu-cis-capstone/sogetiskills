@@ -19,7 +19,7 @@ namespace SogetiSkills.Core.Managers
         /// </summary>
         /// <param name="consultantId">The id of the consultant to load skills for.</param>
         /// <returns>All the skills that have been applied to the consultant</returns>
-        public async Task<IEnumerable<Skill>> LoadSkillsForConsultantAsync(int consultantId)
+        public async Task<IEnumerable<ConsultantSkill>> LoadSkillsForConsultantAsync(int consultantId)
         {
             var command = new SqlCommand("Skill_SelectByConsultantId", await GetOpenConnectionAsync());
             command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -27,7 +27,7 @@ namespace SogetiSkills.Core.Managers
 
             using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                return await ReadSkillsAsync(reader);
+                return await ReadConsultantSkillsAsync(reader);
             }
         }
 
@@ -52,19 +52,18 @@ namespace SogetiSkills.Core.Managers
         /// </summary>
         /// <param name="name">The skills's name.</param>
         /// <param name="description">An optional skill description.</param>
-        public async Task AddCanonicalSkillAsync(string name, string description)
+        public async Task AddCanonicalSkillAsync(string name)
         {
             var tag = await LoadByNameAsync(name);
             if (tag != null)
             {
-                await UpdateSkillAsync(tag.Id, name, description, true);
+                await UpdateSkillAsync(tag.Id, name, true);
             }
             else
             {
                 var command = new SqlCommand("Skill_InsertCanonical", await GetOpenConnectionAsync());
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@name", name);
-                command.Parameters.AddWithValue("@description", DataAccessHelper.ValueOrDBNull(description));
 
                 await command.ExecuteNonQueryAsync();
             }
@@ -92,13 +91,12 @@ namespace SogetiSkills.Core.Managers
         /// <param name="name">The new name for the skill.</param>
         /// <param name="skillDescription">The new description for the skill.</param>
         /// <param name="isCanonical">Whether or not the skill is canonical.</param>
-        public async Task UpdateSkillAsync(int skillId, string name, string skillDescription, bool isCanonical)
+        public async Task UpdateSkillAsync(int skillId, string name, bool isCanonical)
         {
             var command = new SqlCommand("Skill_Update", await GetOpenConnectionAsync());
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@id", skillId);
             command.Parameters.AddWithValue("@name", name);
-            command.Parameters.AddWithValue("@description", DataAccessHelper.ValueOrDBNull(skillDescription));
             command.Parameters.AddWithValue("@isCanonical", isCanonical);
 
             await command.ExecuteNonQueryAsync();
@@ -199,16 +197,21 @@ namespace SogetiSkills.Core.Managers
         /// </summary>
         /// <param name="skillName">The name of the skill to add.</param>
         /// <param name="consultantId">The id of the consultant to add the skill to.</param>
+        /// <param name="proficiency">The proficiency of the consultant with the skill.</param>
         /// <returns>The skill that was added to the consultant.</returns>
-        public async Task<Skill> AddSkillToConsultantAsync(string skillName, int consultantId)
+        public async Task<ConsultantSkill> AddSkillToConsultantAsync(string skillName, int consultantId, int proficiencyLevel)
         {
             var skill = await LoadByNameAsync(skillName);
+
+            SqlCommand command = null;
             if (skill == null)
             {
-                var command = new SqlCommand("Skill_InsertNonCanonicalForConsultant", await GetOpenConnectionAsync());
+                // If the skill doesn't exist yet then insert and tie it to the consultant.
+                command = new SqlCommand("Skill_InsertNonCanonicalForConsultant", await GetOpenConnectionAsync());
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@name", skillName);
                 command.Parameters.AddWithValue("@consultantId", consultantId);
+                command.Parameters.AddWithValue("@proficiencyLevel", proficiencyLevel);
                 int skillId = (int)(await command.ExecuteScalarAsync());
                 skill = new Skill
                 {
@@ -219,14 +222,29 @@ namespace SogetiSkills.Core.Managers
             }
             else
             {
-                var command = new SqlCommand("Skill_AddToConsultant", await GetOpenConnectionAsync());
+                // Else the skill does exist then just tie it to the consultant.
+                command = new SqlCommand("Skill_AddToConsultant", await GetOpenConnectionAsync());
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@skillId", skill.Id);
                 command.Parameters.AddWithValue("@consultantId", consultantId);
+                command.Parameters.AddWithValue("@proficiencyLevel", proficiencyLevel);
                 await command.ExecuteNonQueryAsync();
             }
 
-            return skill;
+            // Select and return the joining table between the consultant and skill.
+            command = new SqlCommand("Skill_SelectConsultantSkill", await GetOpenConnectionAsync());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@skillId", skill.Id);
+            command.Parameters.AddWithValue("@consultantId", consultantId);
+            using(SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    return ReadConsultantSkill(reader);
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -242,6 +260,31 @@ namespace SogetiSkills.Core.Managers
             command.Parameters.AddWithValue("@consultantId", consultantId);
             command.Parameters.AddWithValue("@skillId", skillId);
             await command.ExecuteNonQueryAsync();
+        }
+
+        /// <summary>
+        /// Loads all proficiency levels ordered by level.
+        /// </summary>
+        /// <returns>All proficiency levels.</returns>
+        public async Task<IEnumerable<ProficiencyLevel>> LoadProficiencyLevelsAsync()
+        {
+            var command = new SqlCommand("ProficiencyLevels_SelectAll", await GetOpenConnectionAsync());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            List<ProficiencyLevel> proficiencyLevels = new List<ProficiencyLevel>();
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                while(await reader.ReadAsync())
+                {
+                    var proficiencyLevel = new ProficiencyLevel();
+                    proficiencyLevel.Level = reader.Field<int>("Level");
+                    proficiencyLevel.Name = reader.Field<string>("Name");
+                    proficiencyLevel.SecondPersonDescription = reader.Field<string>("SecondPersonDescription");
+                    proficiencyLevel.ThirdPersonDescription = reader.Field<string>("ThirdPersonDescription");
+                    proficiencyLevels.Add(proficiencyLevel);
+                }
+            }
+            return proficiencyLevels;
         }
 
         #region Private helper methods
@@ -261,9 +304,33 @@ namespace SogetiSkills.Core.Managers
             Skill skill = new Skill();
             skill.Id = reader.Field<int>("Id");
             skill.Name = reader.Field<string>("Name");
-            skill.Description = reader.Field<string>("Description");
             skill.IsCanonical = reader.Field<bool>("IsCanonical");
             return skill;
+        }
+
+        private async Task<IEnumerable<ConsultantSkill>> ReadConsultantSkillsAsync(SqlDataReader reader)
+        {
+            List<ConsultantSkill> consultantSkills = new List<ConsultantSkill>();
+            while (await reader.ReadAsync())
+            {
+                consultantSkills.Add(ReadConsultantSkill(reader));
+            }
+            return consultantSkills;
+        }
+
+        private ConsultantSkill ReadConsultantSkill(SqlDataReader reader)
+        {
+            ConsultantSkill consultantSkill = new ConsultantSkill();
+            consultantSkill.ConsultantId = reader.Field<int>("ConsultantId");
+            consultantSkill.SkillId = reader.Field<int>("SkillId");
+            consultantSkill.SkillName = reader.Field<string>("SkillName");
+            consultantSkill.IsCanonical = reader.Field<bool>("IsCanonical");
+            consultantSkill.Proficiency = new ProficiencyLevel
+            {
+                Level = reader.Field<int>("ProficiencyLevel"),
+                Name = reader.Field<string>("ProficiencyLevelName")
+            };
+            return consultantSkill;
         }
         #endregion
     }

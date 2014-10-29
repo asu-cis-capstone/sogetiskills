@@ -45,8 +45,7 @@ namespace SogetiSkills.UI.Tests.Unit.Controllers
         {
             AddViewModel _validInput = new AddViewModel
                 {
-                    Name = "C#",
-                    Description = "C# Description"
+                    Name = "C#"
                 };
 
             [TestMethod]
@@ -78,7 +77,7 @@ namespace SogetiSkills.UI.Tests.Unit.Controllers
                 
                 var actionResult = await subject.Add(_validInput);
 
-                _fakeSkillManager.Verify(x => x.AddCanonicalSkillAsync("C#", "C# Description"));
+                _fakeSkillManager.Verify(x => x.AddCanonicalSkillAsync("C#"));
             }
 
             [TestMethod]
@@ -99,8 +98,7 @@ namespace SogetiSkills.UI.Tests.Unit.Controllers
             EditViewModel _validInput = new EditViewModel
             {
                 Id = 1,
-                Name = "C#",
-                Description = "C# Description"
+                Name = "C#"
             };
 
             [TestMethod]
@@ -117,7 +115,7 @@ namespace SogetiSkills.UI.Tests.Unit.Controllers
             [TestMethod]
             public async Task Edit_GivenIdOfExistingSkill_ReturnsViewWithModel()
             {
-                var cSharp = new Skill { Id = 1, Name = "C#", Description = "C# Description", IsCanonical = true };
+                var cSharp = new Skill { Id = 1, Name = "C#", IsCanonical = true };
                 _fakeSkillManager.Setup(x => x.LoadByIdAsync(1)).Returns(Task.FromResult(cSharp));
                 var subject = _fixture.Create<CanonicalSkillController>();
 
@@ -127,7 +125,6 @@ namespace SogetiSkills.UI.Tests.Unit.Controllers
                 var model = ((ViewResult)actionResult).Model as EditViewModel;
                 Assert.AreEqual(1, model.Id);
                 Assert.AreEqual("C#", model.Name);
-                Assert.AreEqual("C# Description", model.Description);
             }
 
             [TestMethod]
@@ -149,7 +146,7 @@ namespace SogetiSkills.UI.Tests.Unit.Controllers
 
                 var actionResult = await subject.Edit(_validInput);
 
-                _fakeSkillManager.Verify(x => x.UpdateSkillAsync(1, "C#", "C# Description", true));
+                _fakeSkillManager.Verify(x => x.UpdateSkillAsync(1, "C#", true));
             }
 
             [TestMethod]
@@ -192,7 +189,7 @@ namespace SogetiSkills.UI.Tests.Unit.Controllers
             [TestMethod]
             public async Task Delete_GivenIdOfSkillThatExists_DeletesTheSkill()
             {
-                var cSharp = new Skill { Id = 1, Name = "C#", Description = "C# Description", IsCanonical = true };
+                var cSharp = new Skill { Id = 1, Name = "C#", IsCanonical = true };
                 _fakeSkillManager.Setup(x => x.LoadByIdAsync(1)).Returns(Task.FromResult(cSharp));
                 var subject = _fixture.Create<CanonicalSkillController>();
 
@@ -204,7 +201,7 @@ namespace SogetiSkills.UI.Tests.Unit.Controllers
             [TestMethod]
             public async Task Delete_GivenIdOfSkillThatExists_RedirecstToTheListPageWithASuccessMessage()
             {
-                var cSharp = new Skill { Id = 1, Name = "C#", Description = "C# Description", IsCanonical = true };
+                var cSharp = new Skill { Id = 1, Name = "C#", IsCanonical = true };
                 _fakeSkillManager.Setup(x => x.LoadByIdAsync(1)).Returns(Task.FromResult(cSharp));
                 var subject = _fixture.Create<CanonicalSkillController>();
 

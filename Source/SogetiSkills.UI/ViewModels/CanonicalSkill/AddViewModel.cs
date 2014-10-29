@@ -13,7 +13,6 @@ namespace SogetiSkills.UI.ViewModels.CanonicalSkill
     public class AddViewModel
     {
         public string Name { get; set; }
-        public string Description { get; set; }
     }
 
     public class AddViewModelValidator : AbstractValidator<AddViewModel>

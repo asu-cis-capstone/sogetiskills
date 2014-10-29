@@ -34,7 +34,7 @@ namespace SogetiSkills.Core.Tests.TestHelpers
         {
             var sqlStatements = new[] {
                 "DELETE FROM Resumes",
-                "DELETE FROM Consultant_Skill",
+                "DELETE FROM ConsultantSkill",
                 "DELETE FROM Skills",
                 "DELETE FROM Users",
                 "DBCC CHECKIDENT ('Users', RESEED, 1)",
@@ -83,24 +83,22 @@ namespace SogetiSkills.Core.Tests.TestHelpers
             return (int)TestDatabase.GetLastInsertId();
         }
 
-        protected Skill InsertSkill(string name, string description, bool isCanonical)
+        protected Skill InsertSkill(string name, bool isCanonical)
         {
-            TestDatabase.Execute("INSERT INTO Skills (Name, Description, IsCanonical) VALUES (@0, @1, @2)",
-                name, description, isCanonical);
+            TestDatabase.Execute("INSERT INTO Skills (Name, IsCanonical) VALUES (@0, @1)", name, isCanonical);
 
             int id = (int)TestDatabase.GetLastInsertId();
             return new Skill
             {
                 Id = id,
-                Name = name,
-                Description = description,
+                Name = name,                
                 IsCanonical = isCanonical
             };
         }
 
-        protected void InsertConsultantSkill(int consultantId, int skillId)
+        protected void InsertConsultantSkill(int consultantId, int skillId, int proficiencyLevel = 3)
         {
-            TestDatabase.Execute("INSERT INTO Consultant_Skill(consultantId, skillId) VALUES (@0, @1)", consultantId, skillId);
+            TestDatabase.Execute("INSERT INTO ConsultantSkill(ConsultantId, SkillId, ProficiencyLevel) VALUES (@0, @1, @2)", consultantId, skillId, proficiencyLevel);
         }
     }
 }

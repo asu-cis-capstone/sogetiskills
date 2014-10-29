@@ -86,7 +86,7 @@
                     Skills
                     @if (Model.ProfileBelongsToCurrentUser)
                     {
-                        if (Model.Skills.Any())
+                        if (Model.ConsultantSkills.Any())
                         {
                             <a href="@Url.Action(MVC.Profile.Skills(Model.UserId))" class="pull-right"><span class="glyphicon glyphicon-edit"></span> Edit skills</a>
                         }
@@ -97,20 +97,29 @@
                     }
                 </div>
                 <div class="panel-body">
-                    @if (Model.Skills.Any())
+                    @if (Model.ConsultantSkills.Any())
                     {
-                        <ul>
-                            @foreach (var skill in Model.Skills)
-                            {
-                                <li>
-                                    @skill.Name
-                                    @if (!string.IsNullOrWhiteSpace(skill.Description))
-                                    {
-                                        <span class="text-muted">@skill.Description</span>
-                                    }
-                                </li>
-                            }
-                        </ul>
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Skill</th>
+                                    <th>Proficiency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var skill in Model.ConsultantSkills)
+                                {
+                                    <tr>
+                                        <td>
+                                            @skill.SkillName
+                                        </td>
+                                        <td>
+                                            @skill.Proficiency
+                                        </td>                                        
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     }
                     else
                     {

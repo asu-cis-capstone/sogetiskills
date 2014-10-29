@@ -162,14 +162,14 @@ namespace SogetiSkills.UI.Controllers
         }
 
         [POST("Profile/Skills/Add")]
-        public virtual async Task<ActionResult> AddSkill(int consultantId, string skillName)
+        public virtual async Task<ActionResult> AddSkill(int consultantId, string skillName, int proficiencyLevel)
         {
             var loggedInUser = await _userManager.LoadUserByIdAsync(LoggedInUserId.Value);
             if (loggedInUser.Id != consultantId)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
-            var skill = await _skillManager.AddSkillToConsultantAsync(skillName, consultantId);
+            var skill = await _skillManager.AddSkillToConsultantAsync(skillName, consultantId, proficiencyLevel);
             return Json(skill);
         }
 

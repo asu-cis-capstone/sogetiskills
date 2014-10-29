@@ -9,26 +9,34 @@
         <p>@Html.ActionLink("Back to profile", MVC.Profile.Details(@Model.ConsultantId))</p>
         <form class="form-inline well">
             <div class="form-group">
-                <input id="newSkillText" type="text" style="width: 70em;" class="form-control" placeholder="C#, Ruby on Rails, Postgres SQL, etc" />
+                <input id="newSkillText" type="text" style="width: 50em;" class="form-control" placeholder="C#, Ruby on Rails, Postgres SQL, etc" />
+                @Html.DropDownList("newSkillProficiencyLevel", Model.ProficiencyLevelOptions, new { @class = "form-control", style = "width: 20em;" })
                 <button data-bind="click: addSkill" class="btn btn-primary btn-sm">
                     <span class="glyphicon glyphicon-plus"></span>
                     Add
                 </button>
             </div>
         </form>
-        <div class="table-responsive">
+        <p data-bind="visible: !(sortedSkills().length)">
+            You haven't added any skills.
+        </p>
+        <div data-bind="visible: sortedSkills().length" class="table-responsive">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Description</th>
+                        <th>Skill</th>
+                        <th>Proficiency</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody data-bind="foreach: sortedSkills">
                     <tr>
-                        <td data-bind="text: Name"></td>
-                        <td data-bind="text: Description"></td>
+                        <td data-bind="text: SkillName"></td>
+                        <td>
+                            <span data-bind="text: Proficiency.Level"></span>
+                            -
+                            <span data-bind="text: Proficiency.Name"></span>
+                        </td>
                         <td class="col-md-2">
                             <div class="pull-right">
                                 <a data-bind="click: $parent.removeSkill" href="#">
@@ -40,6 +48,21 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <div class="col-lg-12">
+        <h3>Proficiency levels?</h3>
+        <p>See <a target="_blank" href="http://hr.od.nih.gov/workingatnih/competencies/proficiencyscale.htm">http://hr.od.nih.gov/workingatnih/competencies/proficiencyscale.htm</a>.</p>
+        <dl>
+            @foreach (var level in Model.ProficiencyLevels)
+            {
+                <dt>
+                    @level
+                </dt>
+                <dd>
+                    @level.SecondPersonDescription
+                </dd>
+            }
+        </dl>
     </div>
 </div>
 @section scripts {
@@ -57,17 +80,17 @@
                     list.push(self.skills()[i]);
                 }
                 list = _.sortBy(list, function(x) { 
-                    return x.Name; 
+                    return x.SkillName; 
                 });
-                console.log(list);
-                list = _.unique(list, function(x) { return x.Id; });
+                list = _.unique(list, function(x) { return x.SkillId; });
                 return list;
             });
             self.addSkill = function() {
                 var skillName = $('#newSkillText').val();
+                var proficiencyLevel = $('#newSkillProficiencyLevel').val();
                 $.ajax({
                     type: 'POST',
-                    data: { consultantId: model.ConsultantId, skillName: skillName },
+                    data: { consultantId: model.ConsultantId, skillName: skillName, proficiencyLevel: proficiencyLevel },
                     url: '@Url.Action(MVC.Profile.AddSkill())',
                     success: function(skill) {
                         if (skill) {
@@ -80,16 +103,16 @@
                 });
             };
             self.removeSkill = function(skill) {
-                if (confirm('Are you sure you want to remove ' + skill.Name + '?')) {
+                if (confirm('Are you sure you want to remove ' + skill.SkillName + '?')) {
                     $.ajax({
                         type: 'POST',
-                        data: { consultantId: model.ConsultantId, skillId: skill.Id },
+                        data: { consultantId: model.ConsultantId, skillId: skill.SkillId },
                         url: '@Url.Action(MVC.Profile.RemoveSkill())',
                         success: function() {
                             self.skills.remove(skill);
                         },
                         error: function() {
-                            alert('Unable to remove ' + skill.Name);
+                            alert('Unable to remove ' + skill.SkillName);
                         }
                     });
                 }

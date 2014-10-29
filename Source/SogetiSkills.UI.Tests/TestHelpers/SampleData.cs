@@ -54,12 +54,21 @@ namespace SogetiSkills.UI.Tests.TestHelpers
             };
         }
 
-        public static IEnumerable<Skill> TagList()
+        public static IEnumerable<Skill> CanonicalSkillList()
         {
             return new List<Skill> {
-                new Skill { Id = 1, Name = "C#", IsCanonical = true, Description = "C# Description" },
-                new Skill { Id = 2, Name = "ASP.NET", IsCanonical = true, Description = "ASP.NET Description" },
-                new Skill { Id = 3, Name = "JavaScript", IsCanonical = true, Description = "JavaScript Description" }
+                new Skill { Id = 1, Name = "C#", IsCanonical = true },
+                new Skill { Id = 2, Name = "ASP.NET", IsCanonical = true },
+                new Skill { Id = 3, Name = "JavaScript", IsCanonical = true }
+            };
+        }
+
+        public static IEnumerable<ConsultantSkill> ConsultantSkillList(int consultantId)
+        {
+            return new List<ConsultantSkill> {
+                new ConsultantSkill { ConsultantId = consultantId, SkillId = 1, SkillName = "C#", IsCanonical = true, Proficiency = new  ProficiencyLevel { Name = "Intermediate", Level  = 3 } },
+                new ConsultantSkill { ConsultantId = consultantId, SkillId = 1, SkillName = "ASP.NET", IsCanonical = false, Proficiency = new  ProficiencyLevel { Name = "Advanced", Level  = 4 } },
+                new ConsultantSkill { ConsultantId = consultantId, SkillId = 1, SkillName = "JavaScript", IsCanonical = true, Proficiency = new  ProficiencyLevel { Name = "Intermediate", Level  = 3 } }
             };
         }
     }

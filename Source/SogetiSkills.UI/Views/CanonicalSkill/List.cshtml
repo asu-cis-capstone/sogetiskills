@@ -22,7 +22,6 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Description</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -31,17 +30,6 @@
                         {
                             <tr>
                                 <td>@skill.Name</td>
-                                <td>
-                                    @if (string.IsNullOrWhiteSpace(skill.Description))
-                                    {
-                                        <em>No description.</em>
-                                    }
-                                    else
-                                    {
-                                        @skill.Description
-                                    }
-                                </td>
-
                                 <td class="col-md-2">
                                     <div class="pull-right">
                                         <a href="@Url.Action(MVC.CanonicalSkill.Edit(skill.Id))">

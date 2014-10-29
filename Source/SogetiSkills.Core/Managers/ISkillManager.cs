@@ -17,7 +17,7 @@ namespace SogetiSkills.Core.Managers
         /// </summary>
         /// <param name="consultantId">The id of the consultant to load skills for.</param>
         /// <returns>All the skills that have been applied to the consultant</returns>
-        Task<IEnumerable<Skill>> LoadSkillsForConsultantAsync(int consultantId);
+        Task<IEnumerable<ConsultantSkill>> LoadSkillsForConsultantAsync(int consultantId);
 
         /// <summary>
         /// Load all of the canonical skills from the database.  Account executives maintain the list
@@ -31,7 +31,7 @@ namespace SogetiSkills.Core.Managers
         /// </summary>
         /// <param name="name">The skills's name.</param>
         /// <param name="description">An optional skill description.</param>
-        Task AddCanonicalSkillAsync(string name, string description);
+        Task AddCanonicalSkillAsync(string name);
 
         /// <summary>
         /// Removes a canonical skill.  If the skill has been used by a consultant then it is flagged as
@@ -48,7 +48,7 @@ namespace SogetiSkills.Core.Managers
         /// <param name="name">The new name for the skill.</param>
         /// <param name="skillDescription">The new description for the skill.</param>
         /// <param name="isCanonical">Whether or not the skill is canonical.</param>
-        Task UpdateSkillAsync(int skillId, string name, string skillDescription, bool isCanonical);
+        Task UpdateSkillAsync(int skillId, string name, bool isCanonical);
 
         /// <summary>
         /// Loads a skill by its name.
@@ -89,8 +89,9 @@ namespace SogetiSkills.Core.Managers
         /// </summary>
         /// <param name="skillName">The name of the skill to add.</param>
         /// <param name="consultantId">The id of the consultant to add the skill to.</param>
+        /// <param name="proficiencyLevel">The proficiency of the consultant with the skill.</param>
         /// <returns>The skill that was added to the consultant.</returns>
-        Task<Skill> AddSkillToConsultantAsync(string skillName, int consultantId);
+        Task<ConsultantSkill> AddSkillToConsultantAsync(string skillName, int consultantId, int proficiencyLevel);
 
         /// <summary>
         /// Removes a skill from a consultant.  If the skill is not marked as canonical and is not used by
@@ -99,5 +100,11 @@ namespace SogetiSkills.Core.Managers
         /// <param name="consultantId">The id of the consultant to remove the skill from.</param>
         /// <param name="skillId">The id of the skill to remove from the consultant.</param>
         Task RemoveSkillFromConsultantAsync(int consultantId, int skillId);
+
+        /// <summary>
+        /// Loads all proficiency levels ordered by level.
+        /// </summary>
+        /// <returns>All proficiency levels.</returns>
+        Task<IEnumerable<ProficiencyLevel>> LoadProficiencyLevelsAsync();
     }
 }

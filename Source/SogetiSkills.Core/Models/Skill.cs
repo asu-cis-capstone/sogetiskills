@@ -27,11 +27,6 @@ namespace SogetiSkills.Core.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// A more detailed description of the skill.
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
         /// Whether or not the skill is considered to be canonical.  See class remarks.
         /// </summary>
         public bool IsCanonical { get; set; }

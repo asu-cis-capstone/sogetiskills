@@ -51,10 +51,12 @@
     <Compile Include="Managers\ISkillManager.cs" />
     <Compile Include="Managers\ManagerBase.cs" />
     <Compile Include="Managers\ResumeManager.cs" />
+    <Compile Include="Models\ConsultantSkill.cs" />
     <Compile Include="Models\ResumeMetadata.cs" />
     <Compile Include="Managers\SkillManager.cs" />
     <Compile Include="Models\AccountTypes.cs" />
     <Compile Include="Models\PhoneNumber.cs" />
+    <Compile Include="Models\ProficiencyLevel.cs" />
     <Compile Include="Security\IPasswordHasher.cs" />
     <Compile Include="Security\ISaltGenerator.cs" />
     <Compile Include="Security\PasswordHasher.cs" />
@@ -117,6 +119,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DatabaseMigrations\635483857000637657_Skill_AddToConsultant_OnlyInsertIfNotExists.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DatabaseMigrations\635500888117358439_AddProficiencyToSkills.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DatabaseMigrations\635501126006628050_RemoveDescriptionFromSkill.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DatabaseMigrations\635501224415683757_AddDescriptionToProficiencyLevels.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
