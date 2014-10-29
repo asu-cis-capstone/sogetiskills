@@ -102,6 +102,13 @@ namespace SogetiSkills.UI.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RemoveSkill);
             return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ChangeBeachStatus()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangeBeachStatus);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ProfileController Actions { get { return MVC.Profile; } }
@@ -125,6 +132,7 @@ namespace SogetiSkills.UI.Controllers
             public readonly string Skills = "Skills";
             public readonly string AddSkill = "AddSkill";
             public readonly string RemoveSkill = "RemoveSkill";
+            public readonly string ChangeBeachStatus = "ChangeBeachStatus";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -137,6 +145,7 @@ namespace SogetiSkills.UI.Controllers
             public const string Skills = "Skills";
             public const string AddSkill = "AddSkill";
             public const string RemoveSkill = "RemoveSkill";
+            public const string ChangeBeachStatus = "ChangeBeachStatus";
         }
 
 
@@ -200,6 +209,15 @@ namespace SogetiSkills.UI.Controllers
         {
             public readonly string consultantId = "consultantId";
             public readonly string skillId = "skillId";
+        }
+        static readonly ActionParamsClass_ChangeBeachStatus s_params_ChangeBeachStatus = new ActionParamsClass_ChangeBeachStatus();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ChangeBeachStatus ChangeBeachStatusParams { get { return s_params_ChangeBeachStatus; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ChangeBeachStatus
+        {
+            public readonly string consultantId = "consultantId";
+            public readonly string beachStatus = "beachStatus";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -336,6 +354,19 @@ namespace SogetiSkills.UI.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "consultantId", consultantId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "skillId", skillId);
             RemoveSkillOverride(callInfo, consultantId, skillId);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void ChangeBeachStatusOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int consultantId, bool beachStatus);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ChangeBeachStatus(int consultantId, bool beachStatus)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangeBeachStatus);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "consultantId", consultantId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "beachStatus", beachStatus);
+            ChangeBeachStatusOverride(callInfo, consultantId, beachStatus);
             return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 

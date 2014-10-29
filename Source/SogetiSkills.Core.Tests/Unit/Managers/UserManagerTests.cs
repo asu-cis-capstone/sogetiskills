@@ -131,5 +131,62 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
                 }
             }
         }
+
+        [TestClass]
+        public class UpdateBeachStatus : UserManagerTests
+        {
+            [TestMethod]
+            public async Task UpdateBeachStatus_GivenConsultantAlreadyOnBeachAndTrueForBeachStatus_MarksTheConsultantAsOnTheBeach()
+            {
+                await TestUpdatingBeachStatus(true, true);
+            }
+
+            [TestMethod]
+            public async Task UpdateBeachStatus_GivenConsultantAlreadyOnBeachAndFalseForBeachStatus_MarksTheConsultantAsNotOnTheBeach()
+            {
+                await TestUpdatingBeachStatus(true, false);
+            }
+
+            [TestMethod]
+            public async Task UpdateBeachStatus_GivenConsultantNotOnBeachAndTrueForBeachStatus_MarksTheConsultantAsOnTheBeach()
+            {
+                await TestUpdatingBeachStatus(false, true);
+            }
+
+            [TestMethod]
+            public async Task UpdateBeachStatus_GivenConsultantNotOnBeachAndFalseForBeachStatus_MarksTheConsultantAsNotOnTheBeach()
+            {
+                await TestUpdatingBeachStatus(false, false);
+            }
+
+            private async Task TestUpdatingBeachStatus(bool existingBeachStatus, bool newBeachStatus)
+            {
+                int consultantId = InsertUser(SampleData.Consultant());
+                TestDatabase.Execute("UPDATE Users SET IsOnBeach = @0 WHERE Id = @1", existingBeachStatus, consultantId);
+
+                using (var subject = _fixture.Create<UserManager>())
+                {
+                    await subject.UpdateBeachStatusAsync(consultantId, newBeachStatus);
+                }
+
+                var consultantsBeachStatus = TestDatabase.QueryValue("SELECT IsOnBeach FROM Users WHERE Id = @0", consultantId);
+                Assert.AreEqual(newBeachStatus, consultantsBeachStatus);
+            }
+
+            [TestMethod]
+            public async Task UpdateBeachStatus_GivenAccountExecutive_DoesntChangeBeachStatus()
+            {
+                int accountExecutiveId = InsertUser(SampleData.AccountExecutive());
+                TestDatabase.Execute("UPDATE Users SET IsOnBeach = 1 WHERE Id = @0", accountExecutiveId);
+
+                using (var subject = _fixture.Create<UserManager>())
+                {
+                    await subject.UpdateBeachStatusAsync(accountExecutiveId, false);
+                }
+
+                var accountExecutivesBeachStatus = TestDatabase.QueryValue("SELECT IsOnBeach FROM Users WHERE Id = @0", accountExecutiveId);
+                Assert.AreEqual(true, accountExecutivesBeachStatus);
+            }
+        }
     }
 }

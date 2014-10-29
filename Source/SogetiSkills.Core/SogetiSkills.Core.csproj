@@ -129,6 +129,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DatabaseMigrations\635501224415683757_AddDescriptionToProficiencyLevels.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DatabaseMigrations\635501242375694995_User_UpdateBeachStatus.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

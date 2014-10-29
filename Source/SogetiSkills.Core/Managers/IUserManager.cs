@@ -71,5 +71,13 @@ namespace SogetiSkills.Core.Managers
         /// <param name="emailAddress">The new email address to store for the user.</param>
         /// <param name="phoneNumber">The new phone number to store for the user.</param>
         Task UpdateContactInfoAsync(int userId, string firstName, string lastName, string emailAddress, string phoneNumber);
+
+        /// <summary>
+        /// Updates whether or not a consultant is marked as being on the beach.
+        /// </summary>
+        /// <param name="consultantId">The id of the consultant to change.</param>
+        /// <param name="beachStatus">The new beach status for the consultant.</param>
+        /// <returns></returns>
+        Task UpdateBeachStatusAsync(int consultantId, bool beachStatus);
     }
 }

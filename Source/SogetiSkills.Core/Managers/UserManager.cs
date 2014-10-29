@@ -193,6 +193,21 @@ namespace SogetiSkills.Core.Managers
             await command.ExecuteNonQueryAsync();
         }
 
+        /// <summary>
+        /// Updates whether or not a consultant is marked as being on the beach.
+        /// </summary>
+        /// <param name="consultantId">The id of the consultant to change.</param>
+        /// <param name="beachStatus">The new beach status for the consultant.</param>
+        /// <returns></returns>
+        public async Task UpdateBeachStatusAsync(int consultantId, bool beachStatus)
+        {
+            var command = new SqlCommand("User_UpdateBeachStatus", await GetOpenConnectionAsync());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@consultantId", consultantId);
+            command.Parameters.AddWithValue("@beachStatus", beachStatus);
+            await command.ExecuteNonQueryAsync();
+        }
+
         #region Private helper methods
         // Helper methods for creating user objects from a data reader.
         private User ReadUserRow(SqlDataReader reader)

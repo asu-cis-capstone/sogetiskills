@@ -66,7 +66,6 @@
     </div>
 </div>
 @section scripts {
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
     <script>
         var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented));
         $('#newSkillText').autocomplete({ source: model.CanonicalSkillNames });

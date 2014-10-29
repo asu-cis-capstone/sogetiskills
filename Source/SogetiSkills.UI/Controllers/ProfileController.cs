@@ -184,5 +184,12 @@ namespace SogetiSkills.UI.Controllers
             await _skillManager.RemoveSkillFromConsultantAsync(consultantId, skillId);
             return Json(true);
         }
+
+        [POST("Profile/ChangeBeachStatus")]
+        public virtual async Task<ActionResult> ChangeBeachStatus(int consultantId, bool beachStatus)
+        {
+            await _userManager.UpdateBeachStatusAsync(consultantId, beachStatus);
+            return Json(beachStatus);
+        }
     }
 }

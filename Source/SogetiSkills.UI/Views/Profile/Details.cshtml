@@ -9,14 +9,33 @@
             @Model.FullName - @Model.UserTypeDescription
             @if (Model.IsConsultant)
             {
-                if (Model.IsOnBeach == true)
+                if (Model.ProfileBelongsToCurrentUser)
                 {
-                    <span class="text-success pull-right"><span class="glyphicon glyphicon-ok"></span> On the beach</span>
+                    <span data-bind="visible: isOnBeach, click: setBeachStatusOff" style="cursor: pointer;" class="text-success pull-right">
+                        <span class="glyphicon glyphicon-ok"></span> On the beach
+                        <br />
+                        <p style="font-size: 0.66em;" class="pull-right">(Click to toggle.)</p>
+                    </span>
+                    <span data-bind="visible: !isOnBeach(), click: setBeachStatusOn" style="cursor: pointer;" class="pull-right">
+                        <span class="glyphicon glyphicon-remove"></span> Not on the beach
+                        <br />
+                        <p style="font-size: 0.66em;" class="pull-right">(Click to toggle.)</p>
+                    </span>
                 }
                 else
                 {
-
-                    <span class="text-muted pull-right"><span class="glyphicon glyphicon-remove"></span> Not on the beach</span>
+                    if (Model.IsOnBeach == true)
+                    {
+                        <span id="toggleBeachOn" style="cursor: pointer;" class="text-success pull-right">
+                            <span class="glyphicon glyphicon-ok"></span> On the beach
+                        </span>
+                    }
+                    else
+                    {
+                        <span id="toggleBeachOff" style="cursor: pointer;" class="pull-right">
+                            <span class="glyphicon glyphicon-remove"></span> Not on the beach
+                        </span>
+                    }
                 }
             }
         </h2>
@@ -138,3 +157,38 @@
         }
     </div>
 </div>
+@section scripts {
+    <script type="text/javascript">
+        var ViewModel = function () {
+            var self = this;
+            self.isOnBeach = ko.observable(@Json.Encode(Model.IsOnBeach));
+            self.setBeachStatus = function (newBeachStatus) {
+                $.ajax({
+                    url: '@Url.Action(MVC.Profile.ChangeBeachStatus())',
+                    type: 'POST',
+                    data: { consultantId: @Model.UserId, beachStatus: newBeachStatus },
+                    success: function() {
+                        self.isOnBeach(newBeachStatus);
+                    },
+                    error: function() {
+                        if (newBeachStatus) {
+                            alert('Unable to toggle beach status on.');
+                        }
+                        else {
+                            alert('Unable to toggle beach status off.');
+                        }
+                    }
+                });
+            };
+            self.setBeachStatusOn = function() {
+                self.setBeachStatus(true);
+            }
+            self.setBeachStatusOff = function() {
+                self.setBeachStatus(false);
+            }
+
+            return self;
+        }
+        ko.applyBindings(new ViewModel());
+    </script>
+}
