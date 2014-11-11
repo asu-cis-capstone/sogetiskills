@@ -71,6 +71,7 @@ v0.5
 - Project Management
   John M: jsmonje@gmail.com 
     git: jsmonje
+[jmonje project](https://github.com/jsmonje/Personal-Project)
     skype: j.monje11
     phone: 480-231-7552
 - Frontend Development
