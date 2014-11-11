@@ -8,7 +8,7 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
-<tr><td><a href="datetime.testcase.html">datetime.testcase</a></td></tr>
+<tr><td><a href="@test.html">@test</a></td></tr>
 <tr><td><a href="create_unique_email.testcase.html">create_unique_email.testcase</a></td></tr>
 <tr><td><a href="edit_ae_profile.testcase.html">edit_ae_profile.testcase</a></td></tr>
 <tr><td><a href="edit_con_Profile.testcase.html">edit_con_Profile.testcase</a></td></tr>
