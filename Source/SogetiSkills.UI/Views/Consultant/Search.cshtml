@@ -80,7 +80,7 @@
                                 <dt>Phone number</dt>
                                 <dd>@consultant.PhoneNumber.GetFormattedValue()</dd>
                             </dl>
-                            <a class="btn btn-default center-block" href="@Url.Action(MVC.Profile.Details(consultant.Id))">View to @consultant.FirstName's profile</a>
+                            <a class="btn btn-default center-block" href="@Url.Action(MVC.Profile.Details(consultant.Id))">View @consultant.FirstName's profile</a>
                         </div>
                         <div class="col-lg-6">
                             @if (consultant.Skills.Any())
