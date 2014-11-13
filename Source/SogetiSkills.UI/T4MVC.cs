@@ -27,6 +27,7 @@ public static partial class MVC
 {
     public static SogetiSkills.UI.Controllers.AccountController Account = new SogetiSkills.UI.Controllers.T4MVC_AccountController();
     public static SogetiSkills.UI.Controllers.CanonicalSkillController CanonicalSkill = new SogetiSkills.UI.Controllers.T4MVC_CanonicalSkillController();
+    public static SogetiSkills.UI.Controllers.ConsultantController Consultant = new SogetiSkills.UI.Controllers.T4MVC_ConsultantController();
     public static SogetiSkills.UI.Controllers.HomeController Home = new SogetiSkills.UI.Controllers.T4MVC_HomeController();
     public static SogetiSkills.UI.Controllers.ProfileController Profile = new SogetiSkills.UI.Controllers.T4MVC_ProfileController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();

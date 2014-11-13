@@ -12,7 +12,10 @@
         if (Model is SogetiSkills.Core.Models.AccountExecutive)
         {
             <li>
-                @Html.ActionLink("Canonical skills", MVC.CanonicalSkill.List())
+                @Html.ActionLink("Find consultants", MVC.Consultant.Search(beachStatus: true, lastName: null, emailAddress: null, skills: null))
+            </li>
+            <li>
+                @Html.ActionLink("Manage canonical skills", MVC.CanonicalSkill.List())
             </li>
         }
         <li>

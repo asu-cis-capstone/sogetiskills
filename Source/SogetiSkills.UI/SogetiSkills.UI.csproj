@@ -191,6 +191,9 @@
     <Compile Include="CanonicalSkillController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ConsultantController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\SogetiSkillsControllerBase.cs" />
@@ -254,6 +257,7 @@
     <Content Include="Views\CanonicalSkill\Edit.cshtml" />
     <Content Include="Views\Shared\MainNavigation.cshtml" />
     <Content Include="Views\Profile\Skills.cshtml" />
+    <Content Include="Views\Consultant\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -263,7 +267,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Consultant\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

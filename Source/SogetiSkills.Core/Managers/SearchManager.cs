@@ -37,19 +37,19 @@ namespace SogetiSkills.Core.Managers
 
             if (!string.IsNullOrWhiteSpace(lastName))
             {
-                query = query.Where(x => x.LastName.ToLower().Contains(lastName.ToLower()));
+                query = query.Where(x => x.LastName.Trim().ToLower().Contains(lastName.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(emailAddress))
             {
-                query = query.Where(x => x.EmailAddress.ToLower().Contains(emailAddress.ToLower()));
+                query = query.Where(x => x.EmailAddress.Trim().ToLower().Contains(emailAddress.ToLower()));
             }
 
             if (skills != null && skills.Any())
             {
                 var loweredSkills = skills
                     .Where(x => !string.IsNullOrWhiteSpace(x))
-                    .Select(x => x.ToLower())
+                    .Select(x => x.Trim().ToLower())
                     .ToList();
 
                 query = from x in query
