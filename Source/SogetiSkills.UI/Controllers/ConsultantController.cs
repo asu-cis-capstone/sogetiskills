@@ -21,8 +21,7 @@ namespace SogetiSkills.UI.Controllers
         [GET("Consultants/Search")]
         public virtual async Task<ActionResult> Search(bool? beachStatus, string lastName, string emailAddress, string skills)
         {
-            bool anySearchCriteriaSpecified = beachStatus != null
-                || !string.IsNullOrWhiteSpace(lastName)
+            bool anySearchCriteriaSpecified = !string.IsNullOrWhiteSpace(lastName)
                 || !string.IsNullOrWhiteSpace(emailAddress)
                 || !string.IsNullOrWhiteSpace(skills);
 
