@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SogetiSkills.Core.Models
 {
     /// <summary>
-    /// A consultant that may be on "the beach" and have tags.
+    /// A consultant that may be on "the beach" and have skills.
     /// </summary>
     public class Consultant : User
     {

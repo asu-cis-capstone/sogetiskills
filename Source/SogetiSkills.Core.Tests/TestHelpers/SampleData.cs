@@ -9,16 +9,22 @@ namespace SogetiSkills.Core.Tests.TestHelpers
 {
     public static class SampleData
     {
-        public static Consultant Consultant()
+        public static Consultant Consultant(
+            int id = 123, 
+            string emailAddress = "bill@site.com",
+            string firstName = "Bill",
+            string lastName = "Smith",
+            bool isOnBeach = false,
+            string phoneNumber = "1234567890")
         {
             return new Consultant
             {
-                Id = 123,
-                EmailAddress = "bill@site.com",
-                FirstName = "Bill",
-                LastName = "Smith",
-                IsOnBeach = true,
-                PhoneNumber = new PhoneNumber("1234567890"),
+                Id = id,
+                EmailAddress = emailAddress,
+                FirstName = firstName,
+                LastName = lastName,
+                IsOnBeach = isOnBeach,
+                PhoneNumber = new PhoneNumber(phoneNumber),
                 Password = new HashedPassword
                 {
                     Hash = "hash",
