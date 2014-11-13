@@ -62,19 +62,13 @@ v0.6
 - Project Management
   John M: jsmonje@gmail.com 
     git: jsmonje
-[jmonje project](https://github.com/jsmonje/Personal-Project)
-    skype: j.monje11
+    [jmonje project](https://github.com/jsmonje/Personal-Project)
     phone: 480-231-7552
 - Frontend Development
   John W: john.s.wathen@gmail.com
     git: jwathen
     skype: live:john.s.wathen
     phone: 602-448-3306
-- Backend Development
-  Olivia S: olivia.sin@gmail.com
-    git: olivia-sin
-    skype: oliviasin
-    phone: 213-447-0953
 - Client- Sogeti USA 
     website: https://us.sogeti.com/
     contact: James Moran, MCP MCTS
