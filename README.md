@@ -18,7 +18,24 @@ Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of recor
     * Link to e-mail all consultants on the beach  
   * User maintenance
   * User type change
-  * Roles- Management of logins/users and permissions  
+  * Roles- Management of logins/users and permissions
+  * 
+#### from johnm 11.14
+  * Skill search No / blank / blank / blank = no results
+  * Skill search Yes / blank / blank / blank = no results
+  * Limit size of ALL user entry fields
+	- 	  Limit size of FirstName field
+	- 	  Limit size of LastName field
+	- 	  Limit size of EmailAddress field
+	- 	  Limit size of newSkillText field
+  * Change canonical skills name field to Skill
+  * Change “Beach Only” to “Beach Status”
+  * Add beach status = “Any” to BeachOnly / Beach Status” search field
+  * Remove email Address search field from AE screen
+When AE logs on, the home screen should display all consultants with all skills.  Search = status = all, name = blank.  All registered consultants, and all skills should be displayed
+-   Change skill entry screen
+-   fix skill entry screen 
+  
 
 ####Complete
 v0.1
