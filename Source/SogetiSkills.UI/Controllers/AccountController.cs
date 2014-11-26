@@ -64,7 +64,14 @@ namespace SogetiSkills.UI.Controllers
                     }
                 }
 
-                return RedirectToAction(MVC.Profile.Details(user.Id));
+                if (user is AccountExecutive)
+                {
+                    return RedirectToAction(MVC.Consultant.Search());
+                }
+                else
+                {
+                    return RedirectToAction(MVC.Profile.Details(user.Id));
+                }
             }
             else
             {

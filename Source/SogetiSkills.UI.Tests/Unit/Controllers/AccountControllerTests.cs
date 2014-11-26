@@ -88,7 +88,7 @@ namespace SogetiSkills.UI.Tests.Unit.UI.Controllers
             }
 
             [TestMethod]
-            public async Task SignIn_GivenCorrectCredentials_RedirectsToUsersProfile()
+            public async Task SignIn_GivenCorrectCredentialsForConsultant_RedirectsToUsersProfile()
             {
                 _fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "pass")).Returns(Task.FromResult((User)_consultant123));
                 SignInViewModel correctUsernamePassword = new SignInViewModel { EmailAddress = "user@site.com", Password = "pass" };
@@ -97,6 +97,18 @@ namespace SogetiSkills.UI.Tests.Unit.UI.Controllers
                 ActionResult actionResult = await subject.SignIn(correctUsernamePassword);
 
                 AssertX.IsRedirectToRouteResult(actionResult, MVC.Profile.Name, MVC.Profile.ActionNames.Details, new { userId = 123 });
+            }
+
+            [TestMethod]
+            public async Task SignIn_GivenCorrectCredentialsForAccountExecutive_RedirectsToUsersConsultantSearchPage()
+            {
+                _fakeUserManager.Setup(x => x.ValidatePasswordAsync("user@site.com", "pass")).Returns(Task.FromResult((User)_accountExecutive456));
+                SignInViewModel correctUsernamePassword = new SignInViewModel { EmailAddress = "user@site.com", Password = "pass" };
+                AccountController subject = _fixture.Create<AccountController>();
+
+                ActionResult actionResult = await subject.SignIn(correctUsernamePassword);
+
+                AssertX.IsRedirectToRouteResult(actionResult, MVC.Consultant.Name, MVC.Consultant.ActionNames.Search);
             }
 
             [TestMethod]
