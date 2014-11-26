@@ -163,12 +163,20 @@
       <DependentUpon>Styles.css</DependentUpon>
     </Content>
     <Content Include="packages.config" />
-    <None Include="T4MVC.tt.hooks.t4" />
-    <None Include="T4MVC.tt">
+    <None Include="Properties\PublishProfiles\dev-sogetiskills.pubxml" />
+    <Content Include="Scripts\Profile\Skills.min.js">
+      <DependentUpon>Skills.js</DependentUpon>
+    </Content>
+    <Content Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </None>
+    </Content>
+    <Content Include="Scripts\Profile\Skills.min.js.map">
+      <DependentUpon>Skills.min.js</DependentUpon>
+    </Content>
+    <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Scripts\Profile\Skills.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -223,9 +231,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="T4MVC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\SignInViewModel.cs" />

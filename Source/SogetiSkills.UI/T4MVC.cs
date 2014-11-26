@@ -68,6 +68,23 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
 namespace Links
 {
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public static class Scripts {
+        private const string URLPATH = "~/Scripts";
+        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class Profile {
+            private const string URLPATH = "~/Scripts/Profile";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string Skills_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Skills.min.js") ? Url("Skills.min.js") : Url("Skills.js");
+            public static readonly string Skills_min_js = Url("Skills.min.js");
+            public static readonly string Skills_min_js_map = Url("Skills.min.js.map");
+        }
+    
+    }
+
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static class Content {
         private const string URLPATH = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
