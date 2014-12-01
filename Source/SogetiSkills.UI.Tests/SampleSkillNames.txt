@@ -1,0 +1,21 @@
+﻿C#
+.NET
+Ruby
+Ruby on Rails
+JavaScript
+jQuery
+ASP.NET
+SAP
+Java
+Django
+Python
+NodeJS
+PHP
+Microsoft SQL Server
+MySQL
+Postgres SQL
+Oracle
+Word Press
+Facebook SDK
+C++
+Basket Weaving

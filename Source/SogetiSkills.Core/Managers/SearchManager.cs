@@ -20,12 +20,13 @@ namespace SogetiSkills.Core.Managers
         /// <param name="beachStatus">Whether or not the consultant is currently on the beach.  Pass null to ignore the beach status.</param>
         /// <param name="lastName">Filter by the consultant's last name.  The comparison is case insensitive and filters where the consultant's last name contains the string.  Pass null to ignore the last name.</param>
         /// <param name="emailAddress">Filter by the consultant's email.  The comparison is case insensitive and but requires an exact match.  Pass null to ignore the email address.</param>
-        /// <param name="skills">A list of skills to filter by.  The comparisons are case insensitive and a consultant only needs to match one skill to be included in the result set.</param>
+        /// <param name="skills">A list of skills to filter by.  The comparisons are case insensitive.</param>
+        /// <param name="skillSearchType">Whether a consultant must have all skills in the search or needs to have only matching skill to be included in the result set.</param>
         /// <returns>A filtered list of consultants.</returns>
-        public async Task<IEnumerable<ConsultantWithSkills>> SearchConsultantsAsync(bool? beachStatus, string lastName, string emailAddress, IEnumerable<string> skills)
+        public async Task<IEnumerable<ConsultantWithSkills>> SearchConsultantsAsync(bool? beachStatus, string lastName, string emailAddress, IEnumerable<string> skills, SkillSearchType skillSearchType = SkillSearchType.ConsultantMustHaveAllSkills)
         {
             // For now it will be fast enough to just pull back all consultants and their skills and then do the
-            // filter in memory.  It would be nice to filter in the database but we gain a lot of maintainability
+            // filtering in memory.  It would be nice to filter in the database but we gain a lot of maintainability
             // by using linq instead of dynamically building SQL inside of a stored procedure and I think the trade
             // off is worth it.
 
@@ -52,15 +53,24 @@ namespace SogetiSkills.Core.Managers
                     .Select(x => x.Trim().ToLower())
                     .ToList();
 
-                query = from x in query
-                        where x.Skills.Select(s => s.SkillName.ToLower()).Intersect(loweredSkills).Any()
-                        select x;
+                if (skillSearchType == SkillSearchType.ConsultantMustHaveAllSkills)
+                {
+                    query = from x in query
+                            where x.Skills.Select(s => s.SkillName.ToLower()).Intersect(loweredSkills).Count() == loweredSkills.Count()
+                            select x;
+                }
+                else if (skillSearchType == SkillSearchType.ConstultantMustHaveAtLeastOneMatchingSkill)
+                {
+                    query = from x in query
+                            where x.Skills.Select(s => s.SkillName.ToLower()).Intersect(loweredSkills).Any()
+                            select x;
+                }
             }
             return query.OrderBy(x => x.LastName).ToList();
         }
 
         #region Private helper method
-        // Go the the database and pull back all consultants with their skills.
+        // Go the database and pull back all consultants with their skills.
         private async Task<IEnumerable<ConsultantWithSkills>> GetAllConsultantsAsync()
         {
             var command = new SqlCommand("Consultant_SelectAllWithSkills", await GetOpenConnectionAsync());

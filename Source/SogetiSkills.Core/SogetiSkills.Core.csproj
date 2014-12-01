@@ -53,6 +53,7 @@
     <Compile Include="Managers\ManagerBase.cs" />
     <Compile Include="Managers\ResumeManager.cs" />
     <Compile Include="Managers\SearchManager.cs" />
+    <Compile Include="Managers\SkillSearchType.cs" />
     <Compile Include="Models\ConsultantSkill.cs" />
     <Compile Include="Models\ConsultantWithSkills.cs" />
     <Compile Include="Models\ResumeMetadata.cs" />
@@ -137,6 +138,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DatabaseMigrations\635514082704106014_Consultant_SelectAllWithSkills.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DatabaseMigrations\635530448068262711_Skill_AddToConsultant_FixPreCondition.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

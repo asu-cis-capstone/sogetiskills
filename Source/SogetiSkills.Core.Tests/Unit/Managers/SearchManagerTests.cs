@@ -156,6 +156,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             }
         }
 
+        [TestClass]
         public class SearchConsultantsBySkills : SearchConsultants
         {
             [TestMethod]
@@ -163,7 +164,7 @@ namespace SogetiSkills.Core.Tests.Unit.Managers
             {
                 using (var subject = _fixture.Create<SearchManager>())
                 {
-                    var consultants = await subject.SearchConsultantsAsync(null, null, null, new[] { "C#", "Juggling Oranges" } );
+                    var consultants = await subject.SearchConsultantsAsync(null, null, null, new[] { "C#", "Juggling Oranges" });
 
                     Assert.AreEqual(2, consultants.Count());
                 }

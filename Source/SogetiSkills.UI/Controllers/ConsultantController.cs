@@ -38,7 +38,7 @@ namespace SogetiSkills.UI.Controllers
                 {
                     skillsList = skills.Split(',');
                 }
-                var searchResults = await _searchManager.SearchConsultantsAsync(beachStatus, lastName, emailAddress, skillsList);
+                var searchResults = await _searchManager.SearchConsultantsAsync(beachStatus, lastName, emailAddress, skillsList, SkillSearchType.ConstultantMustHaveAtLeastOneMatchingSkill);
                 return View(searchResults);
             }
             else

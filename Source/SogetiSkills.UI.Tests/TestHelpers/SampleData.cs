@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace SogetiSkills.UI.Tests.TestHelpers
 {
     public static class SampleData
     {
+        private static Random random = new Random();
+
         public static Consultant Consultant()
         {
             return new Consultant
@@ -70,6 +73,19 @@ namespace SogetiSkills.UI.Tests.TestHelpers
                 new ConsultantSkill { ConsultantId = consultantId, SkillId = 1, SkillName = "ASP.NET", IsCanonical = false, Proficiency = new  ProficiencyLevel { Name = "Advanced", Level  = 4 } },
                 new ConsultantSkill { ConsultantId = consultantId, SkillId = 1, SkillName = "JavaScript", IsCanonical = true, Proficiency = new  ProficiencyLevel { Name = "Intermediate", Level  = 3 } }
             };
+        }
+
+        public static int RandomNumber(int lower, int upper)
+        {
+            return random.Next(lower, upper);
+        }
+
+        public static IEnumerable<string> RandomSkillNames(int count)
+        {
+            return (from x in File.ReadAllLines("SampleSkillNames.txt")
+                    where !string.IsNullOrWhiteSpace(x)
+                    orderby Guid.NewGuid()
+                    select x).Take(count).ToList();
         }
     }
 }
