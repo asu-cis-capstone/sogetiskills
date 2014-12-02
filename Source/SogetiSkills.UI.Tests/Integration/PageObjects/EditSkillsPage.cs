@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SogetiSkills.UI.Tests.TestHelpers;
 
 namespace SogetiSkills.UI.Tests.Integration.PageObjects
 {
@@ -19,15 +20,13 @@ namespace SogetiSkills.UI.Tests.Integration.PageObjects
 
         public void AddNewSkill(string skillName, int proficiencyLevel)
         {
-            NewSkillNameInput.Clear();
-            NewSkillNameInput.SendKeys(skillName);
-            Thread.Sleep(500);
+            NewSkillNameInput.ClearSlowy(_delay);
+            NewSkillNameInput.SendKeysSlowly(_delay, skillName);
             
             NewSkillProficiencyDropDown.SelectByValue(proficiencyLevel.ToString());
-            Thread.Sleep(500);
-            
+            Thread.Sleep(_delay);
+
             AddSkillButton.Click();
-            Thread.Sleep(500);
         }
 
         public IWebElement BackToProfileLink

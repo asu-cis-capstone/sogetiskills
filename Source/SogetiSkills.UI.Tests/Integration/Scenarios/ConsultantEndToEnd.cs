@@ -56,7 +56,7 @@ namespace SogetiSkills.UI.Tests.Integration.Scenarios
 
         private void ChangeContactInfo()
         {
-            var consultantProfilePage = new ConsultantProfilePage(_rootUrl, _browser, _delay);            
+            var consultantProfilePage = new ProfilePage(_rootUrl, _browser, _delay);            
             consultantProfilePage.EditContactInfoLink.Click();
 
             var fakeIdentity = FakeIdentity.Generate();
@@ -71,7 +71,7 @@ namespace SogetiSkills.UI.Tests.Integration.Scenarios
 
         private void AddAndRemoveSkills()
         {
-            var consultantProfilePage = new ConsultantProfilePage(_rootUrl, _browser, _delay);
+            var consultantProfilePage = new ProfilePage(_rootUrl, _browser, _delay);
             consultantProfilePage.EditSkillsLink.Click();
 
             var editSkillsPage = new EditSkillsPage(_rootUrl, _browser, _delay);
@@ -82,11 +82,12 @@ namespace SogetiSkills.UI.Tests.Integration.Scenarios
                 editSkillsPage.AddNewSkill(skillName, proficiencyLevel);
             }
             editSkillsPage.BackToProfileLink.Click();
+            Thread.Sleep(_delay);
         }
 
         private void UploadResume()
         {
-            var consultantProfilePage = new ConsultantProfilePage(_rootUrl, _browser, _delay);
+            var consultantProfilePage = new ProfilePage(_rootUrl, _browser, _delay);
             consultantProfilePage.UploadResumeLink.Click();
 
             var uploadResumePage = new UploadResumePage(_rootUrl, _browser, _delay);
@@ -94,11 +95,13 @@ namespace SogetiSkills.UI.Tests.Integration.Scenarios
             string sampleResumeFilePath = Path.Combine(workingDirectory, "Resume.pdf");
             uploadResumePage.FillForm(sampleResumeFilePath);
             uploadResumePage.SumitForm();
+            consultantProfilePage.SiteNavigation.YourProfileLink.Click();
+            Thread.Sleep(_delay);
         }
 
         private void ToggleBeachStatus()
         {
-            var consultantProfilePage = new ConsultantProfilePage(_rootUrl, _browser, _delay);            
+            var consultantProfilePage = new ProfilePage(_rootUrl, _browser, _delay);            
 
             int numberOfToggles = SampleData.RandomNumber(1, 10);
             for (int i = 0; i < numberOfToggles; i++)
@@ -109,8 +112,8 @@ namespace SogetiSkills.UI.Tests.Integration.Scenarios
 
         private void SignOut()
         {
-            var consultantProfilePage = new ConsultantProfilePage(_rootUrl, _browser, _delay);
-            consultantProfilePage.SignOutLink.Click();
+            var consultantProfilePage = new ProfilePage(_rootUrl, _browser, _delay);
+            consultantProfilePage.SiteNavigation.SignOutLink.Click();
         }
     }
 }

@@ -120,11 +120,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Integration\PageObjects\ConsultantProfilePage.cs" />
+    <Compile Include="Integration\PageObjects\AddCanonicalSkillPage.cs" />
+    <Compile Include="Integration\PageObjects\FindConsultantsPage.cs" />
+    <Compile Include="Integration\PageObjects\ProfilePage.cs" />
     <Compile Include="Integration\PageObjects\EditContactInfoPage.cs" />
     <Compile Include="Integration\PageObjects\EditSkillsPage.cs" />
+    <Compile Include="Integration\PageObjects\ManageCanonicalSkillsPage.cs" />
     <Compile Include="Integration\PageObjects\PageObjectBase.cs" />
     <Compile Include="Integration\PageObjects\RegistrationPage.cs" />
+    <Compile Include="Integration\PageObjects\SiteNavigation.cs" />
     <Compile Include="Integration\PageObjects\UploadResumePage.cs" />
     <Compile Include="Integration\Scenarios\AccountExecutiveEndToEnd.cs" />
     <Compile Include="Integration\Scenarios\ConsultantEndToEnd.cs" />
@@ -134,6 +138,7 @@
     <Compile Include="TestHelpers\ControllerUnitTestBase.cs" />
     <Compile Include="TestHelpers\FakeIdentity.cs" />
     <Compile Include="TestHelpers\SampleData.cs" />
+    <Compile Include="TestHelpers\SeleniumExtensions.cs" />
     <Compile Include="TestHelpers\UnitTestBase.cs" />
     <Compile Include="TestHelpers\WebModelCustomization.cs" />
     <Compile Include="Unit\Controllers\AccountControllerTests.cs" />

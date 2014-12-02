@@ -20,11 +20,11 @@ namespace SogetiSkills.UI.Tests.Integration.PageObjects
             _delay = delay;
         }
 
-        public IWebElement SignOutLink
+        public SiteNavigation SiteNavigation
         {
             get
             {
-                return _browser.FindElement(By.LinkText("Sign out"));
+                return new SiteNavigation(_browser);
             }
         }
     }

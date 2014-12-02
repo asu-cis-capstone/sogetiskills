@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SogetiSkills.UI.Tests.TestHelpers;
 
 namespace SogetiSkills.UI.Tests.Integration.PageObjects
 {
@@ -25,20 +26,14 @@ namespace SogetiSkills.UI.Tests.Integration.PageObjects
 
         public void FillForm(string emailAddress, string password, string accountType, string firstName, string lastName, string phoneNumber)
         {
-            this.EmailAddressInput.SendKeys(emailAddress);
-            Thread.Sleep(_delay);
-            this.PasswordInput.SendKeys(password);
-            Thread.Sleep(_delay);
-            this.ConfirmPasswordInput.SendKeys(password);
-            Thread.Sleep(_delay);
+            this.EmailAddressInput.SendKeysSlowly(_delay, emailAddress);            
+            this.PasswordInput.SendKeysSlowly(_delay, password);
+            this.ConfirmPasswordInput.SendKeysSlowly(_delay, password);
             this.AccountTypeDropDown.SelectByValue(accountType);
             Thread.Sleep(_delay);
-            this.FirstNameInput.SendKeys(firstName);
-            Thread.Sleep(_delay);
-            this.LastNameInput.SendKeys(lastName);
-            Thread.Sleep(_delay);
-            this.PhoneNumberInput.SendKeys(phoneNumber);
-            Thread.Sleep(_delay);
+            this.FirstNameInput.SendKeysSlowly(_delay, firstName);
+            this.LastNameInput.SendKeysSlowly(_delay, lastName);
+            this.PhoneNumberInput.SendKeysSlowly(_delay, phoneNumber);
         }
 
         public void SubmitForm()

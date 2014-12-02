@@ -1,5 +1,5 @@
 ﻿C#
-.NET
+Microsoft .NET
 Ruby
 Ruby on Rails
 JavaScript
@@ -18,4 +18,5 @@ Oracle
 Word Press
 Facebook SDK
 C++
-Basket Weaving
+Objective C
+iOS

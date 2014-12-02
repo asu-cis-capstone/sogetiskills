@@ -4,8 +4,10 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using SogetiSkills.UI.Tests.Integration.Scenarios;
+using WebMatrix.Data;
 
 namespace DemoLoop
 {
@@ -17,14 +19,45 @@ namespace DemoLoop
         [STAThread]
         public static void Main(string[] args)
         {
-            using (var browser = new ChromeDriver())
+            IWebDriver browser = null;
+            try
             {
-                browser.Manage().Window.Maximize();
-                for (int i = 0; i < 5; i++)
+                using (browser = new ChromeDriver())
                 {
-                    var consultantEndToEnd = new ConsultantEndToEnd(ROOT_URL, browser, DELAY);
-                    consultantEndToEnd.Execute();
+                    while (true)
+                    {
+                        CleanUpDatabase();
+
+                        browser.Manage().Window.Maximize();
+                        var consultantEndToEnd = new ConsultantEndToEnd(ROOT_URL, browser, DELAY);
+                        consultantEndToEnd.Execute();
+
+                        var accountExecutiveEndToEnd = new AccountExecutiveEndToEnd(ROOT_URL, browser, DELAY);
+                        accountExecutiveEndToEnd.Execute();                        
+                    }
                 }
+            }
+            catch { }
+            finally
+            {
+                if (browser != null)
+                {
+                    browser.Dispose();
+                }
+            }
+        }
+
+        private static void CleanUpDatabase()
+        {
+            var db = Database.Open("SogetiSkills");
+            db.Execute("UPDATE Skills SET IsCanonical = 0 WHERE IsCanonical = 1");
+
+            if ((int)db.QueryValue("SELECT COUNT(*) FROM Users") > 20)
+            {
+                db.Execute("DELETE ConsultantSkill");
+                db.Execute("DELETE Skills");
+                db.Execute("DELETE Resumes");
+                db.Execute("DELETE Users");
             }
         }
     }

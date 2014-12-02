@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
+using SogetiSkills.UI.Tests.TestHelpers;
 
 namespace SogetiSkills.UI.Tests.Integration.PageObjects
 {
@@ -18,21 +19,17 @@ namespace SogetiSkills.UI.Tests.Integration.PageObjects
 
         public void FillForm(string firstName, string lastName, string emailAddress, string phoneNumber)
         {
-            this.FirstNameInput.Clear();
-            this.FirstNameInput.SendKeys(firstName);
-            Thread.Sleep(_delay);
-            
-            this.LastNameInput.Clear();
-            this.LastNameInput.SendKeys(lastName);
-            Thread.Sleep(_delay);
+            this.FirstNameInput.ClearSlowy(_delay);
+            this.FirstNameInput.SendKeysSlowly(_delay, firstName);
 
-            this.EmailAddressInput.Clear();
-            this.EmailAddressInput.SendKeys(emailAddress);
-            Thread.Sleep(_delay);
+            this.LastNameInput.ClearSlowy(_delay);
+            this.LastNameInput.SendKeysSlowly(_delay, lastName);
 
-            this.PhoneNumberInput.Clear();
-            this.PhoneNumberInput.SendKeys(phoneNumber);
-            Thread.Sleep(_delay);
+            this.EmailAddressInput.ClearSlowy(_delay);
+            this.EmailAddressInput.SendKeysSlowly(_delay, emailAddress);
+
+            this.PhoneNumberInput.ClearSlowy(_delay);
+            this.PhoneNumberInput.SendKeysSlowly(_delay, phoneNumber);
         }
 
         public void SubmitForm()

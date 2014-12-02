@@ -8,9 +8,9 @@ using OpenQA.Selenium;
 
 namespace SogetiSkills.UI.Tests.Integration.PageObjects
 {
-    public class ConsultantProfilePage : PageObjectBase
+    public class ProfilePage : PageObjectBase
     {
-        public ConsultantProfilePage(string rootUrl, IWebDriver browser, int delay)
+        public ProfilePage(string rootUrl, IWebDriver browser, int delay)
             : base (rootUrl, browser, delay)
         {
             
