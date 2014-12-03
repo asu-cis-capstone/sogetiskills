@@ -20,7 +20,6 @@ Project "Beach"- For Client Sogeti USA, an IT Consulting Firm. Creation of recor
   * User type change
   * Roles- Management of logins/users and permissions
   
-
   * Skill search No / blank / blank / blank = no results
   * Skill search Yes / blank / blank / blank = no results
   * Limit size of ALL user entry fields
